@@ -228,6 +228,14 @@ class Aircraft:
         """
         return self.name
 
+    def as_dict(self):
+        """
+        Get this Aircraft as a Dictionary.
+        
+        :return: A dictionary representing this Aircraft. 
+        """
+        return {'code': self.code, 'name': self.name}
+
 
 class Result:
     """
