@@ -72,6 +72,7 @@ def post_request(url: str, payload: dict={}):
     :param url: The URL to which the Request should be sent
     :return: The Response as a dictionary 
     """
+    return _requester.loop.run_until_complete(_requester.post_request(url, payload))
 
 print(get_request('http://random.cat/meow'))
 
