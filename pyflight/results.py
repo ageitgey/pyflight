@@ -104,7 +104,7 @@ class Airport:
     Methods
     -------
     as_dict()
-    
+        Get a representation of this Airport as a Dictionary.
     """
 
     def __init__(self, airport: dict, city: dict):
@@ -219,6 +219,14 @@ class Aircraft:
         :return: The Length of the Aircraft's Name 
         """
         return len(self.name)
+
+    def __str__(self):
+        """
+        Get the Name of this Aircraft as a String.
+        
+        :return: The Name of this Aircraft 
+        """
+        return self.name
 
 
 class Result:
