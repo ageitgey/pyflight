@@ -5,8 +5,6 @@ import aiohttp
 import asyncio
 import pyflight
 
-'https://www.googleapis.com/qpxExpress/v1/trips/search'
-
 
 class Requester:
     """
@@ -26,10 +24,11 @@ class Requester:
     def set_api_key(self, key: str):
         """
         Set an API Key to be used for making Calls to the API.
-        Note that there is a free quota of 50 Calls 
-        :param key: 
-        :return: 
+        Note that there is a free quota of 50 Calls per API Key.
+         
+        :param key: The API Key you wish to use for making Calls to the API.
         """
+        self._request_url += '?key=' + key
 
     async def set_client_session(self):
         """
@@ -37,7 +36,7 @@ class Requester:
         """
         self.client_session = aiohttp.ClientSession()
 
-    async def post_request(self, url: str=, payload: dict):
+    async def post_request(self, url: str, payload: dict):
         """
         Send a POST request to the specified URL with the given payload.
         

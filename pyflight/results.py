@@ -30,10 +30,27 @@ class Tax:
         """
         Compare two Taxes with each other for equality.
         
+        >>> first_tax = Tax('9B1', 'Example Tax')
+        >>> second_tax = Tax('7B3', 'Another Example Tax')
+        >>> first_tax == second_tax
+        False
+        
         :param other: A Tax Object to compare
         :return: The Result of the comparison
         """
         return self.id == other.id
+
+    def __len__(self):
+        """
+        Get the length of the Name of this Tax.
+        
+        >>> my_tax = Tax('7H6', 'Example Tax')
+        >>> len(my_tax)
+        11
+        
+        :return: The length of the name of this Tax 
+        """
+        return len(self.name)
 
     def __str__(self):
         """
@@ -59,6 +76,7 @@ class Tax:
         """
         return {'id': self.id, 'name': self.name}
 
+
 class Airport:
     """
     Contains Data of an Airport and its City
@@ -81,6 +99,12 @@ class Airport:
         self.airport_name = airport['name']
         self.city_code = city['code']
         self.city_name = city['name']
+
+    def __str__(self):
+        """
+        Get a representation of this Airport as a String.
+        :return: 
+        """
 
 
 class Result:
