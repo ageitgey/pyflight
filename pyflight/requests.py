@@ -55,14 +55,24 @@ class Requester:
 _requester = Requester()
 
 
-def make_request(url):
+def get_request(url: str):
     """
-    Sends out a request
-    :param url: 
-    :return: 
+    Sends out a GET request
+    
+    :param url: The URL to which the Request should be sent
+    :return: The Response as a dictionary
     """
-    return _requester.loop.run_until_complete(_requester.post_request(url))
+    return _requester.loop.run_until_complete(_requester.get_request(url))
 
-print(make_request('http://random.cat/meow'))
+
+def post_request(url: str, payload: dict={}):
+    """
+    Sends out a POST Request to the specified URL
+    
+    :param url: The URL to which the Request should be sent
+    :return: The Response as a dictionary 
+    """
+
+print(get_request('http://random.cat/meow'))
 
 # _requester.client_session.close() !!!!!!!!
