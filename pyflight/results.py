@@ -224,4 +224,3 @@ class Result:
             self.taxes.append(Tax(tax['id'], tax['name']))
 
         # Save Carriers
-

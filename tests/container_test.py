@@ -44,12 +44,20 @@ def test_airport():
     second_airport = Airport({'code': '58', 'name': 'Another Airport'}, {'code': '337', 'name': 'Another City'})
     third_airport = Airport({'code': '31', 'name': 'Airport Airport'}, {'code': '958', 'name': 'City City'})
 
+    # Test the __len__ overload
+    assert len(first_airport) == 12
+    assert len(second_airport) == 15
+    assert len(third_airport) == 15
+
+    # Test the __eq__ overload
+    assert first_airport == first_airport
+    assert first_airport != second_airport
+    assert first_airport != third_airport
+    assert second_airport != third_airport
+    assert third_airport == third_airport
+
     # Test the __str__ overload
     assert str(first_airport) == 'Some Airport in Some City'
     assert str(second_airport) == 'Another Airport in Another City'
     assert str(third_airport) == 'Airport Airport in City City'
 
-    # Test the __len__ overload
-    assert len(first_airport) == 12
-    assert len(second_airport) == 15
-    assert len(third_airport) == 15
