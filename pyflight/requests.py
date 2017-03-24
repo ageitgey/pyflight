@@ -70,6 +70,7 @@ def post_request(url: str, payload: dict={}):
     Sends out a POST Request to the specified URL
     
     :param url: The URL to which the Request should be sent
+    :param payload: The Payload to be sent to the URL
     :return: The Response as a dictionary 
     """
     return _requester.loop.run_until_complete(_requester.post_request(url, payload))
