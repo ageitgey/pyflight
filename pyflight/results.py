@@ -92,8 +92,8 @@ class Airport:
         each Flight returned from the API. It will match
         the Data for a structured Overview of each Flight.
         
-        :param airport: A single Airports returned by the API
-        :param city: A single Cities returned by the API
+        :param airport: A single Airport returned by the API
+        :param city: A single City returned by the API
         """
         self.airport_code = airport['code']
         self.airport_name = airport['name']
@@ -103,8 +103,14 @@ class Airport:
     def __str__(self):
         """
         Get a representation of this Airport as a String.
-        :return: 
+        
+        >>> example_airport = Airport({'code': '3E7', 'name': 'Example Airport'}, {'code': 'XYZ', 'name': 'Example City'})
+        >>> str(example_airport)
+        Example Airport in Example City
+        
+        :return: A representation of this Airport as a String. 
         """
+        return f'{self.airport_name} in {self.city_name}'
 
 
 class Result:
