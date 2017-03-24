@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 try:
-    long_description = open("README.rst").read()
+    long_description = open("README.md").read()
 except IOError:
     long_description = ""
 
@@ -13,7 +13,7 @@ setup(
     license="MIT",
     author="Volcyy",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=['aiohttp', ],
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",
