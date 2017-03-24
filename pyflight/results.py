@@ -207,6 +207,11 @@ class Aircraft:
         """
         Compare two Aircraft for Equality, returns True if they have identical Code and Name.
         
+        >>> first_aircraft = Aircraft('3E7', 'Foo')
+        >>> second_aircraft = Aircraft('5E1', 'Bar')
+        >>> first_aircraft == second_aircraft
+        False
+        
         :param other: The Aircraft to compare with this one 
         :return: A boolean indicating the Result of the Comparison
         """
@@ -214,7 +219,11 @@ class Aircraft:
 
     def __len__(self):
         """
-        Get the length of this Aircraft's Name
+        Get the length of this Aircraft's Name.
+        
+        >>> aircraft = Aircraft('351', 'Fizz Buzz')
+        >>> len(aircraft)
+        9
         
         :return: The Length of the Aircraft's Name 
         """
@@ -224,6 +233,10 @@ class Aircraft:
         """
         Get the Name of this Aircraft as a String.
         
+        >>> aircraft = Aircraft('502', 'Big Jet')
+        >>> str(aircraft)
+        'Big Jet'
+        
         :return: The Name of this Aircraft 
         """
         return self.name
@@ -231,6 +244,10 @@ class Aircraft:
     def as_dict(self):
         """
         Get this Aircraft as a Dictionary.
+        
+        >>> aircraft = Aircraft('QF9', 'Even Bigger Jet')
+        >>> aircraft.as_dict()
+        {'code': 'QF9', 'name': 'Even Bigger Jet'}
         
         :return: A dictionary representing this Aircraft. 
         """
