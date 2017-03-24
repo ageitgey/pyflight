@@ -23,6 +23,12 @@ class Tax:
     """
 
     def __init__(self, tax_id: str, name: str):
+        """
+        Create a new Tax Object.
+        
+        :param tax_id: The ID for this Tax
+        :param name: The Name of this Tax
+        """
         self.id = tax_id
         self.name = name
 
@@ -100,6 +106,16 @@ class Airport:
         self.city_code = city['code']
         self.city_name = city['name']
 
+    def __eq__(self, other):
+        """
+        Compare two Airports with each other by 
+        their Airport and City Codes.
+        
+        :param other: The other Airport to compare this one to 
+        :return: A boolean indicating the result of the comparison
+        """
+        return self.airport_code == other.airport_code and self.city_code == other.city_code
+
     def __len__(self):
         """
         Get the length of the Airport Name.
@@ -127,6 +143,35 @@ class Airport:
         """
         return f'{self.airport_name} in {self.city_name}'
 
+
+class Aircraft:
+    """
+    Contains Information about a single Aircraft.
+    
+    Attributes
+    ----------
+    code : str
+        The Code for this Aircraft, not unique.
+    name : str
+        The Name of this Aircraft.
+    """
+    def __init__(self, code: str, name: str):
+        """
+        Create a new Aircraft Object.
+        
+        :param code: The Code of the Aircraft
+        :param name: The Name of the Aircraft
+        """
+        self.code = code
+        self.name = name
+
+    def __len__(self):
+        """
+        Get the length of this Aircraft's Name
+        
+        :return: The Length of the Aircraft's Name 
+        """
+        return len(self.name)
 
 
 class Result:
@@ -172,4 +217,11 @@ class Result:
                     self.airports.append(Airport(airport_data, city_data))
 
         # Save Taxes
+        self.taxes = []
+
+        taxes = data['trips']['data']['tax']
+        for tax in taxes:
+            self.taxes.append(Tax(tax['id'], tax['name']))
+
+        # Save Carriers
 
