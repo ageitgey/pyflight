@@ -169,7 +169,7 @@ class Airport:
             'airport_code': '3E7',
             'airport_name': 'Example Airport',
             'city_code': 'XYZ',
-            'city_name': 'Example City'
+            'city_name': 'Example City'<
         }
         
         :return: A dictionary representing this Airport. 

@@ -53,6 +53,7 @@ def test_airport():
     assert first_airport == first_airport
     assert first_airport != second_airport
     assert first_airport != third_airport
+    assert second_airport == second_airport
     assert second_airport != third_airport
     assert third_airport == third_airport
 
@@ -60,4 +61,25 @@ def test_airport():
     assert str(first_airport) == 'Some Airport in Some City'
     assert str(second_airport) == 'Another Airport in Another City'
     assert str(third_airport) == 'Airport Airport in City City'
+
+    # Test the as_dict method
+    assert first_airport.as_dict() == {
+        'airport_code': '13',
+        'airport_name': 'Some Airport',
+        'city_code': 'C83',
+        'city_name': 'Some City'
+    }
+    assert second_airport.as_dict() == {
+        'airport_code': '58',
+        'airport_name': 'Another Airport',
+        'city_code': '337',
+        'city_name': 'Another City'
+    }
+    assert third_airport.as_dict() == {
+        'airport_code': '31',
+        'airport_name': 'Airport Airport',
+        'city_code': '958',
+        'city_name': 'City City'
+    }
+
 
