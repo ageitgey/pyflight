@@ -1,6 +1,6 @@
 import aiohttp
 import asyncio
-import async_timeout
+import json
 
 print(aiohttp.__version__)
 
@@ -19,15 +19,14 @@ class Requester:
         if self.client_session is None:
             await self.set_client_session()
         async with self.client_session.get(url) as r:
-            res = await r.json()
-            print(res)
+            return await r.json()
 
 requester = Requester()
 
 
 def make_request(url):
-    requester.loop.run_until_complete(requester.send_request(url))
+    return requester.loop.run_until_complete(requester.send_request(url))
 
-make_request('http://random.cat/meow')
+print(make_request('http://random.cat/meow'))
 
 # requester.client_session.close() !!!!!!!!
