@@ -175,6 +175,15 @@ class Aircraft:
         self.code = code
         self.name = name
 
+    def __eq__(self, other):
+        """
+        Compare two Aircraft for Equality, returns True if they have identical Code and Name.
+        
+        :param other: The Aircraft to compare with this one 
+        :return: A boolean indicating the Result of the Comparison
+        """
+        return self.code == other.code and self.name == other.name
+
     def __len__(self):
         """
         Get the length of this Aircraft's Name
