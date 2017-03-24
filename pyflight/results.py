@@ -100,6 +100,11 @@ class Airport:
         
     city_name : str
         The Name of the City associated with the Airport
+        
+    Methods
+    -------
+    as_dict()
+    
     """
 
     def __init__(self, airport: dict, city: dict):
@@ -152,6 +157,19 @@ class Airport:
         :return: A representation of this Airport as a String. 
         """
         return f'{self.airport_name} in {self.city_name}'
+
+    def as_dict(self):
+        """
+        Get a dictionary representation of the Airport.
+        
+        :return: A dictionary representing this Airport. 
+        """
+        return {
+            'airport_code': self.airport_code,
+            'airport_name': self.airport_name,
+            'city_code': self.city_code,
+            'city_name': self.city_name
+                }
 
 
 class Aircraft:
