@@ -48,3 +48,8 @@ def test_airport():
     assert str(first_airport) == 'Some Airport in Some City'
     assert str(second_airport) == 'Another Airport in Another City'
     assert str(third_airport) == 'Airport Airport in City City'
+
+    # Test the __len__ overload
+    assert len(first_airport) == 12
+    assert len(second_airport) == 15
+    assert len(third_airport) == 15
