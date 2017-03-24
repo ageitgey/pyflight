@@ -105,3 +105,17 @@ def test_aircraft():
     assert str(first_aircraft) == 'Example Aircraft'
     assert str(second_aircraft) == 'Another Aircraft'
     assert str(third_aircraft) == 'Yet Another Aircraft'
+
+    # Test the as_dict method
+    assert first_aircraft.as_dict() == {
+        'code': '350',
+        'name': 'Example Aircraft'
+    }
+    assert second_aircraft.as_dict() == {
+        'code': '021',
+        'name': 'Another Aircraft'
+    }
+    assert third_aircraft.as_dict() == {
+        'code': '358',
+        'name': 'Yet Another Aircraft'
+    }
