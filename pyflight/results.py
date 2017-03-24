@@ -100,17 +100,33 @@ class Airport:
         self.city_code = city['code']
         self.city_name = city['name']
 
+    def __len__(self):
+        """
+        Get the length of the Airport Name.
+        
+        >>> airport = {'code': '3E7', 'name': 'Example Airport'}
+        >>> city = {'code': 'XYZ', 'name': 'Example City'}
+        >>> example_airport = Airport(airport, city)
+        >>> len(example_airport)
+        15
+        
+        :return: The length of the Airport Name 
+        """
+        return len(self.airport_name)
+
     def __str__(self):
         """
         Get a representation of this Airport as a String.
-        
-        >>> example_airport = Airport({'code': '3E7', 'name': 'Example Airport'}, {'code': 'XYZ', 'name': 'Example City'})
+        >>> airport = {'code': '3E7', 'name': 'Example Airport'}
+        >>> city = {'code': 'XYZ', 'name': 'Example City'}
+        >>> example_airport = Airport(airport, city)
         >>> str(example_airport)
         Example Airport in Example City
         
         :return: A representation of this Airport as a String. 
         """
         return f'{self.airport_name} in {self.city_name}'
+
 
 
 class Result:
