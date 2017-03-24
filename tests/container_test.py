@@ -83,3 +83,25 @@ def test_airport():
     }
 
 
+# Test the Aircraft Container
+def test_aircraft():
+    first_aircraft = Aircraft('350', 'Example Aircraft')
+    second_aircraft = Aircraft('021', 'Another Aircraft')
+    third_aircraft = Aircraft('358', 'Yet Another Aircraft')
+
+    # Test the __len__ overload
+    assert len(first_aircraft) == 16
+    assert len(second_aircraft) == 16
+    assert len(third_aircraft) == 20
+
+    # Test the __eq__ overload
+    assert first_aircraft == first_aircraft
+    assert first_aircraft != second_aircraft
+    assert first_aircraft != third_aircraft
+    assert second_aircraft == second_aircraft
+    assert third_aircraft == third_aircraft
+
+    # Test the __str__ overload
+    assert str(first_aircraft) == 'Example Aircraft'
+    assert str(second_aircraft) == 'Another Aircraft'
+    assert str(third_aircraft) == 'Yet Another Aircraft'
