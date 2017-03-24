@@ -30,8 +30,16 @@ def test_tax():
     assert second_tax.as_dict() == {'id': '7B3', 'name': 'Another Example Tax'}
     assert third_tax.as_dict() != {'id': '9B1', 'name': 'Example Tax'}
 
+
 # Test the Airport Container
 def text_airport():
 
+    first_airport = Airport({'code': '13', 'name': 'Some Airport'}, {'code': 'C83', 'name': 'Some City'})
+    second_airport = Airport({'code': '58', 'name': 'Another Airport'}, {'code': '337', 'name': 'Another City'})
+    third_airport = Airport({'code': '31', 'name': 'Airport Airport'}, {'code': '958', 'name': 'City City'})
+
     # Test the __str__ overload
-    pass
+    assert str(first_airport) == 'Some Airport in Some City'
+    assert str(second_airport) == 'Another Airport in Another City'
+    assert str(third_airport) == 'Airport Airport in City City'
+
