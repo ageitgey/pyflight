@@ -161,6 +161,16 @@ class Airport:
     def as_dict(self):
         """
         Get a dictionary representation of the Airport.
+        >>> airport = {'code': '3E7', 'name': 'Example Airport'}
+        >>> city = {'code': 'XYZ', 'name': 'Example City'}
+        >>> example_airport = Airport(airport, city)
+        >>> example_airport.as_dict()
+        {
+            'airport_code': '3E7',
+            'airport_name': 'Example Airport',
+            'city_code': 'XYZ',
+            'city_name': 'Example City'
+        }
         
         :return: A dictionary representing this Airport. 
         """
