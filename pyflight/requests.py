@@ -1,8 +1,8 @@
+"""
+Handles all Requests that are sent to the API.
+"""
 import aiohttp
 import asyncio
-import json
-
-print(aiohttp.__version__)
 
 base_url = 'https://www.googleapis.com/qpxExpress/v1/trips/search'
 
@@ -27,7 +27,7 @@ class Requester:
         """
         self.client_session = aiohttp.ClientSession()
 
-    async def post_request(self, url: str, payload: dict={}):
+    async def post_request(self, url: str, payload: dict):
         """
         Send a POST request to the specified URL with the given payload.
         
@@ -65,7 +65,7 @@ def get_request(url: str):
     return _requester.loop.run_until_complete(_requester.get_request(url))
 
 
-def post_request(url: str, payload: dict={}):
+def post_request(url: str, payload=None):
     """
     Sends out a POST Request to the specified URL
     
@@ -73,6 +73,8 @@ def post_request(url: str, payload: dict={}):
     :param payload: The Payload to be sent to the URL
     :return: The Response as a dictionary 
     """
+    if payload is None:
+        payload = {}
     return _requester.loop.run_until_complete(_requester.post_request(url, payload))
 
 print(get_request('http://random.cat/meow'))
