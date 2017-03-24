@@ -63,6 +63,12 @@ class Requester:
         async with self.client_session.get(url) as r:
             return await r.json()
 
+    def close(self):
+        """
+        Closes the Client Session of this Object.
+        """
+        self.client_session.close()
+
 _requester = Requester()
 
 
@@ -92,4 +98,4 @@ pyflight.rate_limiter.set_queries_per_day(24 * 60)
 while True:
     print(get_request('http://random.cat/meow'))
 
-# _requester.client_session.close() !!!!!!!!
+# _requester.close() !!!!!!!!
