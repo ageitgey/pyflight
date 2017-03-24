@@ -90,6 +90,16 @@ class Airport:
     Attributes
     ----------
     airport_code : str
+        The Code of this Airport
+        
+    airport_name : str
+        The Name of this Airport
+    
+    city_code : str
+        The Code of the City associated with the Airport
+        
+    city_name : str
+        The Name of the City associated with the Airport
     """
 
     def __init__(self, airport: dict, city: dict):
