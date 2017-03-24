@@ -1,10 +1,17 @@
 # Tests the various Containers / Classes found in results.py
+
+# Change Directory to Parent Directory
+import os
+import sys
+
+current_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, current_path + '/../')
+
 from pyflight.results import *
 
 
 # Test the Tax Container
 def test_tax():
-
     first_tax = Tax('9B1', 'Example Tax')
     second_tax = Tax('7B3', 'Another Example Tax')
     third_tax = first_tax
@@ -28,12 +35,11 @@ def test_tax():
     # Test the as_dict method
     assert first_tax.as_dict() == {'id': '9B1', 'name': 'Example Tax'}
     assert second_tax.as_dict() == {'id': '7B3', 'name': 'Another Example Tax'}
-    assert third_tax.as_dict() != {'id': '9B1', 'name': 'Example Tax'}
+    assert third_tax.as_dict() == {'id': '9B1', 'name': 'Example Tax'}
 
 
 # Test the Airport Container
 def text_airport():
-
     first_airport = Airport({'code': '13', 'name': 'Some Airport'}, {'code': 'C83', 'name': 'Some City'})
     second_airport = Airport({'code': '58', 'name': 'Another Airport'}, {'code': '337', 'name': 'Another City'})
     third_airport = Airport({'code': '31', 'name': 'Airport Airport'}, {'code': '958', 'name': 'City City'})
@@ -42,4 +48,3 @@ def text_airport():
     assert str(first_airport) == 'Some Airport in Some City'
     assert str(second_airport) == 'Another Airport in Another City'
     assert str(third_airport) == 'Airport Airport in City City'
-
