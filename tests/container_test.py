@@ -1,9 +1,10 @@
 # Tests the various Containers / Classes found in results.py
 
-# Change Directory to Parent Directory
+import json
 import os
 import sys
 
+# Change Directory to Parent Directory
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_path + '/../')
 
@@ -119,3 +120,18 @@ def test_aircraft():
         'id': '358',
         'name': 'Yet Another Aircraft'
     }
+
+
+# Test the Result Container
+def test_results():
+    # Get sample Data from JSON
+    with open('tests/response_1.json') as f:
+        first_result = json.load(f)
+    with open('tests/response_2.json') as f:
+        second_result = json.load(f)
+
+    first_result = Result(first_result)
+    second_result = Result(second_result)
+
+    assert first_result.request_id == 'eBJXPDdjvK4zDogeE0JJp3'
+    assert second_result.request_id == 'hRI7zJ7vwhikqNiwU0JKDA'

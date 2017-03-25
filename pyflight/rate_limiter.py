@@ -8,9 +8,11 @@ queries_per_day = 50
 
 
 def set_queries_per_day(queries: int):
-    """
-    Set the maximum amount of Queries which should be sent out per day. 
-    Omit this call if no rate limiting should be performed.
+    """Set the maximum amount of Queries which should be sent out per day.
+     
+    Arguments:
+        queries : int
+            The Amount of Queries to be sent out per day
     """
     global queries_per_day
     queries_per_day = queries
@@ -18,11 +20,11 @@ def set_queries_per_day(queries: int):
 
 
 async def delay_request(loop):
-    """
-    Delay a new request by asynchronously sleeping.
+    """Delay a new request by asynchronously sleeping.
     
-    :param loop: The Loop from the requesting Unit 
-    :return: Returns when done with Sleeping.
+    Arguments
+        loop : asyncio event loop
+            The Loop from the requesting Unit             
     """
     if queries_per_day == 0:
         # No Query set - no rate limiting

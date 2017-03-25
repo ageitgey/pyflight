@@ -1,11 +1,10 @@
 """
 Handles all Requests that are sent to the API.
 """
+import aiohttp
 import asyncio
 
-import aiohttp
-
-import pyflight
+import pyflight.rate_limiter
 
 
 class Requester:
@@ -111,8 +110,9 @@ def post_request(url: str, payload=None):
         payload = {}
     return _requester.loop.run_until_complete(_requester.post_request(url, payload))
 
-# pyflight.rate_limiter.set_queries_per_day(24 * 60)
-# while True:
-#    print(get_request('http://random.cat/meow'))
+
+pyflight.rate_limiter.set_queries_per_day(24 * 60)
+while True:
+    print(get_request('http://random.cat/meow'))
 
 # _requester.close() !!!!!!!!
