@@ -248,6 +248,8 @@ class Flight:
             A description of the meal(s) served on the flight
         change_plane : bool
             Whether passengers have to change planes following this leg. Applies to the next leg.
+        performance : int
+            Specifies the published on time performance on this leg
     """
     def __init__(self, leg_data: dict):
         """Create a new Flight Object
@@ -268,10 +270,8 @@ class Flight:
         self.destination_terminal = leg_data['destinationTerminal']
         self.mileage = leg_data['mileage']
         self.meal = leg_data['meal']
-        if 'changePlane' in leg_data:
-            self.change_plane = leg_data['changePlane']
-        else:
-            self.change_plane = False
+        self.change_plane = leg_data['changePlane']
+        self.performance = leg_data['onTimePerformance']
 
 
 class Segment:
@@ -423,6 +423,12 @@ class Result:
                         break
                 else:
                     raise ValueError(f'Failed to find matching City for Airport: {airport_data}')
+
+        # Save Aircraft
+        self.aircraft = []
+
+        for single_aircraft in data['trips']['data']['aircraft']:
+            self.aircraft.append(Aircraft(single_aircraft['code'], single_aircraft['name']))
 
         # Save Taxes
         self.taxes = []

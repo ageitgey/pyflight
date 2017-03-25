@@ -106,3 +106,15 @@ def test_results():
 
     assert first_result.request_id == 'eBJXPDdjvK4zDogeE0JJp3'
     assert second_result.request_id == 'hRI7zJ7vwhikqNiwU0JKDA'
+
+    assert len(first_result.aircraft) == 1
+    assert len(second_result.aircraft) == 13
+
+    assert len(first_result.airports) == 2
+    assert len(second_result.airports) == 9
+
+    assert len(first_result.carriers) == 1
+    assert len(second_result.carriers) == 5
+
+    assert len(first_result.taxes) == 4
+    assert len(second_result.taxes) == 14
