@@ -160,3 +160,11 @@ def test_results():
     assert second_result.airports[1].city_code == 'FRA'
     assert second_result.airports[1].city_name == 'Frankfurt'
 
+    assert first_result.carriers[0].code == 'VX'
+    assert first_result.carriers[0].name == 'Virgin America Inc.'
+
+    assert second_result.carriers[0].code == 'AF'
+    assert second_result.carriers[0].name == 'Air France'
+
+    assert second_result.carriers[1].code == 'DL'
+    assert second_result.carriers[1].name == 'Delta Air Lines Inc.'
