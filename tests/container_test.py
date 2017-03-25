@@ -118,3 +118,6 @@ def test_results():
 
     assert len(first_result.taxes) == 4
     assert len(second_result.taxes) == 14
+
+    assert len(first_result.trips) == 1
+    assert len(second_result.trips) == 8
