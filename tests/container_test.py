@@ -28,9 +28,9 @@ def test_tax():
     assert len(third_tax) == 11
 
     # Test the __str__ overload
-    assert str(first_tax) == '9B1: Example Tax'
-    assert str(second_tax) == '7B3: Another Example Tax'
-    assert str(third_tax) == '9B1: Example Tax'
+    assert str(first_tax) == 'Example Tax'
+    assert str(second_tax) == 'Another Example Tax'
+    assert str(third_tax) == 'Example Tax'
 
     # Test the as_dict method
     assert first_tax.as_dict() == {'id': '9B1', 'name': 'Example Tax'}
@@ -108,14 +108,14 @@ def test_aircraft():
 
     # Test the as_dict method
     assert first_aircraft.as_dict() == {
-        'code': '350',
+        'id': '350',
         'name': 'Example Aircraft'
     }
     assert second_aircraft.as_dict() == {
-        'code': '021',
+        'id': '021',
         'name': 'Another Aircraft'
     }
     assert third_aircraft.as_dict() == {
-        'code': '358',
+        'id': '358',
         'name': 'Yet Another Aircraft'
     }
