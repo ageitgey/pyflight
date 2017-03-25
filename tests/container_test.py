@@ -225,6 +225,6 @@ def test_result_segments():
     assert first_result.trips[0].routes[0].segments[0].id == 'G4Yqn7Md2QltVrzT'
     assert first_result.trips[0].routes[0].segments[0].flight_carrier == 'VX'
     assert first_result.trips[0].routes[0].segments[0].cabin == 'COACH'
-    assert first_result.trips[0].routes[0].segments[0].bookingCodeCount == 7
+    assert first_result.trips[0].routes[0].segments[0].booking_code_count == 7
     assert first_result.trips[0].routes[0].segments[0].flights[0].id == 'LFaJowO2NvJzM2Vd'
     assert first_result.trips[0].routes[0].segments[0].flights[0].aircraft == '320'
