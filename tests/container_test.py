@@ -160,6 +160,7 @@ def test_results():
     assert second_result.airports[1].city_code == 'FRA'
     assert second_result.airports[1].city_name == 'Frankfurt'
 
+    # Test correct Grabbing of Carriers
     assert first_result.carriers[0].code == 'VX'
     assert first_result.carriers[0].name == 'Virgin America Inc.'
 
@@ -168,3 +169,16 @@ def test_results():
 
     assert second_result.carriers[1].code == 'DL'
     assert second_result.carriers[1].name == 'Delta Air Lines Inc.'
+
+    # Test correct Grabbing of Taxes
+    assert first_result.taxes[0].code == 'ZP'
+    assert first_result.taxes[0].name == 'US Flight Segment Tax'
+
+    assert first_result.taxes[1].code == 'XF'
+    assert first_result.taxes[1].name == 'US Passenger Facility Charge'
+
+    assert second_result.taxes[0].code == 'DE_1'
+    assert second_result.taxes[0].name == 'German Airport Security Tax'
+
+    assert second_result.taxes[1].code == 'XY'
+    assert second_result.taxes[1].name == 'US Immigration Fee'
