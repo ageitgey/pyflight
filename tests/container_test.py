@@ -178,7 +178,6 @@ def test_result_carrier():
 
 # Test correct Grabbing of Taxes
 def test_result_taxes():
-    # Test correct Grabbing of Taxes
     assert first_result.taxes[0].code == 'ZP'
     assert first_result.taxes[0].name == 'US Flight Segment Tax'
 
@@ -222,3 +221,10 @@ def test_result_segments():
     assert len(first_result.trips[0].routes[0].segments) == 1
     assert len(second_result.trips[0].routes[0].segments) == 3
     assert len(second_result.trips[0].routes[1].segments) == 3
+
+    assert first_result.trips[0].routes[0].segments[0].id == 'G4Yqn7Md2QltVrzT'
+    assert first_result.trips[0].routes[0].segments[0].flight_carrier == 'VX'
+    assert first_result.trips[0].routes[0].segments[0].cabin == 'COACH'
+    assert first_result.trips[0].routes[0].segments[0].bookingCodeCount == 7
+    assert first_result.trips[0].routes[0].segments[0].flights[0].id == 'LFaJowO2NvJzM2Vd'
+    assert first_result.trips[0].routes[0].segments[0].flights[0].aircraft == '320'

@@ -232,24 +232,22 @@ class Flight:
             The Time of Arrival local to the point of arrival, with the Time Zone Difference included
         duration : int
             The scheduled Travelling Time between the the two Points, in minutes
-        connection_duration : str
-            The duration of the connection following this Leg, in Minutes
         origin : str
             The Origin of this Flight as a City / Airport Code
         destination : str
             The Destination of this Flight as a City / Airport Code
         origin_terminal : str
-            The scheduled Terminal from which this Flight should depart on
+            The scheduled Terminal from which this Flight should depart on. '' if not specified.
         destination_terminal : str
-            The scheduled Terminal where this Flight should arrive at
+            The scheduled Terminal where this Flight should arrive at. '' if not specified.
         mileage : int
             The number of miles flown in this Flight
         meal : str
-            A description of the meal(s) served on the flight
+            A description of the meal(s) served on the flight, '' if not specified.
         change_plane : bool
-            Whether passengers have to change planes following this leg. Applies to the next leg.
+            Whether passengers have to change planes following this leg. Applies to the next leg, defaults to False.
         performance : int
-            Specifies the published on time performance on this leg
+            Specifies the published on time performance on this leg. 0 if not specified.
     """
     def __init__(self, leg_data: dict):
         """Create a new Flight Object
@@ -258,20 +256,20 @@ class Flight:
             leg_data : dict
                 The Leg Data given from the API to initialize this Object from
         """
+        print(leg_data)
         self.id = leg_data['id']
         self.aircraft = leg_data['aircraft']
         self.departure_time = leg_data['departureTime']
         self.arrival_time = leg_data['arrivalTime']
         self.duration = leg_data['duration']
-        self.connection_duration = leg_data['connectionDuration']
         self.origin = leg_data['origin']
         self.destination = leg_data['destination']
-        self.origin_terminal = leg_data['originTerminal']
-        self.destination_terminal = leg_data['destinationTerminal']
+        self.origin_terminal = leg_data.get('originTerminal', '')
+        self.destination_terminal = leg_data.get('detinationTerminal', '')
         self.mileage = leg_data['mileage']
-        self.meal = leg_data['meal']
-        self.change_plane = leg_data['changePlane']
-        self.performance = leg_data['onTimePerformance']
+        self.meal = leg_data.get('meal', '')
+        self.change_plane = leg_data.get('changePlane', '')
+        self.performance = leg_data.get('onTimePerformance', 0)
 
 
 class Segment:
@@ -301,8 +299,6 @@ class Segment:
             The flight number of this Segment
         married_segment_group : str
             The Index of a Segment in a married Segment Group
-        subject_to_government_approval : bool
-            Indicates whether the operation of this segment remains subject to government approval
     """
     def __init__(self, segment: dict):
         """Create a new Segment Object.
@@ -320,10 +316,11 @@ class Segment:
         self.flight_carrier = segment['flight']['carrier']
         self.flight_number = segment['flight']['number']
         self.married_segment_group = segment['marriedSegmentGroup']
-        if 'subjectToGovernmentApproval' in segment:
-            self.subject_to_government_approval = segment['subjectToGovernmentApproval']
-        else:
-            self.subject_to_government_approval = False
+
+        # Save Flights
+        self.flights = []
+        for flight in segment['leg']:
+            self.flights.append(Flight(flight))
 
 
 class Route:
