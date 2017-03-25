@@ -1,6 +1,7 @@
 """
 Provides several Classes that contain the Results of a Request
-to simplify accessing them.
+to simplify accessing them, as well as offering several Methods
+to work with the Data from the Result.
 """
 
 
@@ -214,12 +215,151 @@ class Airport:
                 }
 
 
+class Flight:
+    """
+    The smallest unit of travel, identifies a flight from takeoff to landing. 
+    
+    In the API Response, this is found as 'trips.tripOption[].slice[].segment[].leg[]'
+    
+    Attributes
+        id : str
+            A unique identifier for this Flight Object
+        aircraft : str
+            The aircraft travelling between the two points of this Flight
+        destination_time : str
+            The Time of Departure local to the point of departure, with the Time Zone Difference included
+        arrival_time : str
+            The Time of Arrival local to the point of arrival, with the Time Zone Difference included
+        duration : int
+            The scheduled Travelling Time between the the two Points, in minutes
+        connection_duration : str
+            The duration of the connection following this Leg, in Minutes
+        origin : str
+            The Origin of this Flight as a City / Airport Code
+        destination : str
+            The Destination of this Flight as a City / Airport Code
+        origin_terminal : str
+            The scheduled Terminal from which this Flight should depart on
+        destination_terminal : str
+            The scheduled Terminal where this Flight should arrive at
+        mileage : int
+            The number of miles flown in this Flight
+        meal : str
+            A description of the meal(s) served on the flight
+        change_plane : bool
+            Whether passengers have to change planes following this leg. Applies to the next leg.
+    """
+    def __init__(self, leg_data: dict):
+        """Create a new Flight Object
+        
+        Args:
+            leg_data : dict
+                The Leg Data given from the API to initialize this Object from
+        """
+        self.id = leg_data['id']
+        self.aircraft = leg_data['aircraft']
+        self.departure_time = leg_data['departureTime']
+        self.arrival_time = leg_data['arrivalTime']
+        self.duration = leg_data['duration']
+        self.connection_duration = leg_data['connectionDuration']
+        self.origin = leg_data['origin']
+        self.destination = leg_data['destination']
+        self.origin_terminal = leg_data['originTerminal']
+        self.destination_terminal = leg_data['destinationTerminal']
+        self.mileage = leg_data['mileage']
+        self.meal = leg_data['meal']
+        if 'changePlane' in leg_data:
+            self.change_plane = leg_data['changePlane']
+        else:
+            self.change_plane = False
+
+
+class Segment:
+    """A single Segment consisting of one or more consecutive legs on the same flight.
+    
+    As an example, a Flight could have a stop between the origin and destination,
+    resulting in two Segments instead of one. This contains information about
+    one Single Segment's duration - for example, a flight from DFW to HNL, as well
+    as other information about the Flight that this Segment describes.
+    
+    In the Response, this is represented as 'trips.tripOption[].slice[].segment[]'
+    
+    Attributes:
+        id : str
+            The unique ID identifying this Segment.
+        duration : int
+            The duration of this Flight Segment, in Minutes
+        cabin : str
+            The cabin booked for this segment
+        booking_code : str
+            The booking code or booking class for this Segment
+        booking_code_count : int
+            The Number of seats available in this Segment with this Booking Code
+        flight_carrier : str
+            A two-letter IATA airline designator for this Segment
+        flight_number : str
+            The flight number of this Segment
+        married_segment_group : str
+            The Index of a Segment in a married Segment Group
+        subject_to_government_approval : bool
+            Indicates whether the operation of this segment remains subject to government approval
+    """
+    def __init__(self, segment: dict):
+        """Create a new Segment Object.
+        
+        Args:
+            segment : dict
+                The dictionary to construct this Segment from.
+        """
+        self.id = segment['id']
+        self.duration = segment['duration']
+
+        self.cabin = segment['cabin']
+        self.booking_code = segment['bookingCode']
+        self.booking_code_count = segment['bookingCodeCount']
+        self.flight_carrier = segment['flight']['carrier']
+        self.flight_number = segment['flight']['number']
+        self.married_segment_group = segment['marriedSegmentGroup']
+        if 'subjectToGovernmentApproval' in segment:
+            self.subject_to_government_approval = segment['subjectToGovernmentApproval']
+        else:
+            self.subject_to_government_approval = False
+
+
+class Route:
+    """Represents the traveller's intent as well as a low-fare search about an itinerary between two points.
+    
+    In the Response, this is represented as 'trips.tripOption[].slice[]'
+    
+    Attributes:
+        duration : int
+            The duration of the Route, in Minutes
+    """
+    def __init__(self, route_slice: dict):
+        """Create a new Route Object.
+        
+        Args:
+            route_slice : dict
+                The 'trips.tripsOption[].slice[]' Object from the Response
+        """
+        self.duration = route_slice['duration']
+
+        # Save Segments
+        self.segments = []
+        for segment in route_slice['segment']:
+            self.segments.append(Segment(segment))
+
+
 class Trip:
-    """Contains Information about one Trip returned by the API.
+    """Contains Information about one Trip - an itinerary solution -  returned by the API.
     
     The Amount of Trips is determined by the amount of Solutions set in the Request.
       
     Attributes
+        total_price : str
+            The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. 'USD59.00'
+        id : str
+            The unique ID given to each Trip
         
     """
     def __init__(self, trip_data: dict):
@@ -230,7 +370,12 @@ class Trip:
                 The tripOption dictionary returned by the API to create the Trip Object from
         """
         self.total_price = trip_data['saleTotal']
-        self.id
+        self.id = trip_data['id']
+        # Get Routes / Slices
+        self.routes = []
+
+        for route in trip_data['slice']:
+            self.routes.append(Route(route))
 
 
 class Result:
@@ -291,3 +436,9 @@ class Result:
         carriers = data['trips']['data']['carrier']
         for carrier in carriers:
             self.carriers.append(Carrier(carrier['code'], carrier['name']))
+
+        # Save Trips
+        self.trips = []
+        trips = data['trips']['tripOption']
+        for trip in trips:
+            self.trips.append(Trip(trip))
