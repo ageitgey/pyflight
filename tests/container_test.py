@@ -107,6 +107,7 @@ def test_results():
     assert first_result.request_id == 'eBJXPDdjvK4zDogeE0JJp3'
     assert second_result.request_id == 'hRI7zJ7vwhikqNiwU0JKDA'
 
+    # Test that all entries were grabbed
     assert len(first_result.aircraft) == 1
     assert len(second_result.aircraft) == 13
 
@@ -121,3 +122,41 @@ def test_results():
 
     assert len(first_result.trips) == 1
     assert len(second_result.trips) == 8
+
+    # Test correct Grabbing of Aircraft
+    assert first_result.aircraft[0].code == '320'
+    assert first_result.aircraft[0].name == 'Airbus A320'
+
+    assert second_result.aircraft[0].code == '319'
+    assert second_result.aircraft[0].name == 'Airbus A319'
+
+    assert second_result.aircraft[1].code == '320'
+    assert second_result.aircraft[1].name == 'Airbus A320'
+
+    assert second_result.aircraft[2].code == '321'
+    assert second_result.aircraft[2].name == 'Airbus A321'
+
+    assert second_result.aircraft[12].code == '76W'
+    assert second_result.aircraft[12].name == 'Boeing 767'
+
+    # Test correct Grabbing of Airports
+    assert first_result.airports[0].airport_code == 'LAX'
+    assert first_result.airports[0].airport_name == 'Los Angeles International'
+    assert first_result.airports[0].city_code == 'LAX'
+    assert first_result.airports[0].city_name == 'Los Angeles'
+
+    assert first_result.airports[1].airport_code == 'SFO'
+    assert first_result.airports[1].airport_name == 'San Francisco International'
+    assert first_result.airports[1].city_code == 'SFO'
+    assert first_result.airports[1].city_name == 'San Francisco'
+
+    assert second_result.airports[0].airport_code == 'CDG'
+    assert second_result.airports[0].airport_name == 'Paris Charles de Gaulle'
+    assert second_result.airports[0].city_code == 'PAR'
+    assert second_result.airports[0].city_name == 'Paris'
+
+    assert second_result.airports[1].airport_code == 'FRA'
+    assert second_result.airports[1].airport_name == 'Frankfurt International'
+    assert second_result.airports[1].city_code == 'FRA'
+    assert second_result.airports[1].city_name == 'Frankfurt'
+
