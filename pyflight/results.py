@@ -28,7 +28,7 @@ class FlightData:
         self.code = code
         self.name = name
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Compare two FlightData Objects with each other for equality or inequality.
 
         Arguments:
@@ -46,7 +46,7 @@ class FlightData:
         """
         return self.code == other.code and self.name == other.name
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Get the length of the Name of this FlightData.
         
         Example:
@@ -59,7 +59,7 @@ class FlightData:
         """
         return len(self.name)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Get the Name of this FlightData Object.
         
         Example:
@@ -72,7 +72,7 @@ class FlightData:
         """
         return f'{self.name}'
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         """Get this FlightData Object as a Dictionary.
 
         Example:
@@ -116,6 +116,14 @@ class Airport:
             The Name of the City associated with the Airport
         
     Methods:
+        __init__(airport: dict, city: dict)
+            Create a new Airport Object containing Data about an Airport and its associated City
+        __eq__ -> bool
+            Compare two Airports with each other by their Airport and City Codes
+        __len__ -> int
+            Get the length of the Airport Name
+        __str__ -> str
+            Get a string representing the Airport and City Name, e.g. "Example Airport in Example City"
         as_dict() -> dict
             Get a representation of this Airport as a Dictionary.
     """
@@ -150,7 +158,7 @@ class Airport:
         """
         return self.airport_code == other.airport_code and self.city_code == other.city_code
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Get the length of the Airport Name.
         
         Example
@@ -165,7 +173,7 @@ class Airport:
         """
         return len(self.airport_name)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Get a representation of this Airport as a String.
         
         Example
@@ -180,7 +188,7 @@ class Airport:
         """
         return f'{self.airport_name} in {self.city_name}'
 
-    def as_dict(self):
+    def as_dict(self) -> dict:
         """Get a dictionary representation of the Airport.
         
         Example
@@ -206,6 +214,25 @@ class Airport:
                 }
 
 
+class Trip:
+    """Contains Information about one Trip returned by the API.
+    
+    The Amount of Trips is determined by the amount of Solutions set in the Request.
+      
+    Attributes
+        
+    """
+    def __init__(self, trip_data: dict):
+        """Create a new Trip object.
+        
+        Arguments:
+            trip_data : dict
+                The tripOption dictionary returned by the API to create the Trip Object from
+        """
+        self.total_price = trip_data['saleTotal']
+        self.id
+
+
 class Result:
     """Contains Results of an API Call.
     
@@ -215,6 +242,12 @@ class Result:
             
         airports : list of Airports
             Contains Data for the Flights found in the Response.
+            
+        taxes : list of Taxes
+            Contains the Code and the Name of Taxes found in the Response
+            
+        carriers : list of Carriers
+            Contains the Code and the Name of the Carriers found in the Response
     """
 
     def __init__(self, data: dict):
@@ -234,7 +267,7 @@ class Result:
 
         # Match Airport and City together
         for airport_data, city_data in zip(airports, cities):
-            # Airport Code and City Code Match - create an Airport Object
+            # Airport Code and City Code Match - append an Airport Object
             if airport_data['city'] == city_data['code']:
                 self.airports.append(Airport(airport_data, city_data))
             else:
@@ -258,4 +291,3 @@ class Result:
         carriers = data['trips']['data']['carrier']
         for carrier in carriers:
             self.carriers.append(Carrier(carrier['code'], carrier['name']))
-
