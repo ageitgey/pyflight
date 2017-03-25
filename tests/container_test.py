@@ -182,3 +182,19 @@ def test_results():
 
     assert second_result.taxes[1].code == 'XY'
     assert second_result.taxes[1].name == 'US Immigration Fee'
+
+    # Test Trips
+    assert first_result.trips[0].id == 'faqkIcj6Te2V3Sll2SskwJ001'
+    assert first_result.trips[0].total_price == 'USD69.00'
+
+    assert second_result.trips[0].id == '43z22eKyiiCSeB8K7CaOB8001'
+    assert second_result.trips[0].total_price == 'USD3275.60'
+
+    assert second_result.trips[1].id == '43z22eKyiiCSeB8K7CaOB8002'
+    assert second_result.trips[1].total_price == 'USD3345.60'
+
+    assert len(first_result.trips[0].routes) == 1
+
+    assert len(second_result.trips[0].routes) == 2
+    assert len(second_result.trips[1].routes) == 2
+    assert len(second_result.trips[2].routes) == 2
