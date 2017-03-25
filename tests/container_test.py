@@ -11,32 +11,41 @@ sys.path.insert(0, current_path + '/../')
 from pyflight.results import *
 
 
-# Test the Tax Container
-def test_tax():
-    first_tax = Tax('9B1', 'Example Tax')
-    second_tax = Tax('7B3', 'Another Example Tax')
-    third_tax = first_tax
+# Test the FlightData Container
+def test_flight_data():
+    first_data = FlightData('9B1', 'Example Data')
+    second_data = FlightData('7B3', 'Another Example Data')
+    third_data = FlightData('9B1', 'Example Data')
 
     # Test the __eq__ overload
-    assert first_tax != second_tax
-    assert second_tax != first_tax
-    assert first_tax == third_tax
-    assert third_tax == first_tax
+    assert first_data != second_data
+    assert second_data != first_data
+    assert first_data == third_data
+    assert third_data == first_data
 
     # Test the __len__ overload
-    assert len(first_tax) == 11
-    assert len(second_tax) == 19
-    assert len(third_tax) == 11
+    assert len(first_data) == 12
+    assert len(second_data) == 20
+    assert len(third_data) == 12
 
     # Test the __str__ overload
-    assert str(first_tax) == 'Example Tax'
-    assert str(second_tax) == 'Another Example Tax'
-    assert str(third_tax) == 'Example Tax'
+    assert str(first_data) == 'Example Data'
+    assert str(second_data) == 'Another Example Data'
+    assert str(third_data) == 'Example Data'
 
     # Test the as_dict method
-    assert first_tax.as_dict() == {'id': '9B1', 'name': 'Example Tax'}
-    assert second_tax.as_dict() == {'id': '7B3', 'name': 'Another Example Tax'}
-    assert third_tax.as_dict() == {'id': '9B1', 'name': 'Example Tax'}
+    assert first_data.as_dict() == {
+        'id': '9B1',
+        'name': 'Example Data'
+    }
+    assert second_data.as_dict() == {
+        'id': '7B3',
+        'name': 'Another Example Data'
+    }
+    assert third_data.as_dict() == {
+        'id': '9B1',
+        'name': 'Example Data'
+    }
 
 
 # Test the Airport Container
@@ -81,44 +90,6 @@ def test_airport():
         'airport_name': 'Airport Airport',
         'city_code': '958',
         'city_name': 'City City'
-    }
-
-
-# Test the Aircraft Container
-def test_aircraft():
-    first_aircraft = Aircraft('350', 'Example Aircraft')
-    second_aircraft = Aircraft('021', 'Another Aircraft')
-    third_aircraft = Aircraft('358', 'Yet Another Aircraft')
-
-    # Test the __len__ overload
-    assert len(first_aircraft) == 16
-    assert len(second_aircraft) == 16
-    assert len(third_aircraft) == 20
-
-    # Test the __eq__ overload
-    assert first_aircraft == first_aircraft
-    assert first_aircraft != second_aircraft
-    assert first_aircraft != third_aircraft
-    assert second_aircraft == second_aircraft
-    assert third_aircraft == third_aircraft
-
-    # Test the __str__ overload
-    assert str(first_aircraft) == 'Example Aircraft'
-    assert str(second_aircraft) == 'Another Aircraft'
-    assert str(third_aircraft) == 'Yet Another Aircraft'
-
-    # Test the as_dict method
-    assert first_aircraft.as_dict() == {
-        'id': '350',
-        'name': 'Example Aircraft'
-    }
-    assert second_aircraft.as_dict() == {
-        'id': '021',
-        'name': 'Another Aircraft'
-    }
-    assert third_aircraft.as_dict() == {
-        'id': '358',
-        'name': 'Yet Another Aircraft'
     }
 
 

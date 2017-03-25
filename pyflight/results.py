@@ -86,11 +86,15 @@ class FlightData:
         return {'id': self.code, 'name': self.name}
 
 
+class Aircraft(FlightData):
+    pass
+
+
 class Tax(FlightData):
     pass
 
 
-class Aircraft(FlightData):
+class Carrier(FlightData):
     pass
 
 
@@ -240,9 +244,7 @@ class Result:
                         self.airports.append(Airport(airport_data, city))
                         break
                 else:
-                    raise ValueError(f'Failed to find matching City for Airport: {airport_data}, '
-                                     f'Airport Data will be unmatched.')
-                    # self.airports.append(Airport(airport_data, city_data))
+                    raise ValueError(f'Failed to find matching City for Airport: {airport_data}')
 
         # Save Taxes
         self.taxes = []
@@ -252,5 +254,8 @@ class Result:
             self.taxes.append(Tax(tax['id'], tax['name']))
 
         # Save Carriers
-        print(x for x in self.airports)
-        print(x for x in self.taxes)
+        self.carriers = []
+        carriers = data['trips']['data']['carrier']
+        for carrier in carriers:
+            self.carriers.append(Carrier(carrier['code'], carrier['name']))
+
