@@ -111,8 +111,7 @@ def post_request(url: str, payload=None):
     return _requester.loop.run_until_complete(_requester.post_request(url, payload))
 
 
-pyflight.rate_limiter.set_queries_per_day(24 * 60)
 while True:
-    print(get_request('http://random.cat/meow'))
+    print(get_request('https://pypi.python.org/pypi/pytest-asyncio'))
 
 # _requester.close() !!!!!!!!
