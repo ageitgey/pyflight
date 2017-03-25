@@ -92,22 +92,21 @@ def test_airport():
         'city_name': 'City City'
     }
 
+# Get sample Data from JSON
+with open('tests/response_1.json') as f:
+    first_result = json.load(f)
+with open('tests/response_2.json') as f:
+    second_result = json.load(f)
 
-# Test the Result Container
-def test_results():
-    # Get sample Data from JSON
-    with open('tests/response_1.json') as f:
-        first_result = json.load(f)
-    with open('tests/response_2.json') as f:
-        second_result = json.load(f)
+first_result = Result(first_result)
+second_result = Result(second_result)
 
-    first_result = Result(first_result)
-    second_result = Result(second_result)
 
+# Test the Entry grabbing from the Result Container
+def test_result_grab_all_entries():
     assert first_result.request_id == 'eBJXPDdjvK4zDogeE0JJp3'
     assert second_result.request_id == 'hRI7zJ7vwhikqNiwU0JKDA'
 
-    # Test that all entries were grabbed
     assert len(first_result.aircraft) == 1
     assert len(second_result.aircraft) == 13
 
@@ -123,7 +122,9 @@ def test_results():
     assert len(first_result.trips) == 1
     assert len(second_result.trips) == 8
 
-    # Test correct Grabbing of Aircraft
+
+# Test correct Grabbing of Aircraft
+def test_result_aircraft():
     assert first_result.aircraft[0].code == '320'
     assert first_result.aircraft[0].name == 'Airbus A320'
 
@@ -139,7 +140,9 @@ def test_results():
     assert second_result.aircraft[12].code == '76W'
     assert second_result.aircraft[12].name == 'Boeing 767'
 
-    # Test correct Grabbing of Airports
+
+# Test correct Grabbing of Airports
+def test_result_airport():
     assert first_result.airports[0].airport_code == 'LAX'
     assert first_result.airports[0].airport_name == 'Los Angeles International'
     assert first_result.airports[0].city_code == 'LAX'
@@ -160,7 +163,9 @@ def test_results():
     assert second_result.airports[1].city_code == 'FRA'
     assert second_result.airports[1].city_name == 'Frankfurt'
 
-    # Test correct Grabbing of Carriers
+
+# Test correct Grabbing of Carriers
+def test_result_carrier():
     assert first_result.carriers[0].code == 'VX'
     assert first_result.carriers[0].name == 'Virgin America Inc.'
 
@@ -170,6 +175,9 @@ def test_results():
     assert second_result.carriers[1].code == 'DL'
     assert second_result.carriers[1].name == 'Delta Air Lines Inc.'
 
+
+# Test correct Grabbing of Taxes
+def test_result_taxes():
     # Test correct Grabbing of Taxes
     assert first_result.taxes[0].code == 'ZP'
     assert first_result.taxes[0].name == 'US Flight Segment Tax'
@@ -183,7 +191,9 @@ def test_results():
     assert second_result.taxes[1].code == 'XY'
     assert second_result.taxes[1].name == 'US Immigration Fee'
 
-    # Test Trips
+
+# Test correct Grabbing of Trips
+def test_result_trips():
     assert first_result.trips[0].id == 'faqkIcj6Te2V3Sll2SskwJ001'
     assert first_result.trips[0].total_price == 'USD69.00'
 
@@ -193,17 +203,22 @@ def test_results():
     assert second_result.trips[1].id == '43z22eKyiiCSeB8K7CaOB8002'
     assert second_result.trips[1].total_price == 'USD3345.60'
 
+
+# Test correct Grabbing of Routes
+def test_result_routes():
     assert len(first_result.trips[0].routes) == 1
 
     assert len(second_result.trips[0].routes) == 2
     assert len(second_result.trips[1].routes) == 2
     assert len(second_result.trips[2].routes) == 2
 
-    # Test Routes and correct Collection of Segments
     assert first_result.trips[0].routes[0].duration == 75
     assert second_result.trips[0].routes[0].duration == 1670
     assert second_result.trips[0].routes[1].duration == 1352
 
+
+# Test correct Grabbing of Route Segments
+def test_result_segments():
     assert len(first_result.trips[0].routes[0].segments) == 1
     assert len(second_result.trips[0].routes[0].segments) == 3
     assert len(second_result.trips[0].routes[1].segments) == 3
