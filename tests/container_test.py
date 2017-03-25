@@ -198,3 +198,12 @@ def test_results():
     assert len(second_result.trips[0].routes) == 2
     assert len(second_result.trips[1].routes) == 2
     assert len(second_result.trips[2].routes) == 2
+
+    # Test Routes and correct Collection of Segments
+    assert first_result.trips[0].routes[0].duration == 75
+    assert second_result.trips[0].routes[0].duration == 1670
+    assert second_result.trips[0].routes[1].duration == 1352
+
+    assert len(first_result.trips[0].routes[0].segments) == 1
+    assert len(second_result.trips[0].routes[0].segments) == 3
+    assert len(second_result.trips[0].routes[1].segments) == 3
