@@ -1,8 +1,10 @@
 """
 Handles all Requests that are sent to the API.
 """
-import aiohttp
 import asyncio
+
+import aiohttp
+
 import pyflight
 
 
@@ -12,8 +14,7 @@ class Requester:
     """
 
     def __init__(self):
-        """
-        Initialization of the Requester. 
+        """Initialization of the Requester. 
         Gets a dedicated Event Loop from asyncio to be used for making Requests along with a Client Session.
         None is assigned to Client Session here because it should be set within a coroutine.
         """
@@ -22,11 +23,13 @@ class Requester:
         self._request_url = 'https://www.googleapis.com/qpxExpress/v1/trips/search'
 
     def set_api_key(self, key: str):
-        """
-        Set an API Key to be used for making Calls to the API.
+        """Set an API Key to be used for making Calls to the API.
+        
         Note that there is a free quota of 50 Calls per API Key.
-         
-        :param key: The API Key you wish to use for making Calls to the API.
+        
+        Arguments: 
+            key : str
+                The API Key you wish to use for making Calls to the API.
         """
         self._request_url += '?key=' + key
 
@@ -37,12 +40,16 @@ class Requester:
         self.client_session = aiohttp.ClientSession()
 
     async def post_request(self, url: str, payload: dict):
-        """
-        Send a POST request to the specified URL with the given payload.
+        """Send a POST request to the specified URL with the given payload.
         
-        :param url: The URL to which the POST Request should be sent
-        :param payload: The Payload to be sent along with the POST request
-        :return: The Response of the Website
+        Arguments
+            url : str
+                The URL to which the POST Request should be sent
+            payload: dict
+                The Payload to be sent along with the POST request
+                
+        Returns
+            dict: The Response of the Website
         """
         await pyflight.rate_limiter.delay_request(self.loop)
         if self.client_session is None:
@@ -51,11 +58,14 @@ class Requester:
             return await r.json()
 
     async def get_request(self, url: str):
-        """
-        Send a GET request to the specified URL with the given payload.
+        """Send a GET request to the specified URL with the given payload.
 
-        :param url: The URL to which the GET Request should be sent
-        :return: The Response of the Website
+        Arguments
+            url : str
+                The URL to which the GET Request should be sent
+                
+        Returns
+            dict: The Response of the Website
         """
         await pyflight.rate_limiter.delay_request(self.loop)
         if self.client_session is None:
@@ -72,30 +82,37 @@ class Requester:
 _requester = Requester()
 
 
-def get_request(url: str):
-    """
-    Sends out a GET request
+def get_request(url: str) -> dict:
+    """Sends out a GET request in Background
     
-    :param url: The URL to which the Request should be sent
-    :return: The Response as a dictionary
+    Arguments:
+        url : str
+            The URL to which the Request should be sent
+            
+    Returns:
+        dict: The Response, as a dictionary
     """
     return _requester.loop.run_until_complete(_requester.get_request(url))
 
 
 def post_request(url: str, payload=None):
-    """
-    Sends out a POST Request to the specified URL
+    """Sends out a POST Request to the specified URL
     
-    :param url: The URL to which the Request should be sent
-    :param payload: The Payload to be sent to the URL
-    :return: The Response as a dictionary 
+    Arguments
+        url : str
+            The URL to which the Request should be sent
+        payload : dict
+            The Payload to be sent to the URL
+            
+    Returns:
+        dict: The Response, as dictionary
     """
     if payload is None:
         payload = {}
     return _requester.loop.run_until_complete(_requester.post_request(url, payload))
 
-pyflight.rate_limiter.set_queries_per_day(24 * 60)
-while True:
-    print(get_request('http://random.cat/meow'))
+# pyflight.rate_limiter.set_queries_per_day(24 * 60)
+# while True:
+#    print(get_request('http://random.cat/meow'))
 
 # _requester.close() !!!!!!!!
