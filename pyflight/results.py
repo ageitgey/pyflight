@@ -88,10 +88,18 @@ class FlightData(object):
 
 
 class Aircraft(FlightData):
+    """
+    An Aircraft with an ID and Name.
+    """
     pass
 
 
 class Tax(FlightData):
+    """
+    A Tax with an ID and a Name. This will also be reflected 
+    in the Pricing section of a Trip, but with more information such as
+    the charge type, the country, and the price of the Tax.
+    """
     pass
 
 
@@ -357,6 +365,8 @@ class Trip(object):
             The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. 'USD59.00'
         id : str
             The unique ID given to each Trip
+        routes : list
+            A list of Routes from this Trip
         
     """
     def __init__(self, trip_data: dict):
