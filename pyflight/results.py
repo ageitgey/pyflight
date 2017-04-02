@@ -5,7 +5,7 @@ to work with the Data from the Result.
 """
 
 
-class FlightData:
+class FlightData(object):
     """Base Class for simple Flight Data with a Code / ID and name. 
     
     Attributes:
@@ -99,7 +99,7 @@ class Carrier(FlightData):
     pass
 
 
-class Airport:
+class Airport(object):
     """
     Contains Data of an Airport and its City
     
@@ -215,7 +215,7 @@ class Airport:
                 }
 
 
-class Flight:
+class Flight(object):
     """
     The smallest unit of travel, identifies a flight from takeoff to landing. 
     
@@ -272,7 +272,7 @@ class Flight:
         self.performance = leg_data.get('onTimePerformance', 0)
 
 
-class Segment:
+class Segment(object):
     """A single Segment consisting of one or more consecutive legs on the same flight.
     
     As an example, a Flight could have a stop between the origin and destination,
@@ -323,7 +323,7 @@ class Segment:
             self.flights.append(Flight(flight))
 
 
-class Route:
+class Route(object):
     """Represents the traveller's intent as well as a low-fare search about an itinerary between two points.
     
     In the Response, this is represented as 'trips.tripOption[].slice[]'
@@ -347,7 +347,7 @@ class Route:
             self.segments.append(Segment(segment))
 
 
-class Trip:
+class Trip(object):
     """Contains Information about one Trip - an itinerary solution -  returned by the API.
     
     The Amount of Trips is determined by the amount of Solutions set in the Request.
@@ -375,7 +375,7 @@ class Trip:
             self.routes.append(Route(route))
 
 
-class Result:
+class Result(object):
     """Contains Results of an API Call.
     
     Attributes

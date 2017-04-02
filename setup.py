@@ -13,7 +13,7 @@ setup(
     license="MIT",
     author="Volcyy",
     packages=find_packages(),
-    install_requires=['aiohttp', ],
+    install_requires=['aiohttp'],
     long_description=long_description,
     classifiers=[
         "Programming Language :: Python",

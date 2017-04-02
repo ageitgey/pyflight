@@ -58,7 +58,6 @@ class Requester:
 
     async def get_request(self, url: str):
         """Send a GET request to the specified URL with the given payload.
-
         Arguments
             url : str
                 The URL to which the GET Request should be sent
@@ -111,7 +110,8 @@ def post_request(url: str, payload=None):
     return _requester.loop.run_until_complete(_requester.post_request(url, payload))
 
 
-while True:
-    print(get_request('https://pypi.python.org/pypi/pytest-asyncio'))
+# pyflight.rate_limiter.set_queries_per_day(24 * 60 * 10)
+# while True:
+#     print(get_request('http://random.cat/meow'))
 
-# _requester.close() !!!!!!!!
+#  _requester.close() !!!!!!!!

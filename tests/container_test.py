@@ -19,7 +19,6 @@ def test_flight_data():
 
     # Test the __eq__ overload
     assert first_data != second_data
-    assert second_data != first_data
     assert first_data == third_data
     assert third_data == first_data
 
