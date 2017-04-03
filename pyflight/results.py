@@ -355,6 +355,60 @@ class Route(object):
             self.segments.append(Segment(segment))
 
 
+class Fare(object):
+    """
+    The fare used to price one or more segments.
+    
+    Attributes:
+        id : str
+            The unique identifier of the fare.
+        carrier_code : str
+            The Code for the Carrier whose fare this is.
+        origin_city_code : str
+            The origin city for this fare
+        destination_city_code : str
+            The destination city for this fare
+        basis_code : str
+            The Basis Code of this fare.
+        private : bool
+            Specifies whether this is a private fare offered only to select customers or not.
+    """
+    def __init__(self, fare_data: dict):
+        """
+        Create a new Fare Object.
+        
+        Args:
+            fare_data : dict 
+                A Fare Object returned in from the API in arrays.
+        """
+        self.id = fare_data['id']
+        self.carrier_code = fare_data['carrier']
+        self.origin_city_code = fare_data['origin']
+        self.destination_city_code = fare_data['destination']
+        self.basis_code = fare_data['basisCode']
+        self.private = fare_data.get('private', False)
+
+
+class Pricing(object):
+    """
+    Contains Information about the pricing of the given Route, per passenger.
+    
+    Attributes
+        fares : list
+            A list of fare objects used to price one or more segments.
+    """
+    def __init__(self, pricing_data: dict):
+        """
+        Create a new Pricing object from a 
+        Args:
+            pricing_data : dict
+                The Pricing Data Object as returned from the API in an Array
+        """
+        self.fares = []
+        for fare in pricing_data['fare']:
+            self.fares.append()
+
+
 class Trip(object):
     """Contains Information about one Trip - an itinerary solution -  returned by the API.
     
