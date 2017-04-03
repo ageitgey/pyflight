@@ -399,14 +399,14 @@ class Pricing(object):
     """
     def __init__(self, pricing_data: dict):
         """
-        Create a new Pricing object from a 
+        Create a new Pricing object from fare data.
         Args:
             pricing_data : dict
                 The Pricing Data Object as returned from the API in an Array
         """
         self.fares = []
         for fare in pricing_data['fare']:
-            self.fares.append()
+            self.fares.append(Fare(fare))
 
 
 class Trip(object):
@@ -432,11 +432,18 @@ class Trip(object):
         """
         self.total_price = trip_data['saleTotal']
         self.id = trip_data['id']
+
         # Get Routes / Slices
         self.routes = []
 
         for route in trip_data['slice']:
             self.routes.append(Route(route))
+
+        # Get Pricing Data
+        self.pricing = []
+
+        for pricing_data in trip_data['pricing']:
+            self.pricing.append(Pricing(pricing_data))
 
 
 class Result(object):
