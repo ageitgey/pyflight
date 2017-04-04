@@ -2,6 +2,10 @@
 Provides several Classes that contain the Results of a Request
 to simplify accessing them, as well as offering several Methods
 to work with the Data from the Result.
+
+Some of the Documentation is extracted from the resource reference from the API itself,
+from which a full documentation can be found here:
+https://developers.google.com/qpx-express/v1/trips/search
 """
 
 
@@ -494,7 +498,28 @@ class Pricing(object):
             A list of fare objects used to price one or more segments.
         segment_pricing : list
             A list of SegmentPricing objects used to price one segment.
-            
+        base_fare_total : str
+            The total fare in the currency of the country of origin.
+            None when the sales currency and the currency of the country of commencement are not different
+        sale_fare_total : str
+            The total fare in the sale or equivalent currency.
+        sale_fare_total : str
+            The total fare in the sale or equivalent currency.
+        sale_tax_total : str
+            The taxes in the sale or equivalent currency.
+        sale_total : str
+            The total per-passenger price (fare + tax) in the sale of equivalent currency.
+        adults : int
+            The amount of passengers that are adults.
+        children : int
+            The amount of passengers that are children.
+        infants_in_lap : int
+            The amount of passengers that are infants travelling in the lap of an adult.
+        infants_in_seat : int
+            The amount of passengers that are infants assigned to a seat.
+        seniors : int
+            The amount of passengers that are senior citizens.
+        
     """
     def __init__(self, pricing_data: dict):
         """
@@ -510,6 +535,15 @@ class Pricing(object):
         self.segment_pricing = []
         for segment_pricing in pricing_data['segmentPricing']:
             self.segment_pricing.append(SegmentPricing(segment_pricing))
+        self.base_fare_total = pricing_data.get('baseFareTotal')
+        self.sale_fare_total = pricing_data['saleFareTotal']
+        self.sale_tax_total = pricing_data['saleTaxTotal']
+        self.sale_total = pricing_data['saleTotal']
+        self.adults = pricing_data['passengers'].get('adultCount', 0)
+        self.children = pricing_data['passengers'].get('childCount', 0)
+        self.infants_in_lap = pricing_data['passengers'].get('infantInLapCount', 0)
+        self.infants_in_seat = pricing_data['passengers'].get('infantInSeatCount', 0)
+        self.seniors = pricing_data['passengers'].get('seniorCount', 0)
 
 
 class Trip(object):
