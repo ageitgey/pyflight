@@ -389,6 +389,29 @@ class Fare(object):
         self.private = fare_data.get('private', False)
 
 
+class SegmentPricing(object):
+    """Price and baggage information for segments.
+    
+    Attributes:
+        fare_id : str
+            The Fare ID for this Segment Pricing. Used to refer to different parts of the same solution.
+        segment_id : str
+            A unique identifier for this SegmentPricing object.
+    
+    """
+    def __init__(self, segment_data: dict):
+        """Create a new SegmentPricing object.
+        
+        Arguments:
+            segment_data : dict
+                The Data for a single SegmentPricing returned in Arrays from the API. 
+                
+        """
+        self.fare_id = segment_data['fareId']
+        self.segment_id = segment_data['segmentId']
+
+
+
 class Pricing(object):
     """
     Contains Information about the pricing of the given Route, per passenger.
