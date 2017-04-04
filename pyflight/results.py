@@ -411,7 +411,6 @@ class SegmentPricing(object):
         self.segment_id = segment_data['segmentId']
 
 
-
 class Pricing(object):
     """
     Contains Information about the pricing of the given Route, per passenger.
@@ -419,6 +418,8 @@ class Pricing(object):
     Attributes
         fares : list
             A list of fare objects used to price one or more segments.
+        segment_pricing : list
+            A list of SegmentPricing objects used to price one segment.
     """
     def __init__(self, pricing_data: dict):
         """
@@ -430,6 +431,10 @@ class Pricing(object):
         self.fares = []
         for fare in pricing_data['fare']:
             self.fares.append(Fare(fare))
+
+        self.segment_pricing = []
+        for segment_pricing in pricing_data['segmentPricing']:
+            self.segment_pricing.append(SegmentPricing(segment_pricing))
 
 
 class Trip(object):
