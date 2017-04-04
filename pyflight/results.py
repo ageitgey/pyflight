@@ -551,7 +551,20 @@ class Pricing(object):
             The amount of passengers that are infants assigned to a seat.
         seniors : int
             The amount of passengers that are senior citizens.
-        
+        fare_calculation : str
+            The horizontal fare calculation. On a ticket, this is a field that displays
+            all of the relevant items that go into the calculation of the fare.
+        latest_ticketing_time : str
+            The latest ticketing time for this pricing assuming there is no change in fares / rules 
+            and the reservation occurs at ticketing time.
+        for_passenger_type : str
+            Specifies the passenger type code for this pricing, used by a carrier to restrict
+            fares to certain categories of passengers (for example, a fare might be valid only
+            for senior citizens).
+        refundable : bool
+            Specifies whether the fares on this pricing are refundable. 
+            If the API does not specify this explicitly in the response, it defaults to False.
+
     """
     def __init__(self, pricing_data: dict):
         """
@@ -576,6 +589,10 @@ class Pricing(object):
         self.infants_in_lap = pricing_data['passengers'].get('infantInLapCount', 0)
         self.infants_in_seat = pricing_data['passengers'].get('infantInSeatCount', 0)
         self.seniors = pricing_data['passengers'].get('seniorCount', 0)
+        self.fare_calculation = pricing_data['fareCalculation']
+        self.latest_ticketing_time = pricing_data['latestTicketingTime']
+        self.for_passenger_type = pricing_data['ptc']
+        self.refundable = pricing_data.get('refundable', False)
 
 
 class Trip(object):
