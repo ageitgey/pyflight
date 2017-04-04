@@ -389,6 +389,28 @@ class Fare(object):
         self.private = fare_data.get('private', False)
 
 
+class FreeBaggageOption(object):
+    """Contains Information about the free baggage allowance for one Segment.
+    
+    Attributes:
+        pieces : int
+            How many pieces of free baggage are allowed
+    
+    Notes:
+        Information about this is saved in a SegmentPricing class.
+    
+    """
+    def __init__(self, baggage_data: dict):
+        """Create a new FreeBaggageOption object. 
+        
+        Args:
+            baggage_data : dict
+                The Baggage Data as returned from the API in an Array.
+                
+        """
+        self.pieces = baggage_data['pieces']
+
+
 class SegmentPricing(object):
     """Price and baggage information for segments.
     
@@ -397,6 +419,8 @@ class SegmentPricing(object):
             The Fare ID for this Segment Pricing. Used to refer to different parts of the same solution.
         segment_id : str
             A unique identifier for this SegmentPricing object.
+        free_baggage : list
+            A list of FreeBaggageOption objects for the free baggage allowance on this segment. 
     
     """
     def __init__(self, segment_data: dict):
@@ -409,6 +433,10 @@ class SegmentPricing(object):
         """
         self.fare_id = segment_data['fareId']
         self.segment_id = segment_data['segmentId']
+
+        self.free_baggage = []
+        for free_baggage_option in segment_data['freeBaggageOption']:
+            self.free_baggage.append(FreeBaggageOption(free_baggage_option))
 
 
 class Pricing(object):
