@@ -396,7 +396,19 @@ class BagDescriptor(object):
             The commercial name for this BagDescriptor for an optional service, can also be an empty string.
         count : int
             How many of this type of bag will be checked on this flight.
-    
+        description : list
+            A list of strings describing the baggage. Can be an empty list.
+        subcode : str
+            An IATA subcode used to identify the optional service
+        max_kilos : int
+            Specifies the maximum number of kilos that all the free baggage together may weigh.
+            None if not specified.
+        kilos_per_piece : int
+            Specifies the maximum number of kilos that any piece of baggage may weigh.
+            None if not specified.
+        pounds : int
+            The number of pounds of free baggage allowed. None if not specified.
+        
     Notes:
         A single FreeBaggageOption contains multiple BagDescriptors.
     """
@@ -408,6 +420,12 @@ class BagDescriptor(object):
                 The Bag Descriptor data as a dictionary, returned from the API in Arrays.
         """
         self.commercial_name = bag_descriptor_data.get('commercialName', '')
+        self.count = bag_descriptor_data['count']
+        self.description = bag_descriptor_data.get('description', [])
+        self.subcode = bag_descriptor_data['subcode']
+        self.max_kilos = bag_descriptor_data.get('kilos')
+        self.kilos_per_piece = bag_descriptor_data.get('kilosPerPiece')
+        self.pounds = bag_descriptor_data.get('pounds')
 
 
 class FreeBaggageOption(object):
