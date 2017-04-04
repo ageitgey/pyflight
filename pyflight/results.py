@@ -420,6 +420,7 @@ class Pricing(object):
             A list of fare objects used to price one or more segments.
         segment_pricing : list
             A list of SegmentPricing objects used to price one segment.
+            
     """
     def __init__(self, pricing_data: dict):
         """
