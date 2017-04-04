@@ -264,7 +264,6 @@ class Flight(object):
             leg_data : dict
                 The Leg Data given from the API to initialize this Object from
         """
-        print(leg_data)
         self.id = leg_data['id']
         self.aircraft = leg_data['aircraft']
         self.departure_time = leg_data['departureTime']
@@ -389,12 +388,37 @@ class Fare(object):
         self.private = fare_data.get('private', False)
 
 
+class BagDescriptor(object):
+    """A representation of a type of bag.
+    
+    Attributes:
+        commercial_name : str
+            The commercial name for this BagDescriptor for an optional service, can also be an empty string.
+        count : int
+            How many of this type of bag will be checked on this flight.
+    
+    Notes:
+        A single FreeBaggageOption contains multiple BagDescriptors.
+    """
+    def __init__(self, bag_descriptor_data: dict):
+        """Create a new BagDescriptor object.
+        
+        Args:
+            bag_descriptor_data : dict
+                The Bag Descriptor data as a dictionary, returned from the API in Arrays.
+        """
+        self.commercial_name = bag_descriptor_data.get('commercialName', '')
+
+
 class FreeBaggageOption(object):
     """Contains Information about the free baggage allowance for one Segment.
     
     Attributes:
         pieces : int
             How many pieces of free baggage are allowed
+        bag_descriptors : list
+            A list of BagDescriptor Objects used to represent different types of bags.
+            Can be an empty list.
     
     Notes:
         Information about this is saved in a SegmentPricing class.
@@ -409,6 +433,10 @@ class FreeBaggageOption(object):
                 
         """
         self.pieces = baggage_data['pieces']
+
+        self.bag_descriptors = []
+        for bag_descriptor in baggage_data.get('bagDescriptor', []):
+            self.bag_descriptors.append(BagDescriptor(bag_descriptor))
 
 
 class SegmentPricing(object):
