@@ -28,6 +28,11 @@ class Request(object):
             __init__ function to directly supply request data instead of setting
             it manually after initializing. If this is not supplied, defaults to {}.
             
+    Methods:
+        send_async : dict or Result
+            Asynchronously execute and send a Request.
+            By passing a boolean, it is possible to specify whether the containers supplied by the library
+            should be used or if the response should be returned as a dictionary.
     """
     def __init__(self, request_body: dict=None, request_api_key: str=''):
         """Create a new Request. If no API Key is passed, then this must be called *after*
