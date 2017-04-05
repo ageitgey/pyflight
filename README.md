@@ -12,7 +12,7 @@ An asynchronous Python Wrapper around the Google QPX Flights API.
 - requests
 
 ### Example
-######Synchronously find flights from San Francisco (SFO) to Los Angeles (LAX), limited to one solution 
+###### Synchronously find flights from San Francisco (SFO) to Los Angeles (LAX), limited to one solution 
 
 The rate limiting call is omitted here, but we keep it in mind for now. We send a request structured as
 described [here](https://developers.google.com/qpx-express/v1/trips/search). We execute the API call synchronously 
