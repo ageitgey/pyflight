@@ -4,8 +4,8 @@ The Rate Limiter to limit the Requests being made to the API
 import asyncio
 import time
 
-# By Default, set to the free quota of 50 Requests per Day
-queries_per_day = 50
+# By Default, disable it
+queries_per_day = 0
 
 
 def set_queries_per_day(queries: int):
