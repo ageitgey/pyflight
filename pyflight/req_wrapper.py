@@ -33,6 +33,7 @@ class Request(object):
             Asynchronously execute and send a Request.
             By passing a boolean, it is possible to specify whether the containers supplied by the library
             should be used or if the response should be returned as a dictionary.
+
     """
     def __init__(self, request_body: dict=None, request_api_key: str=''):
         """Create a new Request. If no API Key is passed, then this must be called *after*
@@ -61,7 +62,7 @@ class Request(object):
             self.url += request_api_key
 
     async def send_async(self, use_containers: bool=True) -> Union[dict, Result]:
-        """Asynchronously execute and send the Request. Calling this function must be awaited.
+        """Asynchronously execute and send the Request. This is a coroutine - calling this function must be awaited.
         
         It is also possible to specify whether the results of an API call should be returned as a Result or directly 
         from the API, as a dictionary, without any modifications. By default, pyflight will use the supplied containers.
@@ -79,6 +80,7 @@ class Request(object):
         Returns:
             If use_containers is True, a pyflight.Result object.
             Otherwise, the response as a dictionary.
+
         """
         if self.request_body != {}:
             response = await requester.post_request(self.url, self.request_body)
