@@ -77,7 +77,7 @@ class Requester:
         """
         self.client_session.close()
 
-_requester = Requester()
+requester = Requester()
 
 
 def get_request(url: str) -> dict:
@@ -90,7 +90,7 @@ def get_request(url: str) -> dict:
     Returns:
         dict: The Response, as a dictionary
     """
-    return _requester.loop.run_until_complete(_requester.get_request(url))
+    return requester.loop.run_until_complete(requester.get_request(url))
 
 
 def post_request(url: str, payload=None):
@@ -107,11 +107,11 @@ def post_request(url: str, payload=None):
     """
     if payload is None:
         payload = {}
-    return _requester.loop.run_until_complete(_requester.post_request(url, payload))
+    return requester.loop.run_until_complete(requester.post_request(url, payload))
 
 
 # pyflight.rate_limiter.set_queries_per_day(24 * 60 * 10)
 # while True:
 #     print(get_request('http://random.cat/meow'))
 
-#  _requester.close() !!!!!!!!
+#  requester.close() !!!!!!!!
