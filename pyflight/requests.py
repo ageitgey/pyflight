@@ -64,7 +64,7 @@ class Requester:
             dict: The Response of the Website
         """
         pyflight.rate_limiter.delay_sync()
-        response = requests.post(url, payload)
+        response = requests.post(url, json=payload)
         return response.json()
 
 requester = Requester()
