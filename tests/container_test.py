@@ -238,3 +238,16 @@ def test_result_segment_flights():
     assert second_result.trips[0].routes[0].segments[0].flights[0].id == 'LACncSVM+gmtx9mJ'
     assert second_result.trips[0].routes[0].segments[0].flights[0].aircraft == '738'
     assert second_result.trips[0].routes[0].segments[0].flights[0].meal == 'Food and Beverages for Purchase'
+
+
+# Test correct Grabbing of Pricing Data
+def test_result_pricing():
+    assert len(first_result.trips[0].pricing) == 1
+    assert len(second_result.trips[0].pricing) == 2
+    assert len(second_result.trips[2].pricing) == 2
+    assert len(first_result.trips[0].pricing[0].segment_pricing) == 1
+
+    assert first_result.trips[0].pricing[0].sale_total == 'USD69.00'
+    assert first_result.trips[0].pricing[0].adults == 1
+    assert first_result.trips[0].pricing[0].fares[0].id == 'A+yi0+pn2eL1pf3nKwZazHIVDvsw2Ru8zx5LByC/kQaA'
+    assert first_result.trips[0].pricing[0].segment_pricing[0].segment_id == 'G4Yqn7Md2QltVrzT'

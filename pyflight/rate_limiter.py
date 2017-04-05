@@ -26,10 +26,14 @@ async def delay_async(loop):
         loop : asyncio event loop
             The Loop from the requesting Unit             
     """
+    if queries_per_day == 0:
+        return
     # 24 / queries is the interval for requests in hours, * 60 * 60 is the interval in seconds
     await asyncio.sleep(24 / queries_per_day * 60 * 60, loop=loop)
 
 
 def delay_sync():
     """Delay a synchronous request."""
+    if queries_per_day == 0:
+        return
     time.sleep(24 / queries_per_day * 60 * 60)
