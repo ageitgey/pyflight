@@ -596,7 +596,7 @@ class Pricing(object):
 
 
 class Trip(object):
-    """Contains Information about one Trip - an itinerary solution -  returned by the API.
+    """Contains Information about one Trip - an itinerary solution - returned by the API.
     
     The Amount of Trips is determined by the amount of Solutions set in the Request.
       

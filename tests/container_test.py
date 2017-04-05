@@ -226,5 +226,15 @@ def test_result_segments():
     assert first_result.trips[0].routes[0].segments[0].flight_carrier == 'VX'
     assert first_result.trips[0].routes[0].segments[0].cabin == 'COACH'
     assert first_result.trips[0].routes[0].segments[0].booking_code_count == 7
+
+
+# Test correct Grabbing of Route Segment Flights
+def test_result_segment_flights():
+    assert len(first_result.trips[0].routes[0].segments[0].flights) == 1
+    assert len(second_result.trips[0].routes[0].segments[0].flights) == 1
+
     assert first_result.trips[0].routes[0].segments[0].flights[0].id == 'LFaJowO2NvJzM2Vd'
     assert first_result.trips[0].routes[0].segments[0].flights[0].aircraft == '320'
+    assert second_result.trips[0].routes[0].segments[0].flights[0].id == 'LACncSVM+gmtx9mJ'
+    assert second_result.trips[0].routes[0].segments[0].flights[0].aircraft == '738'
+    assert second_result.trips[0].routes[0].segments[0].flights[0].meal == 'Food and Beverages for Purchase'
