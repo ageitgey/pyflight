@@ -31,7 +31,7 @@ class Requester:
         Returns
             dict: The Response of the Website
         """
-        await pyflight.rate_limiter.delay(self.loop)
+        await pyflight.rate_limiter.delay_async(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.post(url, data=payload) as r:
                 return await r.json()
@@ -45,7 +45,7 @@ class Requester:
         Returns
             dict: The Response of the Website
         """
-        await pyflight.rate_limiter.delay(self.loop)
+        await pyflight.rate_limiter.delay_async(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.get(url) as r:
                 return await r.json()

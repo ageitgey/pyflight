@@ -19,7 +19,7 @@ def set_queries_per_day(queries: int):
     queries_per_day = queries
 
 
-async def delay(loop):
+async def delay_async(loop):
     """Delay a new request by asynchronously sleeping.
     
     Arguments
