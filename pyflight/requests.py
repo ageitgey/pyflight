@@ -80,8 +80,3 @@ def post_request(url: str, payload=None) -> dict:
     if payload is None:
         payload = {}
     return requester.loop.run_until_complete(requester.post_request(url, payload))
-
-
-pyflight.rate_limiter.set_queries_per_day(24 * 60 * 10)
-while True:
-    print(get_request('http://random.cat/meow'))
