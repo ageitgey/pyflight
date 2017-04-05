@@ -61,7 +61,7 @@ class Request(object):
             self.url += request_api_key
 
     async def send_async(self, use_containers: bool=True) -> Union[dict, Result]:
-        """Asynchronously execute and send the Request.
+        """Asynchronously execute and send the Request. Calling this function must be awaited.
         
         It is also possible to specify whether the results of an API call should be returned as a Result or directly 
         from the API, as a dictionary, without any modifications. By default, pyflight will use the supplied containers.
