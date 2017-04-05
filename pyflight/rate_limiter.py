@@ -2,6 +2,7 @@
 The Rate Limiter to limit the Requests being made to the API
 """
 import asyncio
+import time
 
 # By Default, set to the free quota of 50 Requests per Day
 queries_per_day = 50
@@ -16,10 +17,9 @@ def set_queries_per_day(queries: int):
     """
     global queries_per_day
     queries_per_day = queries
-    print(f'Set Rate Limit to {queries} Requests per Day.')
 
 
-async def delay_request(loop):
+async def delay(loop):
     """Delay a new request by asynchronously sleeping.
     
     Arguments
@@ -32,3 +32,8 @@ async def delay_request(loop):
     else:
         # 24 / queries is the interval for requests in hours, * 60 * 60 is the interval in seconds
         await asyncio.sleep(24 / queries_per_day * 60 * 60, loop=loop)
+
+
+def delay_sync():
+    """Delay a synchronous request."""
+    time.sleep(24 / queries_per_day * 60 * 60)

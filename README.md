@@ -2,13 +2,14 @@
 An asynchronous Python Wrapper around the Google QPX Flights API.
 
 ### Features
-- Fully asynchronous / non-blocking - using aiohttp 2.0
+- Fully asynchronous using aiohttp 2.0, or non-async using `requests`.
 - Automatic saving of results in useful structures which provide easy-to-use interfaces
 - Rate Limiting to your liking
 
 ### Dependencies
 - Python 3.6
-- aiohttp 2.0
+- aiohttp
+- requests
 
 ### Tests
 If you're interested in running the tests, download the two example responses given on the bottom of 

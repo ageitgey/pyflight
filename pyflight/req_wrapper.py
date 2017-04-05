@@ -20,7 +20,7 @@ def set_api_key(key: str):
     api_key = key
 
 
-async def send_async(request: dict, use_containers: bool=True) -> Union[dict, Result]:
+async def send_async(request_body: dict, use_containers: bool=True) -> Union[dict, Result]:
     """Asynchronously execute and send the Request. This is a coroutine - calling this function must be awaited.
     
     It is also possible to specify whether the results of an API call should be returned as a Result or directly 
@@ -28,7 +28,7 @@ async def send_async(request: dict, use_containers: bool=True) -> Union[dict, Re
     Pass False as a second argument to suppress this behaviour.
     
     Args:
-        request : dict
+        request_body : dict
             The body of the request to be sent to the API. This must follow the structure described here:
             https://developers.google.com/qpx-express/v1/trips/search
         use_containers : bool
@@ -44,7 +44,37 @@ async def send_async(request: dict, use_containers: bool=True) -> Union[dict, Re
         Otherwise, the response as a dictionary.
 
     """
-    response = await requester.post_request(BASE_URL + api_key, request)
+    response = await requester.post_request(BASE_URL + api_key, request_body)
+    if use_containers:
+        return Result(response)
+    return response
+
+
+def send_sync(request_body: dict, use_containers: bool=True) -> Union[dict, Result]:
+    """Synchronously execute and send the Request. Note that this function is blocking.
+    
+    It is possible to specify whether the results of an API call should be returned as a Result or directly 
+    from the API, as a dictionary, without any modifications. By default, pyflight will use the supplied containers.
+    Pass False as a second argument to suppress this behaviour.
+    
+    Args:
+        request_body : dict
+            The body of the request to be sent to the API. This must follow the structure described here:
+            https://developers.google.com/qpx-express/v1/trips/search
+        use_containers : bool
+            Whether the containers given should be used or not.
+            If False is given, any API call will return a dictionary of the "raw" API data without any
+            modification. Otherwise, an API call will return a pyflight.Result object or an Error if appropriate.
+            
+    References:
+        https://developers.google.com/qpx-express/v1/trips/search
+        
+    Returns:
+        If use_containers is True, a pyflight.Result object.
+        Otherwise, the response as a dictionary.
+
+    """
+    response = requester.post_request_sync(BASE_URL + api_key, request_body)
     if use_containers:
         return Result(response)
     return response

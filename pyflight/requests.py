@@ -3,6 +3,7 @@ Handles all Requests that are sent to the API.
 """
 import aiohttp
 import asyncio
+import requests
 
 import pyflight.rate_limiter
 
@@ -30,7 +31,7 @@ class Requester:
         Returns
             dict: The Response of the Website
         """
-        await pyflight.rate_limiter.delay_request(self.loop)
+        await pyflight.rate_limiter.delay(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.post(url, data=payload) as r:
                 return await r.json()
@@ -44,10 +45,27 @@ class Requester:
         Returns
             dict: The Response of the Website
         """
-        await pyflight.rate_limiter.delay_request(self.loop)
+        await pyflight.rate_limiter.delay(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.get(url) as r:
                 return await r.json()
+
+    @staticmethod
+    def post_request_sync(url: str, payload: dict) -> dict:
+        """Send a synchronous POST request to the specified URL with the given payload.
+        
+        Arguments
+            url : str
+                The URL to which the POST Request should be sent
+            payload: dict
+                The Payload to be sent along with the POST request
+                
+        Returns
+            dict: The Response of the Website
+        """
+        pyflight.rate_limiter.delay_sync()
+        response = requests.post(url, payload)
+        return response.json()
 
 requester = Requester()
 
