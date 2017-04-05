@@ -6,11 +6,6 @@ An asynchronous Python Wrapper around the Google QPX Flights API.
 - Automatic saving of results in useful structures which provide easy-to-use interfaces
 - Rate Limiting to your liking
 
-## Dependencies
-- Python 3.6
-- aiohttp
-- requests
-
 ## Example
 **Synchronously find flights from San Francisco (SFO) to Los Angeles (LAX), limited to one solution** 
 
@@ -44,6 +39,12 @@ resp = pyflight.send_sync(query_data, False)
 with open('response.json', 'w+') as f:
     json.dump(resp, f)
 ```
+
+## Dependencies
+- Python 3.6
+- aiohttp
+- requests
+
 
 ## Tests
 If you're interested in running the tests, download the two example responses given on the bottom of 
