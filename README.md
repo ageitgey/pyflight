@@ -1,10 +1,15 @@
 # pyflight
-An asynchronous Python Wrapper around the Google QPX Flights API.
+A Python Wrapper around the Google QPX Flights API that supports both synchronous and asynchronous operation.
 
 ## Features
 - Fully asynchronous using aiohttp 2.0, or non-async using `requests`.
 - Automatic saving of results in useful structures which provide easy-to-use interfaces
 - Rate Limiting to your liking
+
+## Installation
+`pip3 install pyflight`
+*or*
+`python3 -m pip install pyflight`  
 
 ## Example
 **Synchronously find flights from San Francisco (SFO) to Los Angeles (LAX), limited to one solution** 

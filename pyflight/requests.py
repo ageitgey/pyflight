@@ -8,7 +8,14 @@ import requests
 import pyflight.rate_limiter
 
 
-class Requester:
+class APIException(Exception):
+    """
+    Custom Exception that is raised from the Requests when an API call goes wrong.
+    """
+    pass
+
+
+class Requester(object):
     """
     Class to execute requests with.
     """
