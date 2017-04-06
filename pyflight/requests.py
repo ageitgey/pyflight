@@ -59,9 +59,7 @@ class Requester(object):
             async with cs.post(url, data=payload) as r:
                 if r.status != 200:
                     resp = r.json()
-                    print(resp)
-                    return resp
-                    reason = resp["error"][0]["reason"]
+                    reason = resp['error']['errors'][0]['reason']
                     raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
                 return await r.json()
 
@@ -96,7 +94,7 @@ class Requester(object):
         r = requests.post(url, json=payload)
         if r.status_code != 200:
             resp = r.json()
-            reason = resp["error"][0]["reason"]
+            reason = resp['error']['errors'][0]['reason']
             raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
         return r.json()
 
