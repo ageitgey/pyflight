@@ -41,6 +41,10 @@ class Requester(object):
         await pyflight.rate_limiter.delay_async(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.post(url, data=payload) as r:
+                if r.status != 200:
+                    resp = r.json()
+                    raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} '
+                                       f'({resp["error"][0]["reason"]})')
                 return await r.json()
 
     async def get_request(self, url: str) -> dict:

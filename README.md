@@ -7,10 +7,14 @@ A Python Wrapper around the Google QPX Flights API that supports both synchronou
 - Rate Limiting to your liking
 
 ## Installation
-`pip3 install pyflight`
-*or*
-`python3 -m pip install pyflight`  
-
+```
+pip3 install pyflight
+```  
+*or*  
+```
+python3 -m pip install pyflight
+```  
+   
 ## Example
 **Synchronously find flights from San Francisco (SFO) to Los Angeles (LAX), limited to one solution** 
 
