@@ -43,8 +43,8 @@ class Requester(object):
             async with cs.post(url, data=payload) as r:
                 if r.status != 200:
                     resp = r.json()
-                    raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} '
-                                       f'({resp["error"][0]["reason"]})')
+                    reason = resp["error"][0]["reason"]
+                    raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
                 return await r.json()
 
     async def get_request(self, url: str) -> dict:
