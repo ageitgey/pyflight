@@ -40,7 +40,7 @@ query_data = {
     "solutions": "1"
   }
 }
-resp = pyflight.send_sync(query_data, False)
+resp = pyflight.send_sync(query_data, use_containers=False)
 with open('response.json', 'w+') as f:
     json.dump(resp, f)
 ```
