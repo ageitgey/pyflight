@@ -12,7 +12,6 @@ class APIException(Exception):
     """
     Custom Exception that is raised from the Requests when an API call goes wrong.
     """
-    pass
 
 
 class Requester(object):
@@ -75,8 +74,12 @@ class Requester(object):
             dict: The Response of the Website
         """
         pyflight.rate_limiter.delay_sync()
-        response = requests.post(url, json=payload)
-        return response.json()
+        r = requests.post(url, json=payload)
+        if r.status_code != 200:
+            resp = r.json()
+            reason = resp["error"][0]["reason"]
+            raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
+        return r.json()
 
 requester = Requester()
 
