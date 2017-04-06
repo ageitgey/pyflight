@@ -20,3 +20,11 @@ Making Requests
 .. autofunction:: pyflight.send_async
 
 .. autofunction:: pyflight.send_sync
+
+.. autoclass:: pyflight.APIException
+
+
+Response Containers
+-------------------
+
+.. automodule:: pyflight.results

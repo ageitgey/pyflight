@@ -29,7 +29,7 @@ async def send_async(request_body: dict, use_containers: bool = True):
     request_body : dict
         The body of the request to be sent to the API. This must follow the structure described here:
         https://developers.google.com/qpx-express/v1/trips/search
-    use_containers : bool
+    use_containers : Optional[bool]
         Whether the containers given should be used or not.
         If False is given, any API call will return a dictionary of the "raw" API data without any
         modification. Otherwise, an API call will return a :class:`Result` object or an Error if appropriate.
@@ -62,7 +62,7 @@ def send_sync(request_body: dict, use_containers: bool = True):
     request_body : dict
         The body of the request to be sent to the API. This must follow the structure described here:
         https://developers.google.com/qpx-express/v1/trips/search
-    use_containers : bool
+    use_containers : Optional[bool]
         Whether the containers given should be used or not.
         If False is given, any API call will return a dictionary of the "raw" API data without any
         modification. Otherwise, an API call will return a :class:`Result` object or an Error if appropriate.

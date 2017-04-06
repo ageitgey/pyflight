@@ -1,5 +1,5 @@
 """
-Provides several Classes that contain the Results of a Request
+These provide several Classes that contain the Results of a Request
 to simplify accessing them, as well as offering several Methods
 to work with the Data from the Result.
 

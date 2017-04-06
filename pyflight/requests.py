@@ -1,8 +1,9 @@
 """
 Handles all Requests that are sent to the API.
 """
-import aiohttp
 import asyncio
+
+import aiohttp
 import requests
 
 import pyflight.rate_limiter
@@ -10,7 +11,8 @@ import pyflight.rate_limiter
 
 class APIException(Exception):
     """
-    Custom Exception that is raised from the Requests when an API call goes wrong.
+    Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not 
+    return a status code of 200. 
     """
 
 
