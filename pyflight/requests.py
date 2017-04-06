@@ -13,6 +13,15 @@ class APIException(Exception):
     """
     Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not 
     return a status code of 200. 
+    
+    Examples:
+        try:
+            flight_info = send_sync(my_request_body, use_containers=False)
+        except pyflight.APIException as err:
+            print('Error trying to execute a request:') 
+            print(err)
+        else:
+            ...
     """
 
 

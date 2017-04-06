@@ -1,7 +1,7 @@
 .. pyflight documentation master file, created by
-sphinx-quickstart on Thu Apr  6 20:41:47 2017.
-You can adapt this file completely to your liking, but it should at least
-contain the root `toctree` directive.
+    sphinx-quickstart on Thu Apr  6 20:41:47 2017.
+    You can adapt this file completely to your liking, but it should at least
+    contain the root `toctree` directive.
 
 Welcome to pyflight's documentation!
 ====================================
@@ -9,9 +9,9 @@ Welcome to pyflight's documentation!
 Contents:
 
 .. toctree::
-:maxdepth: 2
+    :maxdepth: 2
 
-        api
+    api
 
 
 Indices and tables
