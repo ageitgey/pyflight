@@ -15,6 +15,9 @@ class APIException(Exception):
     return a status code of 200. 
     
     Examples:
+        
+    .. code-block:: python
+    
         try:
             flight_info = send_sync(my_request_body, use_containers=False)
         except pyflight.APIException as err:
@@ -22,6 +25,9 @@ class APIException(Exception):
             print(err)
         else:
             ...
+            
+    The Exception will be formatted as: `'<status-code>: <error-message> (reason)'`, for example
+    `400:
     """
 
 
@@ -53,6 +59,7 @@ class Requester(object):
             async with cs.post(url, data=payload) as r:
                 if r.status != 200:
                     resp = r.json()
+                    print(resp)
                     reason = resp["error"][0]["reason"]
                     raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
                 return await r.json()
