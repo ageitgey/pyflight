@@ -45,7 +45,6 @@ fabric.properties
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
 
 # C extensions
@@ -107,7 +106,7 @@ instance/
 .scrapy
 
 # Sphinx documentation
-html/_build/
+docs/_build/
 
 # PyBuilder
 target/
