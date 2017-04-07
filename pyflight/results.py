@@ -290,14 +290,15 @@ class Flight(object):
     """
     The smallest unit of travel, identifies a flight from takeoff to landing. 
     
-    In the API Response, this is found as 'trips.tripOption[].slice[].segment[].leg[]'
+    In the API Response, this is found as ``trips.tripOption[].slice[].segment[].leg[]``
     
     Attributes
+    ----------
         id : str
             A unique identifier for this Flight Object
         aircraft : str
             The aircraft travelling between the two points of this Flight
-        destination_time : str
+        departure_time : str
             The Time of Departure local to the point of departure, with the Time Zone Difference included
         arrival_time : str
             The Time of Arrival local to the point of arrival, with the Time Zone Difference included
@@ -308,22 +309,23 @@ class Flight(object):
         destination : str
             The Destination of this Flight as a City / Airport Code
         origin_terminal : str
-            The scheduled Terminal from which this Flight should depart on. '' if not specified.
+            The scheduled Terminal from which this Flight should depart on. ``''`` if not specified.
         destination_terminal : str
-            The scheduled Terminal where this Flight should arrive at. '' if not specified.
+            The scheduled Terminal where this Flight should arrive at. ``''`` if not specified.
         mileage : int
             The number of miles flown in this Flight
         meal : str
-            A description of the meal(s) served on the flight, '' if not specified.
+            A description of the meal(s) served on the flight, ``''` if not specified.
         change_plane : bool
             Whether passengers have to change planes following this leg. Applies to the next leg, defaults to False.
         performance : int
-            Specifies the published on time performance on this leg. 0 if not specified.
+            Specifies the published on time performance on this leg. ``0`` if not specified.
     """
     def __init__(self, leg_data: dict):
         """Create a new Flight Object
         
-        Args:
+        Parameters
+        ----------
             leg_data : dict
                 The Leg Data given from the API to initialize this Object from
         """
