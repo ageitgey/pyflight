@@ -433,14 +433,14 @@ class Fare(object):
         carrier_code : str
             The Code for the Carrier whose fare this is.
         origin_city_code : str
-            The origin city for this fare
+            The origin city for this fare.
         destination_city_code : str
-            The destination city for this fare
+            The destination city for this fare.
         basis_code : str
             The Basis Code of this fare.
         private : bool
             Specifies whether this is a private fare offered only to select customers or not.
-            Defaults to False.
+            Defaults to ``False``.
     """
     def __init__(self, fare_data: dict):
         """
@@ -505,21 +505,23 @@ class BagDescriptor(object):
 class FreeBaggageOption(object):
     """Contains Information about the free baggage allowance for one Segment.
     
-    Attributes:
+    Attributes
+    ----------
         pieces : int
             How many pieces of free baggage are allowed
         bag_descriptors : list
             A list of BagDescriptor Objects used to represent different types of bags.
             Can be an empty list.
     
-    Notes:
+    Notes
+    -----
         Information about this is saved in a SegmentPricing class.
-    
     """
     def __init__(self, baggage_data: dict):
         """Create a new FreeBaggageOption object. 
         
-        Args:
+        Parameters
+        ----------
             baggage_data : dict
                 The Baggage Data as returned from the API in an Array.
                 
