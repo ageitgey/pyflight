@@ -114,31 +114,49 @@ class FlightData(object):
         -------
             >>> my_data = Tax('B31', 'Example FlightData')
             >>> my_data.as_dict()
-            {'id': 'B31', 'name': 'Example FlightData')
+            {'code': 'B31', 'name': 'Example FlightData')
     
         Returns
         -------
         dict
             Contains the Attributes of this Object 
         """
-        return {'id': self.code, 'name': self.name}
+        return {'code': self.code, 'name': self.name}
 
 
 class Aircraft(FlightData):
     """
-    An Aircraft with an ID and Name. This Class inherits from :class:`FlightData` and thus, supports all operations
-    that FlightData supports.
+    An Aircraft with a Code (unique identifier) and Name. This Class inherits from 
+    :class:`FlightData` and thus, supports all operations that FlightData supports.
     """
-    pass
 
 
 class Tax(FlightData):
     """
-    A Tax with an ID and a Name. This will also be reflected 
+    This Class inherits from :class:`FlightData` and thus, supports all operations
+    that FlightData supports. A Tax with an ID and a Name. This will also be reflected 
     in the Pricing section of a Trip, but with more information such as
     the charge type, the country, and the price of the Tax.
+    
+    Examples:
+        
+        >>> my_tax = Tax({"id": "XYZ", "name": "Example Tax"})
+        >>> my_tax.code
+        'XYZ'
+        >>> my_tax.name
+        'Example Tax'
+        >>> my_tax.as_dict()
+        {'code': 'XYZ', 'name': 'Example Tax'}
+        >>> str(my_tax)
+        'Example Tax'
+        >>> len(my_tax)
+        11
+        >>> another_tax = Tax({"id": "ABC", "name", "Not Equal Tax"})
+        >>> my_tax == another_tax
+        False
+        >>> my_tax != another_tax
+        True
     """
-    pass
 
 
 class Carrier(FlightData):
