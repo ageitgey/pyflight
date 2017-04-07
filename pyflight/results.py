@@ -643,7 +643,7 @@ class Pricing(object):
             for senior citizens).
         refundable : bool
             Specifies whether the fares on this pricing are refundable. 
-            If the API does not specify this explicitly in the response, it defaults to ``False`.
+            If the API does not specify this explicitly in the response, it defaults to ``False``.
 
     """
     def __init__(self, pricing_data: dict):
