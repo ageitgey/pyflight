@@ -37,6 +37,7 @@ class FlightData(object):
         
     ``len(x)``
         Get the length of the Name of this FlightData.
+        
         >>> my_data = FlightData('7H6', 'Example Data')
         >>> len(my_data)
         11
