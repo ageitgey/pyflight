@@ -682,12 +682,13 @@ class Trip(object):
     Attributes
     ----------
         total_price : str
-            The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. 'USD59.00'
+            The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. ``'USD59.00'``
         id : str
             The unique ID given to each Trip
-        routes : list
+        routes : list of :class:`Route`
             A list of Routes from this Trip
-        
+        pricing : list of :class:`Pricing`
+            A list of pricing data from this Trip
     """
     def __init__(self, trip_data: dict):
         """Create a new Trip object.
@@ -717,23 +718,25 @@ class Result(object):
     """Contains Results of an API Call.
     
     Attributes
+    ----------
         request_id : str
             Specifies the Request ID, unique for each Request.
             
-        airports : list of Airports
+        airports : list of :class:`Airport`
             Contains Data for the Flights found in the Response.
             
-        taxes : list of Taxes
+        taxes : list of :class:`Tax`
             Contains the Code and the Name of Taxes found in the Response
             
-        carriers : list of Carriers
+        carriers : list of :class:Carrier`
             Contains the Code and the Name of the Carriers found in the Response
     """
 
     def __init__(self, data: dict):
         """Create the Result Object from the Response of the API.
         
-        Arguments:
+        Parameters
+        ----------
             data: dict
                 The Response of the API, as a dictionary
         """
