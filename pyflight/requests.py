@@ -11,10 +11,11 @@ import pyflight.rate_limiter
 
 class APIException(Exception):
     """
-    Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not 
+    Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not  
     return a status code of 200. 
-    
-    Examples:
+
+    Examples
+    --------
         
     .. code-block:: python
     
@@ -27,7 +28,7 @@ class APIException(Exception):
             ...
             
     The Exception will be formatted as: `'<status-code>: <error-message> (reason)'`, for example
-    `400:
+    `400: Bad Request (keyInvalid)`
     """
 
 

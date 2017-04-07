@@ -40,6 +40,8 @@ extensions = [
     'sphinx.ext.extlinks'
 ]
 
+autodoc_member_order = 'bysource'
+
 extlinks = {
     'issue': ('https://github.com/Volcyy/pyflight/issues%s', 'issue '),
 }

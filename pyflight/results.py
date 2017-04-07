@@ -12,23 +12,43 @@ https://developers.google.com/qpx-express/v1/trips/search
 class FlightData(object):
     """Base Class for simple Flight Data with a Code / ID and name. 
     
-    Attributes:
+    This class supports various magic methods:
+    
+    ``x == y``
+        Compare two FlightData objects with each other for equality.
+        
+        >>> first_data = FlightData('9B1', 'Some Data')
+        >>> second_data = FlightData('7B3', 'More Data')
+        >>> first_data == second_data
+        False
+        
+    ``x != y``
+        Compare two FlightData objects with each other for inequality.
+        
+        >>> first_data != second_data
+        True
+        
+    ``str(x)``
+        Get the Name of this FlightData.
+        
+        >>> my_data = FlightData('3E7', 'Example Data')
+        >>> str(my_data)
+        'Example Data'
+        
+    ``len(x)``
+        Get the length of the Name of this FlightData.
+        >>> my_data = FlightData('7H6', 'Example Data')
+        >>> len(my_data)
+        11
+        
+    Attributes
+    ----------
         code : str
             A Code given to the FlightData Object as given from the API.
         name : str
             A name specifying the Name associated with the Code
     
-    Methods:
-        __init__(code: str, name: str)
-            Create a new FlightData Object with the given parameters. Used by calling
-        __eq__ -> bool
-            Compare two Flight Data Objects for Equality
-        len(some_flight_data) -> int
-            Get the length of the Name of this FlightData
-        as_dict() -> dict
-            Get a dictionary representing the contents of this Object
     """
-
     def __init__(self, code: str, name: str):
         self.code = code
         self.name = name
@@ -36,57 +56,70 @@ class FlightData(object):
     def __eq__(self, other) -> bool:
         """Compare two FlightData Objects with each other for equality or inequality.
 
-        Arguments:
+        Arguments
+        ---------
             other : FlightData
                 The Object to compare this one with
                 
-        Example:
+        Example
+        -------
             >>> first_data = FlightData('9B1', 'Some Data')
             >>> second_data = FlightData('7B3', 'More Data')
             >>> first_data == second_data
             False
         
-        Returns:
-            bool: True or False, depending on the Result of the Comparison
+        Returns
+        -------
+        bool
+            True or False, depending on the Result of the Comparison
         """
         return self.code == other.code and self.name == other.name
 
     def __len__(self) -> int:
         """Get the length of the Name of this FlightData.
         
-        Example:
-            >>> my_data = Tax('7H6', 'Example Data')
+        Example
+        -------
+            >>> my_data = FlightData('7H6', 'Example Data')
             >>> len(my_data)
             11
         
-        Returns:
-            int: The length of the name of this FlightData
+        Returns
+        -------
+        int
+            The length of the name of this FlightData
         """
         return len(self.name)
 
     def __str__(self) -> str:
         """Get the Name of this FlightData Object.
         
-        Example:
+        Example
+        -------
             >>> my_data = FlightData('3E7', 'Example Data')
             >>> str(my_data)
             'Example Data'
         
-        Returns:
-            str: the Name of the FlightData Object
+        Returns
+        -------
+        str 
+            the Name of the FlightData Object
         """
         return f'{self.name}'
 
     def as_dict(self) -> dict:
         """Get this FlightData Object as a Dictionary.
 
-        Example:
+        Example
+        -------
             >>> my_data = Tax('B31', 'Example FlightData')
             >>> my_data.as_dict()
             {'id': 'B31', 'name': 'Example FlightData')
     
-        Returns:
-            dict: Contains the Attributes of this Object 
+        Returns
+        -------
+        dict
+            Contains the Attributes of this Object 
         """
         return {'id': self.code, 'name': self.name}
 

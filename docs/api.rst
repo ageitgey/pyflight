@@ -24,7 +24,8 @@ Making Requests
 .. autoclass:: pyflight.APIException
 
 
-Response Containers
--------------------
+Working with the Response
+-------------------------
 
 .. automodule:: pyflight.results
+   :members:
