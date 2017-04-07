@@ -1,6 +1,5 @@
 .. currentmodule:: pyflight
-.. include:: index.rst
-
+   
 API Reference
 =============
 

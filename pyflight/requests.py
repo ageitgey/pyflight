@@ -61,7 +61,7 @@ class Requester(object):
                 if r.status != 200:
                     resp = r.json()
                     reason = resp['error']['errors'][0]['reason']
-                    raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
+                    raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
                 return await r.json()
 
     async def get_request(self, url: str) -> dict:
@@ -96,7 +96,7 @@ class Requester(object):
         if r.status_code != 200:
             resp = r.json()
             reason = resp['error']['errors'][0]['reason']
-            raise APIException(f'{resp["error"]["code"]}: {resp["error"]["message"]} ({reason})')
+            raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
         return r.json()
 
 requester = Requester()
