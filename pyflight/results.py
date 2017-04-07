@@ -53,7 +53,7 @@ class FlightData(object):
         self.code = code
         self.name = name
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other):
         """Compare two FlightData Objects with each other for equality or inequality.
 
         Arguments
@@ -75,7 +75,7 @@ class FlightData(object):
         """
         return self.code == other.code and self.name == other.name
 
-    def __len__(self) -> int:
+    def __len__(self):
         """Get the length of the Name of this FlightData.
         
         Example
@@ -91,7 +91,7 @@ class FlightData(object):
         """
         return len(self.name)
 
-    def __str__(self) -> str:
+    def __str__(self):
         """Get the Name of this FlightData Object.
         
         Example
@@ -107,7 +107,7 @@ class FlightData(object):
         """
         return f'{self.name}'
 
-    def as_dict(self) -> dict:
+    def as_dict(self):
         """Get this FlightData Object as a Dictionary.
 
         Example
@@ -127,40 +127,28 @@ class FlightData(object):
 class Aircraft(FlightData):
     """
     An Aircraft with a Code (unique identifier) and Name. This Class inherits from 
-    :class:`FlightData` and thus, supports all operations that FlightData supports.
+    :class:`FlightData` and thus, supports all operations that FlightData supports. 
+    For Examples, view the "Examples" section of :class:`FlightData`.
     """
 
 
 class Tax(FlightData):
     """
     This Class inherits from :class:`FlightData` and thus, supports all operations
-    that FlightData supports. A Tax with an ID and a Name. This will also be reflected 
-    in the Pricing section of a Trip, but with more information such as
-    the charge type, the country, and the price of the Tax.
-    
-    Examples:
-        
-        >>> my_tax = Tax({"id": "XYZ", "name": "Example Tax"})
-        >>> my_tax.code
-        'XYZ'
-        >>> my_tax.name
-        'Example Tax'
-        >>> my_tax.as_dict()
-        {'code': 'XYZ', 'name': 'Example Tax'}
-        >>> str(my_tax)
-        'Example Tax'
-        >>> len(my_tax)
-        11
-        >>> another_tax = Tax({"id": "ABC", "name", "Not Equal Tax"})
-        >>> my_tax == another_tax
-        False
-        >>> my_tax != another_tax
-        True
+    that FlightData supports. This represents a Tax with a code (unique identifier) and a Name. 
+    This will also be reflected in the Pricing section of a Trip, but with more information 
+    such as the charge type, the country, and the price of the Tax.
+    For Examples, view the "Examples" section for :class:`FlightData`.
     """
 
 
 class Carrier(FlightData):
-    pass
+    """
+    This Class inherits from :class:`FlightData` and thus, supports all operations
+    that FlightData supports. It represents a Carrier for the returned solution with 
+    a code and a name.
+    For Examples, view the "Examples" section for :class:`FlightData`.
+    """
 
 
 class Airport(object):

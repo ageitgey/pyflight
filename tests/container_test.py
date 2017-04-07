@@ -34,15 +34,15 @@ def test_flight_data():
 
     # Test the as_dict method
     assert first_data.as_dict() == {
-        'id': '9B1',
+        'code': '9B1',
         'name': 'Example Data'
     }
     assert second_data.as_dict() == {
-        'id': '7B3',
+        'code': '7B3',
         'name': 'Another Example Data'
     }
     assert third_data.as_dict() == {
-        'id': '9B1',
+        'code': '9B1',
         'name': 'Example Data'
     }
 
