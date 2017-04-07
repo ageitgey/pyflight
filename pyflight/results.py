@@ -12,7 +12,7 @@ https://developers.google.com/qpx-express/v1/trips/search
 class FlightData(object):
     """Base Class for simple Flight Data with a Code / ID and name. 
     
-    This class supports various magic methods:
+    This Class supports various *magic methods*:
     
     ``x == y``
         Compare two FlightData objects with each other for equality.
@@ -40,6 +40,7 @@ class FlightData(object):
         >>> my_data = FlightData('7H6', 'Example Data')
         >>> len(my_data)
         11
+        
         
     Attributes
     ----------
@@ -153,9 +154,38 @@ class Carrier(FlightData):
 
 class Airport(object):
     """
-    Contains Data of an Airport and its City
+    Contains Data of an Airport and its City Code.
     
-    Attributes:
+    This Class supports various *magic methods*: 
+    
+    ``x == y``
+        Compare two Airports with each other for equality by their Airport and City Codes.
+        
+        >>> my_airport = Airport({'code': 'ABC', 'name': 'ABC International', 'city': 'Example Airport'})
+        >>> another_airport = Airport({'code': 'XYZ', 'name': 'XYZ International', 'city': 'Another Airport'})
+        >>> my_airport == another_airport
+        False
+        
+    ``x != y``
+        Compare two Airports with each other for inequality.
+        
+        >>> my_airport != another_airport
+        True
+        
+    ``str(x)``
+        Get the Airport's Name
+        
+        >>> str(my_airport)
+        'ABC International'
+        
+    ``len(x)``
+        Get the length of the Airport's name
+        
+        >>> len(my_airport)
+        17
+    
+    Attributes
+    ----------
         code : str
             The Code of this Airport
             
@@ -164,19 +194,6 @@ class Airport(object):
         
         city : str
             The Code of the City associated with the Airport
-            
-        
-    Methods:
-        __init__(airport: dict, city: dict)
-            Create a new Airport Object containing Data about an Airport and its associated City
-        __eq__ -> bool
-            Compare two Airports with each other by their Airport and City Codes
-        __len__ -> int
-            Get the length of the Airport Name
-        __str__ -> str
-            Get a string representing the Airport and City Name, e.g. "Example Airport in Example City"
-        as_dict() -> dict
-            Get a representation of this Airport as a Dictionary.
     """
 
     def __init__(self, airport: dict):
@@ -185,7 +202,8 @@ class Airport(object):
         An Airport Object which contains Data about 
         each Flight returned from the API.
         
-        Arguments:
+        Arguments
+        ---------
             airport : dict
                 A single Airport returned by the API
         """
@@ -197,46 +215,56 @@ class Airport(object):
         """Compare two Airports with each other by their Airport and City Codes.
         
         Arguments
+        ---------
             other : Airport
                 The other Airport to compare this one to
         
         Returns
-            bool: True or False depending on the Result of the Comparison
+        -------
+        bool
+            True or False depending on the Result of the Comparison
         """
         return self.code == other.code and self.city == other.city
 
-    def __len__(self) -> int:
+    def __len__(self):
         """Get the length of the Airport Name.
         
         Example
+        -------
             >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
             >>> example_airport = Airport(airport)
             >>> len(example_airport)
             15
         
         Returns
-            int: The length of the Airport Name 
+        -------
+        int
+            The length of the Airport Name 
         """
         return len(self.name)
 
-    def __str__(self) -> str:
+    def __str__(self):
         """Get this airport's name
         
         Example
+        -------
             >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
             >>> example_airport = Airport(airport)
             >>> str(example_airport)
             Example Airport
         
         Returns
-            str: A representation of this Airport as a String.
+        -------
+        str
+            A representation of this Airport as a String.
         """
         return self.name
 
-    def as_dict(self) -> dict:
+    def as_dict(self):
         """Get a dictionary representation of the Airport.
         
         Example
+        -------
             >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
             >>> example_airport = Airport(airport)
             >>> example_airport.as_dict()
@@ -247,7 +275,9 @@ class Airport(object):
             }
         
         Returns
-            dict: A dictionary representing this Airport. 
+        -------
+        dict
+            A dictionary representing this Airport. 
         """
         return {
             'code': self.code,
