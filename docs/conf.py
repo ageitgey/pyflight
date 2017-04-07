@@ -38,13 +38,9 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'sphinx.ext.extlinks'
+    'sphinx.ext.extlinks',
+    'sphinx.ext.napoleon'
 ]
-
-if os.getenv('READTHEDOCS') == 'True':
-    extensions.append('sphinxcontrib.napoleon')
-else:
-    extensions.append('sphinx.ext.napoleon')
 
 autodoc_member_order = 'bysource'
 
