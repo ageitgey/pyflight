@@ -372,6 +372,8 @@ class Segment(object):
             The flight number of this Segment
         married_segment_group : str
             The Index of a Segment in a married Segment Group
+        flights : list of :class:`Flight`
+            The flights from takeoff to landing for this Segment.
     """
     def __init__(self, segment: dict):
         """Create a new Segment Object.
@@ -405,7 +407,7 @@ class Route(object):
     Attributes
     ----------
         duration : int
-            The duration of the :class:`Route, in Minutes
+            The duation of the :class:`Route`, in Minutes
         segments : list of :class:`Segment`\s
             Segments consisting of one more consecutive legs on the same flight.
     """
@@ -677,8 +679,6 @@ class Pricing(object):
 
 class Trip(object):
     """Contains Information about one Trip - an itinerary solution - returned by the API.
-    
-    The Amount of Trips is determined by the amount of Solutions set in the Request.
       
     Attributes
     ----------
@@ -726,11 +726,15 @@ class Result(object):
         airports : list of :class:`Airport`
             Contains Data for the Flights found in the Response.
             
+        carriers : list of :class:`Carrier`
+            Contains the Code and the Name of the Carriers found in the Response
+            
         taxes : list of :class:`Tax`
             Contains the Code and the Name of Taxes found in the Response
             
-        carriers : list of :class:`Carrier`
-            Contains the Code and the Name of the Carriers found in the Response
+        trips : list of :class:`Trip`
+            Contains information about trips (itinerary solutions) returned by the API.
+            The Amount of Trips is determined by the amount of Solutions set in the Request.
     """
 
     def __init__(self, data: dict):
@@ -746,31 +750,27 @@ class Result(object):
         # Save Flight Data
         self.airports = []
 
-        airports = data['trips']['data']['airport']
         # cities = data['trips']['data']['city']
-
-        # Match Airport and City together
+        airports = data['trips']['data']['airport']
         for airport in airports:
             self.airports.append(Airport(airport))
 
         # Save Aircraft
         self.aircraft = []
-
         for single_aircraft in data['trips']['data']['aircraft']:
             self.aircraft.append(Aircraft(single_aircraft['code'], single_aircraft['name']))
-
-        # Save Taxes
-        self.taxes = []
-
-        taxes = data['trips']['data']['tax']
-        for tax in taxes:
-            self.taxes.append(Tax(tax['id'], tax['name']))
 
         # Save Carriers
         self.carriers = []
         carriers = data['trips']['data']['carrier']
         for carrier in carriers:
             self.carriers.append(Carrier(carrier['code'], carrier['name']))
+
+        # Save Taxes
+        self.taxes = []
+        taxes = data['trips']['data']['tax']
+        for tax in taxes:
+            self.taxes.append(Tax(tax['id'], tax['name']))
 
         # Save Trips
         self.trips = []
