@@ -602,10 +602,11 @@ class Pricing(object):
     Contains Information about the pricing of the given Route, per passenger.
     
     Attributes
-        fares : list
-            A list of fare objects used to price one or more segments.
-        segment_pricing : list
-            A list of SegmentPricing objects used to price one segment.
+    ----------
+        fares : list of :class:`Fare`
+            A list of :class:`Fare` objects used to price one or more segments.
+        segment_pricing : list of :class:`SegmentPricing`
+            A list of :class:`SegmentPricing objects used to price one segment.
         base_fare_total : str
             The total fare in the currency of the country of origin.
             ``None`` when the sales currency and the currency of the country of commencement are not different
@@ -645,7 +646,9 @@ class Pricing(object):
     def __init__(self, pricing_data: dict):
         """
         Create a new Pricing object from fare data.
-        Args:
+        
+        Parameters
+        ----------
             pricing_data : dict
                 The Pricing Data Object as returned from the API in an Array
         """
