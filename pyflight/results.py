@@ -400,7 +400,7 @@ class Segment(object):
 class Route(object):
     """Represents the traveller's intent as well as a low-fare search about an itinerary between two points.
     
-    In the Response, this is represented as 'trips.tripOption[].slice[]'
+    In the Response, this is represented as ``trips.tripOption[].slice[]``
     
     Attributes:
         duration : int
@@ -409,9 +409,10 @@ class Route(object):
     def __init__(self, route_slice: dict):
         """Create a new Route Object.
         
-        Args:
+        Parameters
+        ----------
             route_slice : dict
-                The 'trips.tripsOption[].slice[]' Object from the Response
+                The ``trips.tripsOption[].slice[]`` Object from the Response
         """
         self.duration = route_slice['duration']
 
@@ -425,7 +426,8 @@ class Fare(object):
     """
     The fare used to price one or more segments.
     
-    Attributes:
+    Attributes
+    ----------
         id : str
             The unique identifier of the fare.
         carrier_code : str
@@ -443,7 +445,8 @@ class Fare(object):
         """
         Create a new Fare Object.
         
-        Args:
+        Parameters
+        ----------
             fare_data : dict 
                 A Fare Object returned in from the API in arrays.
         """
