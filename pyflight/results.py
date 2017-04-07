@@ -107,7 +107,7 @@ class FlightData(object):
         str 
             the Name of the FlightData Object
         """
-        return f'{self.name}'
+        return self.name
 
     def as_dict(self):
         """Get this FlightData Object as a Dictionary.
