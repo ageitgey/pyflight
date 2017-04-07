@@ -5,8 +5,8 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = pyflight
-SOURCEDIR     = .
-BUILDDIR      = build
+SOURCEDIR     = source
+BUILDDIR      = ..
 
 # Put it first so that "make" without argument is like "make help".
 help:

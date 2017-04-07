@@ -1,0 +1,907 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API Reference &#8212; pyflight 0.0.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to pyflight’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<p>This page shows the functions and classes exposed by pyflight.</p>
+<div class="section" id="basic-configuration">
+<h2>Basic Configuration<a class="headerlink" href="#basic-configuration" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyflight.set_api_key">
+<code class="descclassname">pyflight.</code><code class="descname">set_api_key</code><span class="sig-paren">(</span><em>key: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/req_wrapper.html#set_api_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.set_api_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the API key to use with the API. Note that there is a free quota of 50 calls per day.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>key</strong> (<em>str</em>) &#8211; The API key to make requests with.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyflight.set_queries_per_day">
+<code class="descclassname">pyflight.</code><code class="descname">set_queries_per_day</code><span class="sig-paren">(</span><em>queries: int</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/rate_limiter.html#set_queries_per_day"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.set_queries_per_day" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the maximum amount of Queries which should be sent out per day.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>queries</strong> (<em>int</em>) &#8211; The Amount of Queries to be sent out per day</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="making-requests">
+<h2>Making Requests<a class="headerlink" href="#making-requests" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="pyflight.send_async">
+<code class="descclassname">pyflight.</code><code class="descname">send_async</code><span class="sig-paren">(</span><em>request_body: dict</em>, <em>use_containers: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/req_wrapper.html#send_async"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.send_async" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asynchronously execute and send the Request. This is a coroutine - calling this function must be awaited.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request_body</strong> (<em>dict</em>) &#8211; The body of the request to be sent to the API. This must follow the structure described here:
+<a class="reference external" href="https://developers.google.com/qpx-express/v1/trips/search">https://developers.google.com/qpx-express/v1/trips/search</a></li>
+<li><strong>use_containers</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em></em>) &#8211; Whether the containers given should be used or not.
+If False is given, any API call will return a dictionary of the &#8220;raw&#8221; API data without any
+modification. Otherwise, an API call will return a <code class="xref py py-class docutils literal"><span class="pre">Result</span></code> object or an Error if appropriate.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a class="reference internal" href="#pyflight.APIException" title="pyflight.APIException"><code class="xref py py-class docutils literal"><span class="pre">APIException</span></code></a> &#8211; If the API call did not return the normal <cite>200</cite> status code and thus, an error occurred.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><code class="xref py py-class docutils literal"><span class="pre">Result</span></code> &#8211; If <code class="docutils literal"><span class="pre">use_containers</span></code> is <code class="docutils literal"><span class="pre">True</span></code> and no Error occured.</li>
+<li><em>dict</em> &#8211; If <cite>use_containers</cite> is <cite>False</cite>, as a raw dictionary without any adjustments.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyflight.send_sync">
+<code class="descclassname">pyflight.</code><code class="descname">send_sync</code><span class="sig-paren">(</span><em>request_body: dict</em>, <em>use_containers: bool = True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/req_wrapper.html#send_sync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.send_sync" title="Permalink to this definition">¶</a></dt>
+<dd><p>Synchronously execute and send the Request. Note that this function is blocking.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>request_body</strong> (<em>dict</em>) &#8211; The body of the request to be sent to the API. This must follow the structure described here:
+<a class="reference external" href="https://developers.google.com/qpx-express/v1/trips/search">https://developers.google.com/qpx-express/v1/trips/search</a></li>
+<li><strong>use_containers</strong> (<em>Optional</em><em>[</em><em>bool</em><em>]</em><em></em>) &#8211; Whether the containers given should be used or not.
+If False is given, any API call will return a dictionary of the &#8220;raw&#8221; API data without any
+modification. Otherwise, an API call will return a <code class="xref py py-class docutils literal"><span class="pre">Result</span></code> object or an Error if appropriate.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><a class="reference internal" href="#pyflight.APIException" title="pyflight.APIException"><code class="xref py py-class docutils literal"><span class="pre">APIException</span></code></a> &#8211; If the API call did not return the normal <cite>200</cite> status code and thus, an error occurred.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><code class="xref py py-class docutils literal"><span class="pre">Result</span></code> &#8211; If <cite>use_containers</cite> is <cite>True</cite> and no Error occured.</li>
+<li><em>dict</em> &#8211; If <cite>use_containers</cite> is <cite>False</cite>, as a raw dictionary without any adjustments.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.APIException">
+<em class="property">class </em><code class="descclassname">pyflight.</code><code class="descname">APIException</code><a class="reference internal" href="_modules/pyflight/requests.html#APIException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.APIException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not
+return a status code of 200.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">flight_info</span> <span class="o">=</span> <span class="n">send_sync</span><span class="p">(</span><span class="n">my_request_body</span><span class="p">,</span> <span class="n">use_containers</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">pyflight</span><span class="o">.</span><span class="n">APIException</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Error trying to execute a request:&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>The Exception will be formatted as: <cite>&#8216;&lt;status-code&gt;: &lt;error-message&gt; (reason)&#8217;</cite>, for example
+<cite>400: Bad Request (keyInvalid)</cite></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyflight.results">
+<span id="working-with-the-response"></span><h2>Working with the Response<a class="headerlink" href="#module-pyflight.results" title="Permalink to this headline">¶</a></h2>
+<p>These provide several Classes that contain the Results of a Request
+to simplify accessing them, as well as offering several Methods
+to work with the Data from the Result.</p>
+<p>Some of the Documentation is extracted from the resource reference from the API itself,
+from which a full documentation can be found here:
+<a class="reference external" href="https://developers.google.com/qpx-express/v1/trips/search">https://developers.google.com/qpx-express/v1/trips/search</a></p>
+<dl class="class">
+<dt id="pyflight.results.Result">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Result</code><span class="sig-paren">(</span><em>data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains Results of an API Call.</p>
+<dl class="attribute">
+<dt id="pyflight.results.Result.request_id">
+<code class="descname">request_id</code><a class="headerlink" href="#pyflight.results.Result.request_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; Specifies the Request ID, unique for each Request.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Result.airports">
+<code class="descname">airports</code><a class="headerlink" href="#pyflight.results.Result.airports" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Airport" title="pyflight.results.Airport"><code class="xref py py-class docutils literal"><span class="pre">Airport</span></code></a> &#8211; Contains Data for the Flights found in the Response.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Result.carriers">
+<code class="descname">carriers</code><a class="headerlink" href="#pyflight.results.Result.carriers" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Carrier" title="pyflight.results.Carrier"><code class="xref py py-class docutils literal"><span class="pre">Carrier</span></code></a> &#8211; Contains the Code and the Name of the Carriers found in the Response</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Result.taxes">
+<code class="descname">taxes</code><a class="headerlink" href="#pyflight.results.Result.taxes" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Tax" title="pyflight.results.Tax"><code class="xref py py-class docutils literal"><span class="pre">Tax</span></code></a> &#8211; Contains the Code and the Name of Taxes found in the Response</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Result.trips">
+<code class="descname">trips</code><a class="headerlink" href="#pyflight.results.Result.trips" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Trip" title="pyflight.results.Trip"><code class="xref py py-class docutils literal"><span class="pre">Trip</span></code></a> &#8211; Contains information about trips (itinerary solutions) returned by the API.
+The Amount of Trips is determined by the amount of Solutions set in the Request.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.FlightData">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">FlightData</code><span class="sig-paren">(</span><em>code: str</em>, <em>name: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#FlightData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.FlightData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Class for simple Flight Data with a Code / ID and name.</p>
+<p>This Class supports various <em>magic methods</em>:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code></dt>
+<dd><p class="first">Compare two FlightData objects with each other for equality.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_data</span> <span class="o">=</span> <span class="n">FlightData</span><span class="p">(</span><span class="s1">&#39;9B1&#39;</span><span class="p">,</span> <span class="s1">&#39;Some Data&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">second_data</span> <span class="o">=</span> <span class="n">FlightData</span><span class="p">(</span><span class="s1">&#39;7B3&#39;</span><span class="p">,</span> <span class="s1">&#39;More Data&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_data</span> <span class="o">==</span> <span class="n">second_data</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">y</span></code></dt>
+<dd><p class="first">Compare two FlightData objects with each other for inequality.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_data</span> <span class="o">!=</span> <span class="n">second_data</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">str(x)</span></code></dt>
+<dd><p class="first">Get the Name of this FlightData.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_data</span> <span class="o">=</span> <span class="n">FlightData</span><span class="p">(</span><span class="s1">&#39;3E7&#39;</span><span class="p">,</span> <span class="s1">&#39;Example Data&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">my_data</span><span class="p">)</span>
+<span class="go">&#39;Example Data&#39;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">len(x)</span></code></dt>
+<dd>Get the length of the Name of this FlightData.
+&gt;&gt;&gt; my_data = FlightData(&#8216;7H6&#8217;, &#8216;Example Data&#8217;)
+&gt;&gt;&gt; len(my_data)
+11</dd>
+</dl>
+<dl class="attribute">
+<dt id="pyflight.results.FlightData.code">
+<code class="descname">code</code><a class="headerlink" href="#pyflight.results.FlightData.code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; A Code given to the FlightData Object as given from the API.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.FlightData.name">
+<code class="descname">name</code><a class="headerlink" href="#pyflight.results.FlightData.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; A name specifying the Name associated with the Code</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyflight.results.FlightData.as_dict">
+<code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#FlightData.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.FlightData.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get this FlightData Object as a Dictionary.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_data</span> <span class="o">=</span> <span class="n">Tax</span><span class="p">(</span><span class="s1">&#39;B31&#39;</span><span class="p">,</span> <span class="s1">&#39;Example FlightData&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_data</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+<span class="go">{&#39;code&#39;: &#39;B31&#39;, &#39;name&#39;: &#39;Example FlightData&#39;)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Contains the Attributes of this Object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Airport">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Airport</code><span class="sig-paren">(</span><em>airport: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Airport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Airport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains Data of an Airport and its City Code.</p>
+<p>This Class supports various <em>magic methods</em>:</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">x</span> <span class="pre">==</span> <span class="pre">y</span></code></dt>
+<dd><p class="first">Compare two Airports with each other for equality by their Airport and City Codes.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_airport</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="s1">&#39;ABC&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ABC International&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Example Airport&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">another_airport</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">({</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="s1">&#39;XYZ&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;XYZ International&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;Another Airport&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_airport</span> <span class="o">==</span> <span class="n">another_airport</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">x</span> <span class="pre">!=</span> <span class="pre">y</span></code></dt>
+<dd><p class="first">Compare two Airports with each other for inequality.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_airport</span> <span class="o">!=</span> <span class="n">another_airport</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">str(x)</span></code></dt>
+<dd><p class="first">Get the Airport&#8217;s Name</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">my_airport</span><span class="p">)</span>
+<span class="go">&#39;ABC International&#39;</span>
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">len(x)</span></code></dt>
+<dd><p class="first">Get the length of the Airport&#8217;s name</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">my_airport</span><span class="p">)</span>
+<span class="go">17</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="pyflight.results.Airport.code">
+<code class="descname">code</code><a class="headerlink" href="#pyflight.results.Airport.code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Code of this Airport</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Airport.name">
+<code class="descname">name</code><a class="headerlink" href="#pyflight.results.Airport.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Name of this Airport</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Airport.city">
+<code class="descname">city</code><a class="headerlink" href="#pyflight.results.Airport.city" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Code of the City associated with the Airport</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyflight.results.Airport.as_dict">
+<code class="descname">as_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Airport.as_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Airport.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a dictionary representation of the Airport.</p>
+<p class="rubric">Example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">airport</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;code&#39;</span><span class="p">:</span> <span class="s1">&#39;3E7&#39;</span><span class="p">,</span> <span class="s1">&#39;city&#39;</span><span class="p">:</span> <span class="s1">&#39;XYZ&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Example Airport&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example_airport</span> <span class="o">=</span> <span class="n">Airport</span><span class="p">(</span><span class="n">airport</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example_airport</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>
+<span class="go">{</span>
+<span class="go">    &#39;code&#39;: &#39;3E7&#39;,</span>
+<span class="go">    &#39;city&#39;: &#39;XYZ&#39;,</span>
+<span class="go">    &#39;name&#39;: &#39;Example Airport&#39;,</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A dictionary representing this Airport.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Carrier">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Carrier</code><span class="sig-paren">(</span><em>code: str</em>, <em>name: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Carrier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Carrier" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Class inherits from <a class="reference internal" href="#pyflight.results.FlightData" title="pyflight.results.FlightData"><code class="xref py py-class docutils literal"><span class="pre">FlightData</span></code></a> and thus, supports all operations
+that FlightData supports. It represents a Carrier for the returned solution with
+a code and a name.
+For Examples, view the &#8220;Examples&#8221; section for <a class="reference internal" href="#pyflight.results.FlightData" title="pyflight.results.FlightData"><code class="xref py py-class docutils literal"><span class="pre">FlightData</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Tax">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Tax</code><span class="sig-paren">(</span><em>code: str</em>, <em>name: str</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Tax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Tax" title="Permalink to this definition">¶</a></dt>
+<dd><p>This Class inherits from <a class="reference internal" href="#pyflight.results.FlightData" title="pyflight.results.FlightData"><code class="xref py py-class docutils literal"><span class="pre">FlightData</span></code></a> and thus, supports all operations
+that FlightData supports. This represents a Tax with a code (unique identifier) and a Name.
+This will also be reflected in the Pricing section of a Trip, but with more information
+such as the charge type, the country, and the price of the Tax.
+For Examples, view the &#8220;Examples&#8221; section for <a class="reference internal" href="#pyflight.results.FlightData" title="pyflight.results.FlightData"><code class="xref py py-class docutils literal"><span class="pre">FlightData</span></code></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Trip">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Trip</code><span class="sig-paren">(</span><em>trip_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Trip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Trip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains Information about one Trip - an itinerary solution - returned by the API.</p>
+<dl class="attribute">
+<dt id="pyflight.results.Trip.total_price">
+<code class="descname">total_price</code><a class="headerlink" href="#pyflight.results.Trip.total_price" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. <code class="docutils literal"><span class="pre">'USD59.00'</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Trip.id">
+<code class="descname">id</code><a class="headerlink" href="#pyflight.results.Trip.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The unique ID given to each Trip</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Trip.routes">
+<code class="descname">routes</code><a class="headerlink" href="#pyflight.results.Trip.routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Route" title="pyflight.results.Route"><code class="xref py py-class docutils literal"><span class="pre">Route</span></code></a> &#8211; A list of Routes from this Trip</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Trip.pricing">
+<code class="descname">pricing</code><a class="headerlink" href="#pyflight.results.Trip.pricing" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Pricing" title="pyflight.results.Pricing"><code class="xref py py-class docutils literal"><span class="pre">Pricing</span></code></a> &#8211; A list of pricing data from this Trip</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Route">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Route</code><span class="sig-paren">(</span><em>route_slice: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Route"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Route" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the traveller&#8217;s intent as well as a low-fare search about an itinerary between two points.</p>
+<p>In the Response, this is represented as <code class="docutils literal"><span class="pre">trips.tripOption[].slice[]</span></code></p>
+<dl class="attribute">
+<dt id="pyflight.results.Route.duration">
+<code class="descname">duration</code><a class="headerlink" href="#pyflight.results.Route.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The duation of the <a class="reference internal" href="#pyflight.results.Route" title="pyflight.results.Route"><code class="xref py py-class docutils literal"><span class="pre">Route</span></code></a>, in Minutes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Route.segments">
+<code class="descname">segments</code><a class="headerlink" href="#pyflight.results.Route.segments" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Segment" title="pyflight.results.Segment"><code class="xref py py-class docutils literal"><span class="pre">Segment</span></code></a>s &#8211; Segments consisting of one more consecutive legs on the same flight.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Segment">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Segment</code><span class="sig-paren">(</span><em>segment: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A single Segment consisting of one or more consecutive legs on the same flight.</p>
+<p>As an example, a Flight could have a stop between the origin and destination,
+resulting in two Segments instead of one. This contains information about
+one Single Segment&#8217;s duration - for example, a flight from DFW to HNL, as well
+as other information about the Flight that this Segment describes.</p>
+<p>In the Response, this is represented as <code class="docutils literal"><span class="pre">trips.tripOption[].slice[].segment[]</span></code></p>
+<dl class="attribute">
+<dt id="pyflight.results.Segment.id">
+<code class="descname">id</code><a class="headerlink" href="#pyflight.results.Segment.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The unique ID identifying this Segment.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.duration">
+<code class="descname">duration</code><a class="headerlink" href="#pyflight.results.Segment.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The duration of this Flight Segment, in Minutes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.cabin">
+<code class="descname">cabin</code><a class="headerlink" href="#pyflight.results.Segment.cabin" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The cabin booked for this segment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.booking_code">
+<code class="descname">booking_code</code><a class="headerlink" href="#pyflight.results.Segment.booking_code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The booking code or booking class for this Segment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.booking_code_count">
+<code class="descname">booking_code_count</code><a class="headerlink" href="#pyflight.results.Segment.booking_code_count" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The Number of seats available in this Segment with this Booking Code</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.flight_carrier">
+<code class="descname">flight_carrier</code><a class="headerlink" href="#pyflight.results.Segment.flight_carrier" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; A two-letter IATA airline designator for this Segment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.flight_number">
+<code class="descname">flight_number</code><a class="headerlink" href="#pyflight.results.Segment.flight_number" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The flight number of this Segment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.married_segment_group">
+<code class="descname">married_segment_group</code><a class="headerlink" href="#pyflight.results.Segment.married_segment_group" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Index of a Segment in a married Segment Group</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Segment.flights">
+<code class="descname">flights</code><a class="headerlink" href="#pyflight.results.Segment.flights" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Flight" title="pyflight.results.Flight"><code class="xref py py-class docutils literal"><span class="pre">Flight</span></code></a> &#8211; The flights from takeoff to landing for this Segment.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Flight">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Flight</code><span class="sig-paren">(</span><em>leg_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Flight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Flight" title="Permalink to this definition">¶</a></dt>
+<dd><p>The smallest unit of travel, identifies a flight from takeoff to landing.</p>
+<p>In the API Response, this is found as <code class="docutils literal"><span class="pre">trips.tripOption[].slice[].segment[].leg[]</span></code></p>
+<dl class="attribute">
+<dt id="pyflight.results.Flight.id">
+<code class="descname">id</code><a class="headerlink" href="#pyflight.results.Flight.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; A unique identifier for this Flight Object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.aircraft">
+<code class="descname">aircraft</code><a class="headerlink" href="#pyflight.results.Flight.aircraft" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The aircraft travelling between the two points of this Flight</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.departure_time">
+<code class="descname">departure_time</code><a class="headerlink" href="#pyflight.results.Flight.departure_time" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Time of Departure local to the point of departure, with the Time Zone Difference included</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.arrival_time">
+<code class="descname">arrival_time</code><a class="headerlink" href="#pyflight.results.Flight.arrival_time" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Time of Arrival local to the point of arrival, with the Time Zone Difference included</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.duration">
+<code class="descname">duration</code><a class="headerlink" href="#pyflight.results.Flight.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The scheduled Travelling Time between the the two Points, in minutes</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.origin">
+<code class="descname">origin</code><a class="headerlink" href="#pyflight.results.Flight.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Origin of this Flight as a City / Airport Code</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.destination">
+<code class="descname">destination</code><a class="headerlink" href="#pyflight.results.Flight.destination" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Destination of this Flight as a City / Airport Code</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.origin_terminal">
+<code class="descname">origin_terminal</code><a class="headerlink" href="#pyflight.results.Flight.origin_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The scheduled Terminal from which this Flight should depart on. <code class="docutils literal"><span class="pre">''</span></code> (empty string) if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.destination_terminal">
+<code class="descname">destination_terminal</code><a class="headerlink" href="#pyflight.results.Flight.destination_terminal" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The scheduled Terminal where this Flight should arrive at. <code class="docutils literal"><span class="pre">''</span></code> (empty string) if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.mileage">
+<code class="descname">mileage</code><a class="headerlink" href="#pyflight.results.Flight.mileage" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The number of miles flown in this Flight</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.meal">
+<code class="descname">meal</code><a class="headerlink" href="#pyflight.results.Flight.meal" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; A description of the meal(s) served on the flight, <code class="docutils literal"><span class="pre">''</span></code> (empty string) if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.change_plane">
+<code class="descname">change_plane</code><a class="headerlink" href="#pyflight.results.Flight.change_plane" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Whether passengers have to change planes following this leg. Applies to the next leg, defaults to False.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Flight.performance">
+<code class="descname">performance</code><a class="headerlink" href="#pyflight.results.Flight.performance" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Specifies the published on time performance on this leg. <code class="docutils literal"><span class="pre">0</span></code> if not specified.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Pricing">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Pricing</code><span class="sig-paren">(</span><em>pricing_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Pricing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Pricing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains Information about the pricing of the given Route, per passenger.</p>
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.fares">
+<code class="descname">fares</code><a class="headerlink" href="#pyflight.results.Pricing.fares" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.Fare" title="pyflight.results.Fare"><code class="xref py py-class docutils literal"><span class="pre">Fare</span></code></a> &#8211; A list of <a class="reference internal" href="#pyflight.results.Fare" title="pyflight.results.Fare"><code class="xref py py-class docutils literal"><span class="pre">Fare</span></code></a> objects used to price one or more segments.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.segment_pricing">
+<code class="descname">segment_pricing</code><a class="headerlink" href="#pyflight.results.Pricing.segment_pricing" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of <a class="reference internal" href="#pyflight.results.SegmentPricing" title="pyflight.results.SegmentPricing"><code class="xref py py-class docutils literal"><span class="pre">SegmentPricing</span></code></a> &#8211; A list of <a class="reference internal" href="#pyflight.results.SegmentPricing" title="pyflight.results.SegmentPricing"><code class="xref py py-class docutils literal"><span class="pre">SegmentPricing</span></code></a> objects used to price one segment.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.base_fare_total">
+<code class="descname">base_fare_total</code><a class="headerlink" href="#pyflight.results.Pricing.base_fare_total" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The total fare in the currency of the country of origin.
+<code class="docutils literal"><span class="pre">None</span></code> when the sales currency and the currency of the country of commencement are not different</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.sale_fare_total">
+<code class="descname">sale_fare_total</code><a class="headerlink" href="#pyflight.results.Pricing.sale_fare_total" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The total fare in the sale or equivalent currency.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">sale_fare_total</code></dt>
+<dd><p><em>str</em> &#8211; The total fare in the sale or equivalent currency.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.sale_tax_total">
+<code class="descname">sale_tax_total</code><a class="headerlink" href="#pyflight.results.Pricing.sale_tax_total" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The taxes in the sale or equivalent currency.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.sale_total">
+<code class="descname">sale_total</code><a class="headerlink" href="#pyflight.results.Pricing.sale_total" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The total per-passenger price (fare + tax) in the sale of equivalent currency.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.adults">
+<code class="descname">adults</code><a class="headerlink" href="#pyflight.results.Pricing.adults" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The amount of passengers that are adults.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.children">
+<code class="descname">children</code><a class="headerlink" href="#pyflight.results.Pricing.children" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The amount of passengers that are children.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.infants_in_lap">
+<code class="descname">infants_in_lap</code><a class="headerlink" href="#pyflight.results.Pricing.infants_in_lap" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The amount of passengers that are infants travelling in the lap of an adult.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.infants_in_seat">
+<code class="descname">infants_in_seat</code><a class="headerlink" href="#pyflight.results.Pricing.infants_in_seat" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The amount of passengers that are infants assigned to a seat.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.seniors">
+<code class="descname">seniors</code><a class="headerlink" href="#pyflight.results.Pricing.seniors" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The amount of passengers that are senior citizens.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.fare_calculation">
+<code class="descname">fare_calculation</code><a class="headerlink" href="#pyflight.results.Pricing.fare_calculation" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The horizontal fare calculation. On a ticket, this is a field that displays
+all of the relevant items that go into the calculation of the fare.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.latest_ticketing_time">
+<code class="descname">latest_ticketing_time</code><a class="headerlink" href="#pyflight.results.Pricing.latest_ticketing_time" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The latest ticketing time for this pricing assuming there is no change in fares / rules
+and the reservation occurs at ticketing time.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.for_passenger_type">
+<code class="descname">for_passenger_type</code><a class="headerlink" href="#pyflight.results.Pricing.for_passenger_type" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; Specifies the passenger type code for this pricing, used by a carrier to restrict
+fares to certain categories of passengers (for example, a fare might be valid only
+for senior citizens).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Pricing.refundable">
+<code class="descname">refundable</code><a class="headerlink" href="#pyflight.results.Pricing.refundable" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Specifies whether the fares on this pricing are refundable.
+If the API does not specify this explicitly in the response, it defaults to <a href="#id1"><span class="problematic" id="id2">``</span></a>False`.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.Fare">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">Fare</code><span class="sig-paren">(</span><em>fare_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#Fare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.Fare" title="Permalink to this definition">¶</a></dt>
+<dd><p>The fare used to price one or more segments.</p>
+<dl class="attribute">
+<dt id="pyflight.results.Fare.id">
+<code class="descname">id</code><a class="headerlink" href="#pyflight.results.Fare.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The unique identifier of the fare.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Fare.carrier_code">
+<code class="descname">carrier_code</code><a class="headerlink" href="#pyflight.results.Fare.carrier_code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Code for the Carrier whose fare this is.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Fare.origin_city_code">
+<code class="descname">origin_city_code</code><a class="headerlink" href="#pyflight.results.Fare.origin_city_code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The origin city for this fare.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Fare.destination_city_code">
+<code class="descname">destination_city_code</code><a class="headerlink" href="#pyflight.results.Fare.destination_city_code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The destination city for this fare.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Fare.basis_code">
+<code class="descname">basis_code</code><a class="headerlink" href="#pyflight.results.Fare.basis_code" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Basis Code of this fare.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.Fare.private">
+<code class="descname">private</code><a class="headerlink" href="#pyflight.results.Fare.private" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> &#8211; Specifies whether this is a private fare offered only to select customers or not.
+Defaults to <code class="docutils literal"><span class="pre">False</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.SegmentPricing">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">SegmentPricing</code><span class="sig-paren">(</span><em>segment_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#SegmentPricing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.SegmentPricing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Price and baggage information for segments.</p>
+<dl class="attribute">
+<dt id="pyflight.results.SegmentPricing.fare_id">
+<code class="descname">fare_id</code><a class="headerlink" href="#pyflight.results.SegmentPricing.fare_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The Fare ID for this Segment Pricing. Used to refer to different parts of the same solution.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.SegmentPricing.segment_id">
+<code class="descname">segment_id</code><a class="headerlink" href="#pyflight.results.SegmentPricing.segment_id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; A unique identifier for this <a class="reference internal" href="#pyflight.results.SegmentPricing" title="pyflight.results.SegmentPricing"><code class="xref py py-class docutils literal"><span class="pre">SegmentPricing</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.SegmentPricing.free_baggage">
+<code class="descname">free_baggage</code><a class="headerlink" href="#pyflight.results.SegmentPricing.free_baggage" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> &#8211; A list of <a class="reference internal" href="#pyflight.results.FreeBaggageOption" title="pyflight.results.FreeBaggageOption"><code class="xref py py-class docutils literal"><span class="pre">FreeBaggageOption</span></code></a> objects for the free baggage allowance on this segment.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.BagDescriptor">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">BagDescriptor</code><span class="sig-paren">(</span><em>bag_descriptor_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#BagDescriptor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.BagDescriptor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A representation of a type of bag.</p>
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.commercial_name">
+<code class="descname">commercial_name</code><a class="headerlink" href="#pyflight.results.BagDescriptor.commercial_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; The commercial name for this <a class="reference internal" href="#pyflight.results.BagDescriptor" title="pyflight.results.BagDescriptor"><code class="xref py py-class docutils literal"><span class="pre">BagDescriptor</span></code></a> for an optional service, can also be an empty string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.count">
+<code class="descname">count</code><a class="headerlink" href="#pyflight.results.BagDescriptor.count" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; How many of this type of bag will be checked on this flight.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.description">
+<code class="descname">description</code><a class="headerlink" href="#pyflight.results.BagDescriptor.description" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> &#8211; A list of strings describing the baggage. Can be an empty list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.subcode">
+<code class="descname">subcode</code><a class="headerlink" href="#pyflight.results.BagDescriptor.subcode" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> &#8211; An IATA subcode used to identify the optional service</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.max_kilos">
+<code class="descname">max_kilos</code><a class="headerlink" href="#pyflight.results.BagDescriptor.max_kilos" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Specifies the maximum number of kilos that all the free baggage together may weigh.
+<code class="docutils literal"><span class="pre">None</span></code> if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.kilos_per_piece">
+<code class="descname">kilos_per_piece</code><a class="headerlink" href="#pyflight.results.BagDescriptor.kilos_per_piece" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; Specifies the maximum number of kilos that any piece of baggage may weigh.
+<code class="docutils literal"><span class="pre">None</span></code> if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.BagDescriptor.pounds">
+<code class="descname">pounds</code><a class="headerlink" href="#pyflight.results.BagDescriptor.pounds" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; The number of pounds of free baggage allowed. <code class="docutils literal"><span class="pre">None</span></code> if not specified.</p>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>A single <a class="reference internal" href="#pyflight.results.FreeBaggageOption" title="pyflight.results.FreeBaggageOption"><code class="xref py py-class docutils literal"><span class="pre">FreeBaggageOption</span></code></a> contains multiple BagDescriptors.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyflight.results.FreeBaggageOption">
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">FreeBaggageOption</code><span class="sig-paren">(</span><em>baggage_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#FreeBaggageOption"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyflight.results.FreeBaggageOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains Information about the free baggage allowance for one Segment.</p>
+<dl class="attribute">
+<dt id="pyflight.results.FreeBaggageOption.pieces">
+<code class="descname">pieces</code><a class="headerlink" href="#pyflight.results.FreeBaggageOption.pieces" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> &#8211; How many pieces of free baggage are allowed</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyflight.results.FreeBaggageOption.bag_descriptors">
+<code class="descname">bag_descriptors</code><a class="headerlink" href="#pyflight.results.FreeBaggageOption.bag_descriptors" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> &#8211; A list of <a class="reference internal" href="#pyflight.results.BagDescriptor" title="pyflight.results.BagDescriptor"><code class="xref py py-class docutils literal"><span class="pre">BagDescriptor</span></code></a> Objects used to represent different types of bags.
+Can be an empty list.</p>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>Information about this is saved in a <a class="reference internal" href="#pyflight.results.SegmentPricing" title="pyflight.results.SegmentPricing"><code class="xref py py-class docutils literal"><span class="pre">SegmentPricing</span></code></a> class.</p>
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">pyflight.results.</code><code class="descname">BagDescriptor</code><span class="sig-paren">(</span><em>bag_descriptor_data: dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyflight/results.html#BagDescriptor"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>A representation of a type of bag.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">commercial_name</code></dt>
+<dd><p><em>str</em> &#8211; The commercial name for this <a class="reference internal" href="#pyflight.results.BagDescriptor" title="pyflight.results.BagDescriptor"><code class="xref py py-class docutils literal"><span class="pre">BagDescriptor</span></code></a> for an optional service, can also be an empty string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">count</code></dt>
+<dd><p><em>int</em> &#8211; How many of this type of bag will be checked on this flight.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">description</code></dt>
+<dd><p><em>list</em> &#8211; A list of strings describing the baggage. Can be an empty list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">subcode</code></dt>
+<dd><p><em>str</em> &#8211; An IATA subcode used to identify the optional service</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">max_kilos</code></dt>
+<dd><p><em>int</em> &#8211; Specifies the maximum number of kilos that all the free baggage together may weigh.
+<code class="docutils literal"><span class="pre">None</span></code> if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">kilos_per_piece</code></dt>
+<dd><p><em>int</em> &#8211; Specifies the maximum number of kilos that any piece of baggage may weigh.
+<code class="docutils literal"><span class="pre">None</span></code> if not specified.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">pounds</code></dt>
+<dd><p><em>int</em> &#8211; The number of pounds of free baggage allowed. <code class="docutils literal"><span class="pre">None</span></code> if not specified.</p>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>A single <a class="reference internal" href="#pyflight.results.FreeBaggageOption" title="pyflight.results.FreeBaggageOption"><code class="xref py py-class docutils literal"><span class="pre">FreeBaggageOption</span></code></a> contains multiple BagDescriptors.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div><generator object macro at 0x1075fcd58>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Volcyy.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
