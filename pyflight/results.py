@@ -567,27 +567,28 @@ class SegmentPricing(object):
 class TaxPricing(object):
     """The taxes used to calculate the tax total per ticket.
     
-    This extends the information being held in the Tax objects.
+    This extends the information being held in the :class:`Tax` objects.
     
-    Attributes:
+    Attributes
+    ----------
         id : str
             The unique identifier for this tax in a response, which is not present
-            for unnamed carrier surcharges. Is an empty string if not present.
+            for unnamed carrier surcharges. ``''`` (empty string) if not present.
         charge_type : str
-            Specifies the charge type for this Tax - whether it is a government charge or a carrier surcharge.
+            Specifies the charge type for this :class:`Tax` - whether it is a government charge or a carrier surcharge.
         code : str
             The code to enter in the ticket's tax box.
         country : str
-            The country issuing the charge, for government charges only. '' if not a government charge.
+            The country issuing the charge, for government charges only. ``''`` (Empty string) if not a government charge.
         sale_price : str
             The price of the tax in the sales or equivalent currency.
     """
     def __init__(self, pricing_tax_data: dict):
-        """Create a new TaxPricing object.
+        """Create a new :class:`TaxPricing object.
         
         Args:
             pricing_tax_data : dict
-                The pricing[].tax[] data returned from the API.
+                The ``pricing[].tax[]` data returned from the API.
         """
         self.id = pricing_tax_data.get('id', '')
         self.charge_type = pricing_tax_data['chargeType']
