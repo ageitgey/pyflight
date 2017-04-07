@@ -405,6 +405,8 @@ class Route(object):
     Attributes:
         duration : int
             The duration of the Route, in Minutes
+        segments : list of :class:`Segment`
+            Segments consisting of one more consecutive legs on the same flight.
     """
     def __init__(self, route_slice: dict):
         """Create a new Route Object.
@@ -465,7 +467,7 @@ class BagDescriptor(object):
     Attributes
     ----------
         commercial_name : str
-            The commercial name for this BagDescriptor for an optional service, can also be an empty string.
+            The commercial name for this :class:`BagDescriptor` for an optional service, can also be an empty string.
         count : int
             How many of this type of bag will be checked on this flight.
         description : list
@@ -483,7 +485,7 @@ class BagDescriptor(object):
         
     Notes
     -----
-        A single FreeBaggageOption contains multiple BagDescriptors.
+        A single :class:`FreeBaggageOption` contains multiple BagDescriptors.
     """
     def __init__(self, bag_descriptor_data: dict):
         """Create a new BagDescriptor object.
@@ -510,12 +512,12 @@ class FreeBaggageOption(object):
         pieces : int
             How many pieces of free baggage are allowed
         bag_descriptors : list
-            A list of BagDescriptor Objects used to represent different types of bags.
+            A list of :class:`BagDescriptor` Objects used to represent different types of bags.
             Can be an empty list.
     
     Notes
     -----
-        Information about this is saved in a SegmentPricing class.
+        Information about this is saved in a :class:`SegmentPricing` class.
     """
     def __init__(self, baggage_data: dict):
         """Create a new FreeBaggageOption object. 
@@ -536,13 +538,14 @@ class FreeBaggageOption(object):
 class SegmentPricing(object):
     """Price and baggage information for segments.
     
-    Attributes:
+    Attributes
+    -----------
         fare_id : str
             The Fare ID for this Segment Pricing. Used to refer to different parts of the same solution.
         segment_id : str
-            A unique identifier for this SegmentPricing object.
+            A unique identifier for this :class:`SegmentPricing` object.
         free_baggage : list
-            A list of FreeBaggageOption objects for the free baggage allowance on this segment. 
+            A list of :class:`FreeBaggageOption` objects for the free baggage allowance on this segment. 
     
     """
     def __init__(self, segment_data: dict):
