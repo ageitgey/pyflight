@@ -352,9 +352,10 @@ class Segment(object):
     one Single Segment's duration - for example, a flight from DFW to HNL, as well
     as other information about the Flight that this Segment describes.
     
-    In the Response, this is represented as 'trips.tripOption[].slice[].segment[]'
+    In the Response, this is represented as ``trips.tripOption[].slice[].segment[]``
     
-    Attributes:
+    Attributes
+    ----------
         id : str
             The unique ID identifying this Segment.
         duration : int
@@ -375,7 +376,8 @@ class Segment(object):
     def __init__(self, segment: dict):
         """Create a new Segment Object.
         
-        Args:
+        Parameters
+        ----------
             segment : dict
                 The dictionary to construct this Segment from.
         """
