@@ -402,10 +402,11 @@ class Route(object):
     
     In the Response, this is represented as ``trips.tripOption[].slice[]``
     
-    Attributes:
+    Attributes
+    ----------
         duration : int
-            The duration of the Route, in Minutes
-        segments : list of :class:`Segment`
+            The duration of the :class:`Route, in Minutes
+        segments : list of :class:`Segment`\s
             Segments consisting of one more consecutive legs on the same flight.
     """
     def __init__(self, route_slice: dict):
@@ -606,7 +607,7 @@ class Pricing(object):
         fares : list of :class:`Fare`
             A list of :class:`Fare` objects used to price one or more segments.
         segment_pricing : list of :class:`SegmentPricing`
-            A list of :class:`SegmentPricing objects used to price one segment.
+            A list of :class:`SegmentPricing` objects used to price one segment.
         base_fare_total : str
             The total fare in the currency of the country of origin.
             ``None`` when the sales currency and the currency of the country of commencement are not different
@@ -728,7 +729,7 @@ class Result(object):
         taxes : list of :class:`Tax`
             Contains the Code and the Name of Taxes found in the Response
             
-        carriers : list of :class:Carrier`
+        carriers : list of :class:`Carrier`
             Contains the Code and the Name of the Carriers found in the Response
     """
 
