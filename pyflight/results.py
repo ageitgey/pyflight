@@ -40,7 +40,7 @@ class FlightData(object):
         
         >>> my_data = FlightData('7H6', 'Example Data')
         >>> len(my_data)
-        11
+        12
         
         
     Attributes
@@ -84,7 +84,7 @@ class FlightData(object):
         -------
             >>> my_data = FlightData('7H6', 'Example Data')
             >>> len(my_data)
-            11
+            12
         
         Returns
         -------
