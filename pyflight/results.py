@@ -72,7 +72,7 @@ class FlightData(object):
         Returns
         -------
         bool
-            True or False, depending on the Result of the Comparison
+            ``True`` or ``False``, depending on the Result of the Comparison
         """
         return self.code == other.code and self.name == other.name
 
@@ -222,7 +222,7 @@ class Airport(object):
         Returns
         -------
         bool
-            True or False depending on the Result of the Comparison
+            ``True`` or ``False` depending on the Result of the Comparison
         """
         return self.code == other.code and self.city == other.city
 
@@ -474,12 +474,12 @@ class BagDescriptor(object):
             An IATA subcode used to identify the optional service
         max_kilos : int
             Specifies the maximum number of kilos that all the free baggage together may weigh.
-            None if not specified.
+            ``None`` if not specified.
         kilos_per_piece : int
             Specifies the maximum number of kilos that any piece of baggage may weigh.
-            None if not specified.
+            ``None`` if not specified.
         pounds : int
-            The number of pounds of free baggage allowed. None if not specified.
+            The number of pounds of free baggage allowed. ``None`` if not specified.
         
     Notes
     -----
@@ -602,7 +602,7 @@ class Pricing(object):
             A list of SegmentPricing objects used to price one segment.
         base_fare_total : str
             The total fare in the currency of the country of origin.
-            None when the sales currency and the currency of the country of commencement are not different
+            ``None`` when the sales currency and the currency of the country of commencement are not different
         sale_fare_total : str
             The total fare in the sale or equivalent currency.
         sale_fare_total : str
@@ -633,7 +633,7 @@ class Pricing(object):
             for senior citizens).
         refundable : bool
             Specifies whether the fares on this pricing are refundable. 
-            If the API does not specify this explicitly in the response, it defaults to False.
+            If the API does not specify this explicitly in the response, it defaults to ``False`.
 
     """
     def __init__(self, pricing_data: dict):
