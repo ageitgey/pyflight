@@ -680,6 +680,7 @@ class Trip(object):
     The Amount of Trips is determined by the amount of Solutions set in the Request.
       
     Attributes
+    ----------
         total_price : str
             The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. 'USD59.00'
         id : str
@@ -691,7 +692,8 @@ class Trip(object):
     def __init__(self, trip_data: dict):
         """Create a new Trip object.
         
-        Arguments:
+        Parameters
+        ----------
             trip_data : dict
                 The tripOption dictionary returned by the API to create the Trip Object from
         """
