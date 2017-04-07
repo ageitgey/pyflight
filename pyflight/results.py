@@ -309,13 +309,13 @@ class Flight(object):
         destination : str
             The Destination of this Flight as a City / Airport Code
         origin_terminal : str
-            The scheduled Terminal from which this Flight should depart on. ``''`` if not specified.
+            The scheduled Terminal from which this Flight should depart on. ``''`` (empty string) if not specified.
         destination_terminal : str
-            The scheduled Terminal where this Flight should arrive at. ``''`` if not specified.
+            The scheduled Terminal where this Flight should arrive at. ``''`` (empty string) if not specified.
         mileage : int
             The number of miles flown in this Flight
         meal : str
-            A description of the meal(s) served on the flight, ``''` if not specified.
+            A description of the meal(s) served on the flight, ``''`` (empty string) if not specified.
         change_plane : bool
             Whether passengers have to change planes following this leg. Applies to the next leg, defaults to False.
         performance : int
