@@ -685,11 +685,11 @@ class Result(object):
         self.airports = []
 
         airports = data['trips']['data']['airport']
-        cities = data['trips']['data']['city']
+        # cities = data['trips']['data']['city']
 
         # Match Airport and City together
-        for airport_data, city_data in zip(airports, cities):
-
+        for airport in airports:
+            self.airports.append(Airport(airport))
 
         # Save Aircraft
         self.aircraft = []

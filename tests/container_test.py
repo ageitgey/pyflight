@@ -49,9 +49,9 @@ def test_flight_data():
 
 # Test the Airport Container
 def test_airport():
-    first_airport = Airport({'code': '13', 'name': 'Some Airport'}, {'code': 'C83', 'name': 'Some City'})
-    second_airport = Airport({'code': '58', 'name': 'Another Airport'}, {'code': '337', 'name': 'Another City'})
-    third_airport = Airport({'code': '31', 'name': 'Airport Airport'}, {'code': '958', 'name': 'City City'})
+    first_airport = Airport({'code': '13', 'city': 'C83', 'name': 'Some Airport'})
+    second_airport = Airport({'code': '58', 'city': '337', 'name': 'Another Airport'})
+    third_airport = Airport({'code': '31', 'city': '958', 'name': 'Airport Airport'})
 
     # Test the __len__ overload
     assert len(first_airport) == 12
@@ -67,28 +67,25 @@ def test_airport():
     assert third_airport == third_airport
 
     # Test the __str__ overload
-    assert str(first_airport) == 'Some Airport in Some City'
-    assert str(second_airport) == 'Another Airport in Another City'
-    assert str(third_airport) == 'Airport Airport in City City'
+    assert str(first_airport) == 'Some Airport'
+    assert str(second_airport) == 'Another Airport'
+    assert str(third_airport) == 'Airport Airport'
 
     # Test the as_dict method
     assert first_airport.as_dict() == {
         'code': '13',
-        'name': 'Some Airport',
         'city': 'C83',
-        'city_name': 'Some City'
+        'name': 'Some Airport'
     }
     assert second_airport.as_dict() == {
         'code': '58',
-        'name': 'Another Airport',
         'city': '337',
-        'city_name': 'Another City'
+        'name': 'Another Airport'
     }
     assert third_airport.as_dict() == {
         'code': '31',
-        'name': 'Airport Airport',
         'city': '958',
-        'city_name': 'City City'
+        'name': 'Airport Airport'
     }
 
 # Get sample Data from JSON
@@ -142,25 +139,21 @@ def test_result_aircraft():
 
 # Test correct Grabbing of Airports
 def test_result_airport():
-    assert first_result.airports[0].airport_code == 'LAX'
-    assert first_result.airports[0].airport_name == 'Los Angeles International'
-    assert first_result.airports[0].city_code == 'LAX'
-    assert first_result.airports[0].city_name == 'Los Angeles'
+    assert first_result.airports[0].code == 'LAX'
+    assert first_result.airports[0].name == 'Los Angeles International'
+    assert first_result.airports[0].city == 'LAX'
 
-    assert first_result.airports[1].airport_code == 'SFO'
-    assert first_result.airports[1].airport_name == 'San Francisco International'
-    assert first_result.airports[1].city_code == 'SFO'
-    assert first_result.airports[1].city_name == 'San Francisco'
+    assert first_result.airports[1].code == 'SFO'
+    assert first_result.airports[1].name == 'San Francisco International'
+    assert first_result.airports[1].city == 'SFO'
 
-    assert second_result.airports[0].airport_code == 'CDG'
-    assert second_result.airports[0].airport_name == 'Paris Charles de Gaulle'
-    assert second_result.airports[0].city_code == 'PAR'
-    assert second_result.airports[0].city_name == 'Paris'
+    assert second_result.airports[0].code == 'CDG'
+    assert second_result.airports[0].name == 'Paris Charles de Gaulle'
+    assert second_result.airports[0].city == 'PAR'
 
-    assert second_result.airports[1].airport_code == 'FRA'
-    assert second_result.airports[1].airport_name == 'Frankfurt International'
-    assert second_result.airports[1].city_code == 'FRA'
-    assert second_result.airports[1].city_name == 'Frankfurt'
+    assert second_result.airports[1].code == 'FRA'
+    assert second_result.airports[1].name == 'Frankfurt International'
+    assert second_result.airports[1].city == 'FRA'
 
 
 # Test correct Grabbing of Carriers
