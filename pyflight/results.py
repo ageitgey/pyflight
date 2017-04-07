@@ -440,6 +440,7 @@ class Fare(object):
             The Basis Code of this fare.
         private : bool
             Specifies whether this is a private fare offered only to select customers or not.
+            Defaults to False.
     """
     def __init__(self, fare_data: dict):
         """
@@ -461,7 +462,8 @@ class Fare(object):
 class BagDescriptor(object):
     """A representation of a type of bag.
     
-    Attributes:
+    Attributes
+    ----------
         commercial_name : str
             The commercial name for this BagDescriptor for an optional service, can also be an empty string.
         count : int
@@ -479,13 +481,15 @@ class BagDescriptor(object):
         pounds : int
             The number of pounds of free baggage allowed. None if not specified.
         
-    Notes:
+    Notes
+    -----
         A single FreeBaggageOption contains multiple BagDescriptors.
     """
     def __init__(self, bag_descriptor_data: dict):
         """Create a new BagDescriptor object.
         
-        Args:
+        Parameters
+        ----------
             bag_descriptor_data : dict
                 The Bag Descriptor data as a dictionary, returned from the API in Arrays.
         """
