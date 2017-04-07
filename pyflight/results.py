@@ -126,7 +126,8 @@ class FlightData(object):
 
 class Aircraft(FlightData):
     """
-    An Aircraft with an ID and Name.
+    An Aircraft with an ID and Name. This Class inherits from :class:`FlightData` and thus, supports all operations
+    that FlightData supports.
     """
     pass
 
@@ -149,17 +150,15 @@ class Airport(object):
     Contains Data of an Airport and its City
     
     Attributes:
-        airport_code : str
+        code : str
             The Code of this Airport
             
-        airport_name : str
+        name : str
             The Name of this Airport
         
-        city_code : str
+        city : str
             The Code of the City associated with the Airport
             
-        city_name : str
-            The Name of the City associated with the Airport
         
     Methods:
         __init__(airport: dict, city: dict)
@@ -174,23 +173,19 @@ class Airport(object):
             Get a representation of this Airport as a Dictionary.
     """
 
-    def __init__(self, airport: dict, city: dict):
+    def __init__(self, airport: dict):
         """Create an Airport Object containing Data about an Airport and its associated City.
         
         An Airport Object which contains Data about 
-        each Flight returned from the API. It will match
-        the Data for a structured Overview of each Flight.
+        each Flight returned from the API.
         
         Arguments:
             airport : dict
                 A single Airport returned by the API
-            city : dict
-                A single City returned by the API
         """
-        self.airport_code = airport['code']
-        self.airport_name = airport['name']
-        self.city_code = city['code']
-        self.city_name = city['name']
+        self.code = airport['code']
+        self.name = airport['name']
+        self.city = airport['city']
 
     def __eq__(self, other):
         """Compare two Airports with each other by their Airport and City Codes.
@@ -202,61 +197,56 @@ class Airport(object):
         Returns
             bool: True or False depending on the Result of the Comparison
         """
-        return self.airport_code == other.airport_code and self.city_code == other.city_code
+        return self.code == other.code and self.city == other.city
 
     def __len__(self) -> int:
         """Get the length of the Airport Name.
         
         Example
-            >>> airport = {'code': '3E7', 'name': 'Example Airport'}
-            >>> city = {'code': 'XYZ', 'name': 'Example City'}
-            >>> example_airport = Airport(airport, city)
+            >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
+            >>> example_airport = Airport(airport)
             >>> len(example_airport)
             15
         
         Returns
             int: The length of the Airport Name 
         """
-        return len(self.airport_name)
+        return len(self.name)
 
     def __str__(self) -> str:
-        """Get a representation of this Airport as a String.
+        """Get this airport's name
         
         Example
-            >>> airport = {'code': '3E7', 'name': 'Example Airport'}
-            >>> city = {'code': 'XYZ', 'name': 'Example City'}
-            >>> example_airport = Airport(airport, city)
+            >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
+            >>> example_airport = Airport(airport)
             >>> str(example_airport)
-            Example Airport in Example City
+            Example Airport
         
         Returns
             str: A representation of this Airport as a String.
         """
-        return f'{self.airport_name} in {self.city_name}'
+        return self.name
 
     def as_dict(self) -> dict:
         """Get a dictionary representation of the Airport.
         
         Example
-            >>> airport = {'code': '3E7', 'name': 'Example Airport'}
-            >>> city = {'code': 'XYZ', 'name': 'Example City'}
-            >>> example_airport = Airport(airport, city)
+            >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
+            >>> example_airport = Airport(airport)
             >>> example_airport.as_dict()
             {
-                'airport_code': '3E7',
-                'airport_name': 'Example Airport',
-                'city_code': 'XYZ',
-                'city_name': 'Example City'<
+                'code': '3E7',
+                'city': 'XYZ',
+                'name': 'Example Airport',
             }
         
         Returns
             dict: A dictionary representing this Airport. 
         """
         return {
-            'airport_code': self.airport_code,
-            'airport_name': self.airport_name,
-            'city_code': self.city_code,
-            'city_name': self.city_name
+            'code': self.code,
+            'city': self.city,
+            'name': self.name
                 }
 
 
@@ -699,17 +689,7 @@ class Result(object):
 
         # Match Airport and City together
         for airport_data, city_data in zip(airports, cities):
-            # Airport Code and City Code Match - append an Airport Object
-            if airport_data['city'] == city_data['code']:
-                self.airports.append(Airport(airport_data, city_data))
-            else:
-                # Search for the Airport matching the City Code
-                for city in cities:
-                    if city['code'] == airport_data['city']:
-                        self.airports.append(Airport(airport_data, city))
-                        break
-                else:
-                    raise ValueError(f'Failed to find matching City for Airport: {airport_data}')
+
 
         # Save Aircraft
         self.aircraft = []

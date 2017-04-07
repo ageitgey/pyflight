@@ -8,7 +8,6 @@ import sys
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, current_path + '/../')
 
-import pyflight
 from pyflight.results import *
 
 
@@ -74,21 +73,21 @@ def test_airport():
 
     # Test the as_dict method
     assert first_airport.as_dict() == {
-        'airport_code': '13',
-        'airport_name': 'Some Airport',
-        'city_code': 'C83',
+        'code': '13',
+        'name': 'Some Airport',
+        'city': 'C83',
         'city_name': 'Some City'
     }
     assert second_airport.as_dict() == {
-        'airport_code': '58',
-        'airport_name': 'Another Airport',
-        'city_code': '337',
+        'code': '58',
+        'name': 'Another Airport',
+        'city': '337',
         'city_name': 'Another City'
     }
     assert third_airport.as_dict() == {
-        'airport_code': '31',
-        'airport_name': 'Airport Airport',
-        'city_code': '958',
+        'code': '31',
+        'name': 'Airport Airport',
+        'city': '958',
         'city_name': 'City City'
     }
 
