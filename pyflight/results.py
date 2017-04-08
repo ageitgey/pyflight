@@ -134,21 +134,30 @@ class Aircraft(FlightData):
     """
 
 
+class Carrier(FlightData):
+    """
+    This Class inherits from :class:`FlightData` and thus, supports all operations
+    that FlightData supports. It represents a Carrier for the returned solution with 
+    a code and a name.
+    For Examples, view the "Examples" section for :class:`FlightData`.
+    """
+
+
+class City(FlightData):
+    """
+    This Class inherits from :class:`FlightData` and thus, supports all operations
+    that FlightData supports. This represents a City with a code that uniquely identifies
+    it as well as a name.
+    For Examples, view the "Examples" section for :class:`FlightData`.
+    """
+
+
 class Tax(FlightData):
     """
     This Class inherits from :class:`FlightData` and thus, supports all operations
     that FlightData supports. This represents a Tax with a code (unique identifier) and a Name. 
     This will also be reflected in the Pricing section of a Trip, but with more information 
     such as the charge type, the country, and the price of the Tax.
-    For Examples, view the "Examples" section for :class:`FlightData`.
-    """
-
-
-class Carrier(FlightData):
-    """
-    This Class inherits from :class:`FlightData` and thus, supports all operations
-    that FlightData supports. It represents a Carrier for the returned solution with 
-    a code and a name.
     For Examples, view the "Examples" section for :class:`FlightData`.
     """
 
@@ -748,13 +757,15 @@ class Result(object):
         """
         self.request_id = data['trips']['requestId']
 
-        # Save Flight Data
+        # Save Airports
         self.airports = []
-
-        # cities = data['trips']['data']['city']
         airports = data['trips']['data']['airport']
         for airport in airports:
             self.airports.append(Airport(airport))
+
+        # Save Cities
+        # cities = data['trips']['data']['city']
+        self.cities = []
 
         # Save Aircraft
         self.aircraft = []
