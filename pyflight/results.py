@@ -484,7 +484,7 @@ class Segment(object):
     def find_flight(self, condition_function):
         """Find a Flight out of the List of Flights in this :class:`Flight`\s that matches the passed function.
         This will return the first :class:`Flight` for which ``condition_function`` returns ``True``.
-        For example, finding a flight by its Carrier: ::
+        For example, finding the first matching flight by its Carrier: ::
             
             flight = find_flight(lambda f: f.flight_carrier == 'AB')
             
@@ -504,6 +504,29 @@ class Segment(object):
             if condition_function(flight):
                 return flight
         return None
+
+    def find_all_flights(self, condition_function):
+        """Similar to :meth:`find_flight`\, except that it returns a list of :class:`Flight`\s matching the condition
+        in the passed function instead of a single :class:`Flight` or ``None``. This returns all :class:`Flight`\s for
+        which ``condition_function`` returns True.
+        
+        Parameters
+        ---------
+        condition_function : function
+            A function that returns a ``bool`` as a result of, for example, a comparison.
+            
+        Returns
+        -------
+        list of :class:`Flight`\s
+            If the search was successful
+        empty list
+            If nothing was found
+        """
+        matching_flights = []
+        for flight in self.flights:
+            if condition_function(flight):
+                matching_flights.append(flight)
+        return matching_flights
 
 
 class Route(object):
