@@ -481,6 +481,30 @@ class Segment(object):
         """Get the ID of this :class:`Segment` object."""
         return self.id
 
+    def find_flight(self, condition_function):
+        """Find a Flight out of the List of Flights in this :class:`Flight`\s that matches the passed function.
+        This will return the first :class:`Flight` for which ``condition_function`` returns ``True``.
+        For example, finding a flight by its Carrier: ::
+            
+            flight = find_flight(lambda f: f.flight_carrier == 'AB')
+            
+        Parameters
+        ---------
+        condition_function : function
+            A function that returns a ``bool`` as a result of, for example, a comparison.
+            
+        Returns
+        -------
+        :class:`Flight`
+            If the search was successful and a :class:`Flight` was found
+        None
+            If no element has been found
+        """
+        for flight in self.flights:
+            if condition_function(flight):
+                return flight
+        return None
+
 
 class Route(object):
     """Represents the traveller's intent as well as a low-fare search about an itinerary between two points.
