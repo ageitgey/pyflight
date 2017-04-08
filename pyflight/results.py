@@ -528,6 +528,26 @@ class Segment(object):
                 matching_flights.append(flight)
         return matching_flights
 
+    def as_dict(self):
+        """Get a dictionary representing the contents of this :class:`Segment`.
+        
+        Returns
+        -------
+        dict
+            A dictionary containing the Data of this :class:`Flight` object.
+        """
+        return {
+            'id': self.id,
+            'duration': self.duration,
+            'cabin': self.cabin,
+            'booking_code': self.booking_code,
+            'booking_code_count': self.booking_code_count,
+            'flight_carrier': self.flight_carrier,
+            'flight_number': self.flight_number,
+            'married_segment_group': self.married_segment_group,
+            'flights': [x.as_dict() for x in self.flights]
+        }
+
 
 class Route(object):
     """Represents the traveller's intent as well as a low-fare search about an itinerary between two points.
