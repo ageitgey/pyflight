@@ -405,7 +405,7 @@ class Flight(object):
             'mileage': self.mileage,
             'meal': self.meal,
             'change_plane': self.change_plane,
-            'perforamnce': self.performance
+            'performance': self.performance
         }
 
 
