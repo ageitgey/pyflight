@@ -554,6 +554,15 @@ class Route(object):
     
     In the Response, this is represented as ``trips.tripOption[].slice[]``
     
+    This Class supports various *magic methods*:
+    
+    ``x == y``
+        Compares two :class:`Route`\s with each other for equality.
+        
+    ``x != y``
+        Compares two :class:`Route`\s with each other for inequality.
+    
+    
     Attributes
     ----------
         duration : int
@@ -575,6 +584,16 @@ class Route(object):
         self.segments = []
         for segment in route_slice['segment']:
             self.segments.append(Segment(segment))
+
+    def __eq__(self, other):
+        """Compare two :class:`Route`\s with each other.
+        
+        Returns
+        -------
+        bool
+            The result of the comparison
+        """
+        return [s.id for s in self.segments] == [s.id for s in other.segments] and self.duration == other.duration
 
 
 class Fare(object):
