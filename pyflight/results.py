@@ -421,6 +421,12 @@ class Segment(object):
     
     This class supports various *magic methods*:
     
+    ``x == y``
+        Compares two :class:`Segment`\s for equality.
+        
+    ``x != y``
+        Compares two :class:`Segment`\s for inequality.
+    
     ``str(x)``
         Get the ID of this :class:`Segment` object.
     
@@ -466,6 +472,10 @@ class Segment(object):
         self.flights = []
         for flight in segment['leg']:
             self.flights.append(Flight(flight))
+
+    def __eq__(self, other):
+        """Compare one :class:`Segment` object to another."""
+        return self.id == other.id
 
     def __str__(self):
         """Get the ID of this :class:`Segment` object."""

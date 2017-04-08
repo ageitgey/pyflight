@@ -9,7 +9,8 @@ queries_per_day = 0
 
 
 def set_queries_per_day(queries: int):
-    """Set the maximum amount of Queries which should be sent out per day.
+    """Set the maximum amount of Queries which should be sent out per day. 
+    Note that there is a free quota of 50 calls per day.
      
     Parameters
     ----------

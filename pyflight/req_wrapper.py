@@ -9,7 +9,7 @@ api_key = ''
 
 
 def set_api_key(key: str):
-    """Set the API key to use with the API. Note that there is a free quota of 50 calls per day. 
+    """Set the API key to use with the API.  
     
     Parameters
     ----------

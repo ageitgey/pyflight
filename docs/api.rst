@@ -35,9 +35,6 @@ Working with the Response
 .. autoclass:: pyflight.results.FlightData
    :members:
 
-.. autoclass:: pyflight.results.Airport
-   :members:
-
 .. autoclass:: pyflight.results.Carrier
    :members:
 
@@ -45,6 +42,9 @@ Working with the Response
    :members:
 
 .. autoclass:: pyflight.results.Tax
+   :members:
+
+.. autoclass:: pyflight.results.Airport
    :members:
 
 .. autoclass:: pyflight.results.Trip
