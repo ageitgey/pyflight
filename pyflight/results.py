@@ -384,6 +384,30 @@ class Flight(object):
         """Get a string representing the ID of this instance of :class:`Flight`"""
         return self.id
 
+    def as_dict(self):
+        """Get this object in the form of a dictionary.
+        
+        Returns
+        -------
+        dict
+            A dictionary representing all attributes of this :class:`Flight` as Key / Value pairs.
+        """
+        return {
+            'id': self.id,
+            'aircraft': self.aircraft,
+            'departure_time': self.departure_time,
+            'arrival_time': self.arrival_time,
+            'duration': self.duration,
+            'origin': self.origin,
+            'destination': self.destination,
+            'origin_terminal': self.origin_terminal,
+            'destination_terminal': self.destination_terminal,
+            'mileage': self.mileage,
+            'meal': self.meal,
+            'change_plane': self.change_plane,
+            'perforamnce': self.performance
+        }
+
 
 class Segment(object):
     """A single Segment consisting of one or more consecutive legs on the same flight.
