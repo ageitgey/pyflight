@@ -647,7 +647,8 @@ class TaxPricing(object):
         code : str
             The code to enter in the ticket's tax box.
         country : str
-            The country issuing the charge, for government charges only. ``''`` (Empty string) if not a government charge.
+            The country issuing the charge, for government charges only. 
+            ``''`` (Empty string) if not a government charge.
         sale_price : str
             The price of the tax in the sales or equivalent currency.
     """
