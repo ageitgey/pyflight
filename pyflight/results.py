@@ -764,8 +764,9 @@ class Result(object):
             self.airports.append(Airport(airport))
 
         # Save Cities
-        # cities = data['trips']['data']['city']
         self.cities = []
+        for city in data['trips']['data']['city']:
+            self.cities.append(City(city['code'], city['name']))
 
         # Save Aircraft
         self.aircraft = []
