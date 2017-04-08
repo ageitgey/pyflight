@@ -329,7 +329,7 @@ class Flight(object):
         change_plane : bool
             Whether passengers have to change planes following this leg. Applies to the next leg, defaults to False.
         performance : int
-            Specifies the published on time performance on this leg. ``0`` if not specified.
+            Specifies the published on time performance on this leg. ``None`` if not specified.
     """
     def __init__(self, leg_data: dict):
         """Create a new Flight Object
@@ -351,7 +351,7 @@ class Flight(object):
         self.mileage = leg_data['mileage']
         self.meal = leg_data.get('meal', '')
         self.change_plane = leg_data.get('changePlane', '')
-        self.performance = leg_data.get('onTimePerformance', 0)
+        self.performance = leg_data.get('onTimePerformance', None)
 
 
 class Segment(object):
