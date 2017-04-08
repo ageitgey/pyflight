@@ -305,10 +305,10 @@ class Flight(object):
     This class supports various *magic methods*:
     
     ``x == y``
-        Compare two :class:`Flight`s with each other for equality.
+        Compare two :class:`Flight`\s with each other for equality.
         
     ``x != y``
-        Compare two :class:`Flight`s with each other for inequality.
+        Compare two :class:`Flight`\s with each other for inequality.
         
     ``str(x)``
         Get the :class:`Flight`'s ``id`` as a String.
@@ -419,6 +419,11 @@ class Segment(object):
     
     In the Response, this is represented as ``trips.tripOption[].slice[].segment[]``
     
+    This class supports various *magic methods*:
+    
+    ``str(x)``
+        Get the ID of this :class:`Segment` object.
+    
     Attributes
     ----------
         id : str
@@ -450,7 +455,6 @@ class Segment(object):
         """
         self.id = segment['id']
         self.duration = segment['duration']
-
         self.cabin = segment['cabin']
         self.booking_code = segment['bookingCode']
         self.booking_code_count = segment['bookingCodeCount']
@@ -462,6 +466,10 @@ class Segment(object):
         self.flights = []
         for flight in segment['leg']:
             self.flights.append(Flight(flight))
+
+    def __str__(self):
+        """Get the ID of this :class:`Segment` object."""
+        return self.id
 
 
 class Route(object):
