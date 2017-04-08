@@ -302,6 +302,18 @@ class Flight(object):
     
     In the API Response, this is found as ``trips.tripOption[].slice[].segment[].leg[]``
     
+    This class supports various *magic methods*:
+    
+    ``x == y``
+        Compare two :class:`Flight`s with each other for equality.
+        
+    ``x != y``
+        Compare two :class:`Flight`s with each other for inequality.
+        
+    ``str(x)``
+        Get the Flight's ID.
+
+    
     Attributes
     ----------
         id : str
@@ -347,11 +359,30 @@ class Flight(object):
         self.origin = leg_data['origin']
         self.destination = leg_data['destination']
         self.origin_terminal = leg_data.get('originTerminal', '')
-        self.destination_terminal = leg_data.get('detinationTerminal', '')
+        self.destination_terminal = leg_data.get('destinationTerminal', '')
         self.mileage = leg_data['mileage']
         self.meal = leg_data.get('meal', '')
         self.change_plane = leg_data.get('changePlane', '')
         self.performance = leg_data.get('onTimePerformance', None)
+
+    def __eq__(self, other):
+        """Compare two :class:`Flight`s with each other for equality.
+        
+        Parameters
+        ----------
+        other : :class:`Flight`
+            The other :class:`Flight` to compare to.
+            
+        Returns
+        -------
+        bool
+            ``True`` or ``False``, depending on the result of the comparison.
+        """
+        return self.id == other.id
+
+    def __str__(self):
+        """Get a string representing the ID of this instance of :class:`Flight`"""
+        return self.id
 
 
 class Segment(object):
