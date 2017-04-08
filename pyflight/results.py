@@ -311,7 +311,7 @@ class Flight(object):
         Compare two :class:`Flight`s with each other for inequality.
         
     ``str(x)``
-        Get the Flight's ID.
+        Get the :class:`Flight`'s ``id`` as a String.
 
     
     Attributes
@@ -818,11 +818,6 @@ class Result(object):
         for airport in airports:
             self.airports.append(Airport(airport))
 
-        # Save Cities
-        self.cities = []
-        for city in data['trips']['data']['city']:
-            self.cities.append(City(city['code'], city['name']))
-
         # Save Aircraft
         self.aircraft = []
         for single_aircraft in data['trips']['data']['aircraft']:
@@ -833,6 +828,11 @@ class Result(object):
         carriers = data['trips']['data']['carrier']
         for carrier in carriers:
             self.carriers.append(Carrier(carrier['code'], carrier['name']))
+
+        # Save Cities
+        self.cities = []
+        for city in data['trips']['data']['city']:
+            self.cities.append(City(city['code'], city['name']))
 
         # Save Taxes
         self.taxes = []

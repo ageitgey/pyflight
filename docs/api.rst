@@ -41,6 +41,9 @@ Working with the Response
 .. autoclass:: pyflight.results.Carrier
    :members:
 
+.. autoclass:: pyflight.results.City
+   :members:
+
 .. autoclass:: pyflight.results.Tax
    :members:
 
