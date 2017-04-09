@@ -814,6 +814,7 @@ class BagDescriptor(object):
         """
         return self.__dict__ == other.__dict__
 
+
 class FreeBaggageOption(object):
     """Contains Information about the free baggage allowance for one Segment.
     
