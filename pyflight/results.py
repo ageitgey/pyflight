@@ -862,10 +862,23 @@ class FreeBaggageOption(object):
 class SegmentPricing(object):
     """Price and baggage information for segments.
     
+    This class supports various *magic methods*:
+    
+    ``x == y``
+        Compares two :class:`SegmentPricing`\s for equality.
+        Returns ``True`` if ``x.segment_id == y.segment_id and x.fare_id == y.fare_id``.
+        
+    ``x != y``
+        Compares two :class:`SegmentPricing`\s for inequality.
+        Returns ``True`` if ``not x == y``
+    
+    ``str(x)``
+        Returns the ``segment_id`` of this :class:`SegmentPricing`.
+    
     Attributes
     -----------
         fare_id : str
-            The Fare ID for this Segment Pricing. Used to refer to different parts of the same solution.
+            The Fare ID for this :class:`SegmentPricing. Used to refer to different parts of the same solution.
         segment_id : str
             A unique identifier for this :class:`SegmentPricing` object.
         free_baggage : list
@@ -886,6 +899,26 @@ class SegmentPricing(object):
         self.free_baggage = []
         for free_baggage_option in segment_data['freeBaggageOption']:
             self.free_baggage.append(FreeBaggageOption(free_baggage_option))
+
+    def __eq__(self, other):
+        """Compares two :class:`SegmentPricing` objects for equality.
+        
+        Returns
+        -------
+        bool
+            True or False, depending on the result of the comparison.
+        """
+        return self.segment_id == other.segment_id and self.fare_id == other.fare_id
+
+    def __str__(self):
+        """Returns the ``segment_id`` of this :class:`SegmentPricing`.
+        
+        Returns
+        -------
+        str
+            The ``segment_id`` of this :class:`SegmentPricing`.
+        """
+        return self.segment_id
 
 
 class TaxPricing(object):
@@ -984,6 +1017,7 @@ class Pricing(object):
         self.segment_pricing = []
         for segment_pricing in pricing_data['segmentPricing']:
             self.segment_pricing.append(SegmentPricing(segment_pricing))
+
         self.base_fare_total = pricing_data.get('baseFareTotal')
         self.sale_fare_total = pricing_data['saleFareTotal']
         self.sale_tax_total = pricing_data['saleTaxTotal']
@@ -997,6 +1031,20 @@ class Pricing(object):
         self.latest_ticketing_time = pricing_data['latestTicketingTime']
         self.for_passenger_type = pricing_data['ptc']
         self.refundable = pricing_data.get('refundable', False)
+
+    def as_dict(self):
+        """Get a dictionary representing this :class:`Pricing`.
+        
+        Returns
+        -------
+        dict
+            A dictionary containing the attributes of this :class:`Pricing` as key / value pairs.
+        """
+        return {
+            'fares': [
+                f.as_dict() for f in self.fares
+            ],
+        }
 
 
 class Trip(object):
