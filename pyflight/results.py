@@ -1003,6 +1003,16 @@ class TaxPricing(object):
         """
         return self.id
 
+    def as_dict(self):
+        """Get a dictionary representation of this :class:`TaxPricing`
+        
+        Returns
+        -------
+        dict
+            A dictionary containing the attributes of this :class:`TaxPricing` as key / value pairs.
+        """
+        return self.__dict__
+
 
 class Pricing(object):
     """
