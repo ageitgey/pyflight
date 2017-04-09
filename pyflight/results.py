@@ -600,6 +600,11 @@ class Fare(object):
     """
     The fare used to price one or more segments.
     
+    This Class supports various *magic methods*:
+    
+    ``str(x)``
+        Returns the ``id`` of this :class:`Fare` object.
+    
     Attributes
     ----------
         id : str
@@ -631,6 +636,16 @@ class Fare(object):
         self.destination_city_code = fare_data['destination']
         self.basis_code = fare_data['basisCode']
         self.private = fare_data.get('private', False)
+
+    def __str__(self):
+        """Get the ID of this :class:`Fare` object.
+        
+        Returns
+        -------
+        str
+            The ``id`` of this :class:`Fare` object.
+        """
+        return self.id
 
 
 class BagDescriptor(object):
