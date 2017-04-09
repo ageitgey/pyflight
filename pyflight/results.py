@@ -559,10 +559,10 @@ class Route(object):
     while ``<=``, ``>=``, ``<`` and ``>`` are used to compare their duration.**
         
     ``x == y``
-        Compares two :class:`Route`\s with each other for equality by the IDs of their Segments.
+        Compares two duration of two :class:`Route`\s with each other for equality.
         
     ``x != y``
-        Compares two :class:`Route`\s with each other for inequality by the IDs of their Segments.
+        Compares two duration of two :class:`Route`\s with each other for inequality.
     
     ``x < y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
@@ -641,14 +641,14 @@ class Route(object):
         return self.duration >= other.duration
 
     def __eq__(self, other):
-        """Compare two :class:`Route`\s with each other.
+        """Compare the duration of two :class:`Route`\s with each other.
         
         Returns
         -------
         bool
-            The result of the comparison
+            The result of the comparison, depending on the ``duration`` of two :class:`Route`s.
         """
-        return [s.id for s in self.segments] == [s.id for s in other.segments] and self.duration == other.duration
+        return self.duration == other.duration
 
 
 class Fare(object):
