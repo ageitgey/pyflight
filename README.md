@@ -55,7 +55,7 @@ with open('response.json', 'w+') as f:
 ```
 
 ## Dependencies
-- Python 3.6
+- Python 3.5+
 - aiohttp
 - requests
 
