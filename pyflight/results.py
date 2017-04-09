@@ -1124,7 +1124,20 @@ class Pricing(object):
 
 class Trip(object):
     """Contains Information about one Trip - an itinerary solution - returned by the API.
-      
+      `
+    This class supports various *magic methods*:
+    
+    ``x == y``
+        Compares two :class:`Trip`\s with each other for equality.
+        Returns ``True`` when ``x.id == y.id``.
+        
+    ``x != y``
+        Compares two :class:`Trip`\s with each other for inequality.
+        Returns ``True`` when ``x.id != y.id``.
+        
+    ``str(x)``
+        Returns the ``id`` of the :class:`Trip` this is invoked on.
+    
     Attributes
     ----------
         total_price : str
@@ -1158,6 +1171,26 @@ class Trip(object):
 
         for pricing_data in trip_data['pricing']:
             self.pricing.append(Pricing(pricing_data))
+
+    def __eq__(self, other):
+        """Compare two :class:`Trip` objects with each other for equality
+        
+        Returns
+        -------
+        bool
+            True or False depending on the result of the comparison
+        """
+        return self.id == other.id
+
+    def __str__(self):
+        """Returns the ``id`` of this :class:`Trip`.
+        
+        Returns
+        -------
+        str
+            The ``id`` of this :class:`Trip`
+        """
+        return self.id
 
 
 class Result(object):
