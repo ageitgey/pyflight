@@ -234,7 +234,7 @@ class Airport(object):
         bool
             ``True`` or ``False` depending on the Result of the Comparison
         """
-        return self.code == other.code and self.city == other.city
+        return self.__dict__ == other.__dict__
 
     def __len__(self):
         """Get the length of the Airport Name.
@@ -842,6 +842,21 @@ class FreeBaggageOption(object):
         self.bag_descriptors = []
         for bag_descriptor in baggage_data.get('bagDescriptor', []):
             self.bag_descriptors.append(BagDescriptor(bag_descriptor))
+
+    def as_dict(self):
+        """Return a dictionary representation of this :class:`FreeBaggageOption`.
+        
+        Returns
+        -------
+        dict
+            A dictionary with key / value pairs containing the attributes of this :class:`FreeBaggageOption`.
+        """
+        return {
+            'pieces': self.pieces,
+            'bag_descriptors': [
+                bd.as_dict() for bd in self.bag_descriptors
+            ]
+        }
 
 
 class SegmentPricing(object):
