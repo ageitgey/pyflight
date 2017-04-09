@@ -734,6 +734,23 @@ class Fare(object):
         """
         return self.id
 
+    def as_dict(self):
+        """Get a representation of this :class:`Fare` as a dictionary.
+        
+        Returns
+        -------
+        dict
+            A dictionary containing the attributes of this :class:`Fare` as key / value pairs.
+        """
+        return {
+            'id': self.id,
+            'carrier_code': self.carrier_code,
+            'origin_city_code': self.origin_city_code,
+            'destination_city_code': self.destination_city_code,
+            'basis_code': self.basis_code,
+            'private': self.private
+        }
+
 
 class BagDescriptor(object):
     """A representation of a type of bag.
