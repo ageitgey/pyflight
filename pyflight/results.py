@@ -555,8 +555,6 @@ class Route(object):
     In the Response, this is represented as ``trips.tripOption[].slice[]``
     
     This Class supports various *magic methods*:
-    **Please note that ``==`` and ``!=`` are used to compare for equality of two :class:`Route`\s 
-    while ``<=``, ``>=``, ``<`` and ``>`` are used to compare their duration.**
         
     ``x == y``
         Compares two duration of two :class:`Route`\s with each other for equality.
