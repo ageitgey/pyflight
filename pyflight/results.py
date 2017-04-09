@@ -602,6 +602,12 @@ class Fare(object):
     
     This Class supports various *magic methods*:
     
+    ``x == y``
+        Compare two :class:`Fare` objects with each other for equality.
+    
+    ``x != y``
+        Compare two :class:`Fare` objects with each other for inequality.
+        
     ``str(x)``
         Returns the ``id`` of this :class:`Fare` object.
     
@@ -636,6 +642,16 @@ class Fare(object):
         self.destination_city_code = fare_data['destination']
         self.basis_code = fare_data['basisCode']
         self.private = fare_data.get('private', False)
+
+    def __eq__(self, other):
+        """Compare two :class:`Fare`\s for equality.
+        
+        Returns
+        -------
+        bool
+            The result of the comparison
+        """
+        return self.id == other.id
 
     def __str__(self):
         """Get the ID of this :class:`Fare` object.
