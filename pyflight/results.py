@@ -971,7 +971,7 @@ class TaxPricing(object):
             The price of the tax in the sales or equivalent currency.
     """
     def __init__(self, pricing_tax_data: dict):
-        """Create a new :class:`TaxPricing object.
+        """Create a new :class:`TaxPricing` object.
         
         Args:
             pricing_tax_data : dict
@@ -993,7 +993,15 @@ class TaxPricing(object):
         """
         return self.id == other.id
 
-
+    def __str__(self):
+        """Get the ``id`` of this :class:`TaxPricing` object.
+        
+        Returns
+        -------
+        str
+            The ``id`` of this :class:`TaxPricing`
+        """
+        return self.id
 
 
 class Pricing(object):
