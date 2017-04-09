@@ -123,7 +123,7 @@ class FlightData(object):
         dict
             Contains the Attributes of this Object 
         """
-        return {'code': self.code, 'name': self.name}
+        return self.__dict__
 
 
 class Aircraft(FlightData):
@@ -289,11 +289,7 @@ class Airport(object):
         dict
             A dictionary representing this Airport. 
         """
-        return {
-            'code': self.code,
-            'city': self.city,
-            'name': self.name
-                }
+        return self.__dict__
 
 
 class Flight(object):
@@ -392,21 +388,7 @@ class Flight(object):
         dict
             A dictionary representing all attributes of this :class:`Flight` as Key / Value pairs.
         """
-        return {
-            'id': self.id,
-            'aircraft': self.aircraft,
-            'departure_time': self.departure_time,
-            'arrival_time': self.arrival_time,
-            'duration': self.duration,
-            'origin': self.origin,
-            'destination': self.destination,
-            'origin_terminal': self.origin_terminal,
-            'destination_terminal': self.destination_terminal,
-            'mileage': self.mileage,
-            'meal': self.meal,
-            'change_plane': self.change_plane,
-            'performance': self.performance
-        }
+        return self.__dict__
 
 
 class Segment(object):
@@ -742,14 +724,7 @@ class Fare(object):
         dict
             A dictionary containing the attributes of this :class:`Fare` as key / value pairs.
         """
-        return {
-            'id': self.id,
-            'carrier_code': self.carrier_code,
-            'origin_city_code': self.origin_city_code,
-            'destination_city_code': self.destination_city_code,
-            'basis_code': self.basis_code,
-            'private': self.private
-        }
+        return self.__dict__
 
 
 class BagDescriptor(object):
@@ -826,6 +801,16 @@ class BagDescriptor(object):
             True or False, depending on the result of the comparison.
         """
         return self.__dict__ == other.__dict__
+
+    def as_dict(self):
+        """Get a dictionary representing the attributes of this :class:`BagDescriptor`
+        
+        Returns
+        -------
+        dict
+            A dictionary with key / value pairs containing the attributes of this :class:`BagDescriptor`.
+        """
+        return self.__dict__
 
 
 class FreeBaggageOption(object):
