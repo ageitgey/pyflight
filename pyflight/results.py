@@ -1103,6 +1103,22 @@ class Pricing(object):
             'fares': [
                 f.as_dict() for f in self.fares
             ],
+            'segment_pricing': [
+                sp.as_dict() for sp in self.segment_pricing
+            ],
+            'base_fare_total': self.base_fare_total,
+            'sale_fare_total': self.sale_fare_total,
+            'sale_tax_total': self.sale_tax_total,
+            'sale_total': self.sale_total,
+            'adults': self.adults,
+            'children': self.children,
+            'infants_in_lap': self.infants_in_lap,
+            'infants_in_seat': self.infants_in_seat,
+            'seniors': self.seniors,
+            'fare_calculation': self.fare_calculation,
+            'latest_ticketing_time': self.latest_ticketing_time,
+            'for_passenger_type': self.for_passenger_type,
+            'refundable': self.refundable
         }
 
 
