@@ -942,6 +942,19 @@ class TaxPricing(object):
     
     This extends the information being held in the :class:`Tax` objects.
     
+    This class supports various *magic methods*:
+    
+    ``x == y``
+        Check if two :class:`TaxPricing` objects are equal.
+        Returns ``True`` if ``x.id == y.id``.
+        
+    ``x != y``
+        Check if two :class:`TaxPricing` objects are equal.
+        Returns ``True`` if ``x.id != y.id``.
+        
+    ``str(x)``
+        Returns the ``id`` of this :class:`TaxPricing`
+    
     Attributes
     ----------
         id : str
@@ -969,6 +982,18 @@ class TaxPricing(object):
         self.code = pricing_tax_data['code']
         self.country = pricing_tax_data.get('country', '')
         self.sale_price = pricing_tax_data['salePrice']
+
+    def __eq__(self, other):
+        """Compare two :class:`TaxPricing` objects.
+        
+        Returns
+        -------
+        bool
+            True or False depending on the result of the comparison
+        """
+        return self.id == other.id
+
+
 
 
 class Pricing(object):
