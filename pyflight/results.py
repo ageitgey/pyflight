@@ -1206,6 +1206,8 @@ class Result(object):
         Checks if two :class:`Result`\s are not identical to each other.
         This is equivalent to ``x.request_id != y.request_id``.
         
+    ``str(x)``
+        Returns the ``request_id`` for the :class:`Result` this is invoked on.
     
     Attributes
     ----------
@@ -1279,3 +1281,13 @@ class Result(object):
             True or False depending on the result of the comparison
         """
         return self.request_id == other.request_id
+
+    def __str__(self):
+        """Get the ID of this :class:`Request`.
+        
+        Returns
+        -------
+        str
+            The ``request_id`` of the :class:`Request` this is invoked on.
+        """
+        return self.request_id
