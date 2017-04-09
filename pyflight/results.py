@@ -764,6 +764,9 @@ class BagDescriptor(object):
     ``x != y``
         Compare two :class:`BagDescriptor`\s for inequality.
         Works by comparing their attributes, so it returns ``True`` when ``x.__dict__ != y.__dict``.
+        
+    ``str(x)``
+        Returns the ``commercial_name`` of a :class:`BagDescriptor`.
     
     Attributes
     ----------
@@ -803,6 +806,16 @@ class BagDescriptor(object):
         self.max_kilos = bag_descriptor_data.get('kilos')
         self.kilos_per_piece = bag_descriptor_data.get('kilosPerPiece')
         self.pounds = bag_descriptor_data.get('pounds')
+
+    def __str__(self):
+        """Get the ``commercial_name`` of this :class:`BagDescriptor`.
+        
+        Returns
+        -------
+        str
+            The ``commercial_name`` of this :class:`BagDescriptor`.
+        """
+        return self.commercial_name
 
     def __eq__(self, other):
         """Compare two :class:`BagDescriptor` objects with each other for equality by their attributes.
