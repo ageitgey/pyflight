@@ -568,9 +568,17 @@ class Route(object):
         Compare the ``duration`` of two :class:`Route`\s with each other.
         Returns ``True`` when ``x.duration < y.duration``.
         
+    ``x <= y``
+        Compare the ``duration`` of two :class:`Route`\s with each other.
+        Returns ``True`` when ``x.duration <= y.duration``.
+        
     ``x > y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
         Returns ``True`` when ``x.duration > y.duration``.
+        
+    ``x >= y``
+        Compare the ``duration`` of two :class:`Route`\s with each other.
+        Returns ``True`` when ``x.duration >= y.duration``.
     
     Attributes
     ----------
@@ -603,6 +611,15 @@ class Route(object):
             The result of the comparison, depending on the ``duration`` of two :class:`Route`\s."""
         return self.duration < other.duration
 
+    def __le__(self, other):
+        """Compare the duration of two :class:`Route`\s.
+        
+        Returns
+        -------
+        bool
+            The result of the comparison, depending on the ``duration`` of two :class:`Route`\s."""
+        return self.duration <= other.duration
+
     def __gt__(self, other):
         """Compare the duration of two :class:`Route`\s
         
@@ -612,6 +629,16 @@ class Route(object):
             The result of the comparison, depending on the ``duration`` of two :class:`Route`\s.
         """
         return self.duration > other.duration
+
+    def __ge__(self, other):
+        """Compare the duration of two :class:`Route`\s
+         
+        Returns
+        -------
+        bool
+            The result of the comparison, depending on the ``duration`` of two :class:`Route`\s.
+        """
+        return self.duration >= other.duration
 
     def __eq__(self, other):
         """Compare two :class:`Route`\s with each other.
