@@ -1196,6 +1196,17 @@ class Trip(object):
 class Result(object):
     """Contains Results of an API Call.
     
+    This Class supports various *magic methods*:
+    
+    ``x == y``
+        Checks if two :class:`Result`\s are identical.
+        This is equivalent to ``x.request_id == y.request_id``.
+        
+    ``x != y``
+        Checks if two :class:`Result`\s are not identical to each other.
+        This is equivalent to ``x.request_id != y.request_id``.
+        
+    
     Attributes
     ----------
         request_id : str
@@ -1258,3 +1269,13 @@ class Result(object):
         trips = data['trips']['tripOption']
         for trip in trips:
             self.trips.append(Trip(trip))
+
+    def __eq__(self, other):
+        """Compare two :class:`Result` objects for equality.
+        
+        Returns
+        -------
+        bool
+            True or False depending on the result of the comparison
+        """
+        return self.request_id == other.request_id
