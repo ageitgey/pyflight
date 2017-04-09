@@ -755,6 +755,16 @@ class Fare(object):
 class BagDescriptor(object):
     """A representation of a type of bag.
     
+    This class supports various *magic methods*:
+    
+    ``x == y``
+        Compare two :class:`BagDescriptor`\s for equality.
+        Works by comparing their attributes, so it returns ``True`` when ``x.__dict__ == y.__dict__``.
+        
+    ``x != y``
+        Compare two :class:`BagDescriptor`\s for inequality.
+        Works by comparing their attributes, so it returns ``True`` when ``x.__dict__ != y.__dict``.
+    
     Attributes
     ----------
         commercial_name : str
@@ -794,6 +804,15 @@ class BagDescriptor(object):
         self.kilos_per_piece = bag_descriptor_data.get('kilosPerPiece')
         self.pounds = bag_descriptor_data.get('pounds')
 
+    def __eq__(self, other):
+        """Compare two :class:`BagDescriptor` objects with each other for equality by their attributes.
+        
+        Returns
+        -------
+        bool
+            True or False, depending on the result of the comparison.
+        """
+        return self.__dict__ == other.__dict__
 
 class FreeBaggageOption(object):
     """Contains Information about the free baggage allowance for one Segment.
