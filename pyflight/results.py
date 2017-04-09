@@ -659,9 +659,11 @@ class Fare(object):
     
     ``x == y``
         Compare two :class:`Fare` objects with each other for equality.
+        Returns ``True`` when ``x.id == y.id``.
     
     ``x != y``
         Compare two :class:`Fare` objects with each other for inequality.
+        Returns ``True`` when ``x.id != y.id``.
         
     ``str(x)``
         Returns the ``id`` of this :class:`Fare` object.
