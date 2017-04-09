@@ -650,6 +650,20 @@ class Route(object):
         """
         return self.duration == other.duration
 
+    def as_dict(self):
+        """Returns this :class:`Route` as a dictionary.
+        
+        Returns
+        -------
+        dict
+            This :class:`Route` as a dictionary."""
+        return {
+            'duration': self.duration,
+            'segments': [
+                segment.as_dict() for segment in self.segments
+            ]
+        }
+
 
 class Fare(object):
     """
