@@ -558,9 +558,11 @@ class Route(object):
         
     ``x == y``
         Compares two duration of two :class:`Route`\s with each other for equality.
+        Returns ``True`` when ``x.duration == y.duration``.
         
     ``x != y``
         Compares two duration of two :class:`Route`\s with each other for inequality.
+        Returns ``True`` when ``x.duration != y.duration``.
     
     ``x < y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
