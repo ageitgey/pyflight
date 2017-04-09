@@ -880,7 +880,7 @@ class SegmentPricing(object):
         segment_id : str
             A unique identifier for this :class:`SegmentPricing` object.
         fare_id : str
-            The Fare ID for this :class:`SegmentPricing. Used to refer to different parts of the same solution.
+            The Fare ID for this :class:`SegmentPricing`. Used to refer to different parts of the same solution.
         free_baggage : list
             A list of :class:`FreeBaggageOption` objects for the free baggage allowance on this segment. 
     
@@ -1124,7 +1124,7 @@ class Pricing(object):
 
 class Trip(object):
     """Contains Information about one Trip - an itinerary solution - returned by the API.
-      `
+      
     This class supports various *magic methods*:
     
     ``x == y``
