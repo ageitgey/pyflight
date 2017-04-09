@@ -877,10 +877,10 @@ class SegmentPricing(object):
     
     Attributes
     -----------
-        fare_id : str
-            The Fare ID for this :class:`SegmentPricing. Used to refer to different parts of the same solution.
         segment_id : str
             A unique identifier for this :class:`SegmentPricing` object.
+        fare_id : str
+            The Fare ID for this :class:`SegmentPricing. Used to refer to different parts of the same solution.
         free_baggage : list
             A list of :class:`FreeBaggageOption` objects for the free baggage allowance on this segment. 
     
@@ -893,8 +893,8 @@ class SegmentPricing(object):
                 The Data for a single SegmentPricing returned in Arrays from the API. 
                 
         """
-        self.fare_id = segment_data['fareId']
         self.segment_id = segment_data['segmentId']
+        self.fare_id = segment_data['fareId']
 
         self.free_baggage = []
         for free_baggage_option in segment_data['freeBaggageOption']:
@@ -919,6 +919,22 @@ class SegmentPricing(object):
             The ``segment_id`` of this :class:`SegmentPricing`.
         """
         return self.segment_id
+
+    def as_dict(self):
+        """Return a dictionary representing this :class:`SegmentPricing`.
+        
+        Returns
+        -------
+        dict
+            A dictionary containing the attributes of this :class:`SegmentPricing` as key / value pairs.
+        """
+        return {
+            'segment_id': self.segment_id,
+            'fare_id': self.fare_id,
+            'free_baggage': [
+                fbo.as_dict() for fbo in self.free_baggage
+            ]
+        }
 
 
 class TaxPricing(object):
