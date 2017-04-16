@@ -42,13 +42,15 @@ async def send_async(request_body: dict, use_containers: bool = True):
     Returns
     -------
     :class:`Result`
-        If ``use_containers`` is ``True`` and no Error occured.
+        If ``use_containers`` is ``True`` and no Error occurred.
     dict
         If `use_containers` is `False`, as a raw dictionary without any adjustments.
 
-
     """
-    response = await requester.post_request(BASE_URL + api_key, request_body)
+    if isinstance(request_body, dict):
+        response = await requester.post_request(BASE_URL + api_key, request_body)
+    else:
+        return ValueError('Unsupported Request Type')
     if use_containers:
         return Result(response)
     return response
@@ -80,7 +82,10 @@ def send_sync(request_body: dict, use_containers: bool = True):
         If `use_containers` is `False`, as a raw dictionary without any adjustments.
 
     """
-    response = requester.post_request_sync(BASE_URL + api_key, request_body)
+    if isinstance(request_body, dict):
+        response = requester.post_request_sync(BASE_URL + api_key, request_body)
+    else:
+        return ValueError('Unsupported Request Type')
     if use_containers:
         return Result(response)
     return response
