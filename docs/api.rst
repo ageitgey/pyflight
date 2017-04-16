@@ -18,6 +18,7 @@ Making Requests
 ---------------
 
 .. autoclass:: pyflight.Request
+   :members:
 
 .. autofunction:: pyflight.send_async
 

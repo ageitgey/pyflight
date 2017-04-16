@@ -93,12 +93,8 @@ class Request:
         >>> my_request.set_passenger_counts(adults=2, children=3)
         >>> my_request.get_passenger_counts()
         {
-            'kind': "qpxexpress#passengerCounts",
             'adultCount': 2,
-            'childCount': 3,
-            'infantInLapCount': 0,
-            'infantInSeatCount': 0,
-            'seniorCount': 0
+            'childCount': 3
         }
         
         Returns
