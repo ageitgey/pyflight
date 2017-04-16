@@ -32,6 +32,60 @@ class APIException(Exception):
     """
 
 
+class Request:
+    """Represents a Request that can be sent to the API instead of using a dictionary manually.
+    
+    Attributes
+    ----------
+    raw_data : dict
+        The raw JSON / dictionary data which will be sent to the API.
+        
+    """
+    def __init__(self):
+        """Create a new Request."""
+        self.raw_data = {
+            'request': {
+                'passengers': {
+                    'kind': "qpxexpress#passengerCounts",
+                    'adultCount': 0,
+                    'childCount': 0,
+                    'infantInLapCount': 0,
+                    'infantInSeatCount': 0,
+                    'seniorCount': 0
+                },
+                'slice': [],
+                'maxPrice': '',
+                'saleCountry': '',
+                'ticketingCountry': '',
+                'refundable': False,
+                'solutions': 1
+            }
+        }
+
+    def set_passenger_counts(self, adults: int=0, children: int=0, infants_in_lap: int=0,
+                             infants_in_seat: int=0, seniors: int=0):
+        self.raw_data['request']['passengers']['adultCount'] = adults
+        self.raw_data['request']['passengers']['childCount'] = children
+        self.raw_data['request']['passengers']['infantInLapCount'] = infants_in_lap
+        self.raw_data['request']['passengers']['infantsInSeatCount'] = infants_in_seat
+        self.raw_data['request']['passengers']['seniorCount'] = seniors
+
+    def set_max_price(self, max_price: str):
+        self.raw_data['request']['maxPrice'] = max_price
+
+    def set_sale_country(self, sale_country: str):
+        self.raw_data['request']['saleCountry'] = sale_country
+
+    def set_ticketing_country(self, ticketing_country: str):
+        self.raw_data['request']['ticketingCountry'] = ticketing_country
+
+    def set_refundable(self, refundable: bool):
+        self.raw_data['request']['refundable'] = refundable
+
+    def set_solution_count(self, solution_amount: int):
+        self.raw_data['request']['solutions'] = solution_amount
+
+
 class Requester(object):
     """
     Class to execute requests with.
