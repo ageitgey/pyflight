@@ -80,6 +80,7 @@ class Request:
             The number of passengers that are infants assigned a seat.
         seniors : int
             The number of passengers that are senior citizens.
+
         """
         self.raw_data['request']['passengers']['adultCount'] = adults
         self.raw_data['request']['passengers']['childCount'] = children
@@ -88,6 +89,25 @@ class Request:
         self.raw_data['request']['passengers']['seniorCount'] = seniors
 
     def get_passenger_counts(self):
+        """Get the passenger counts of this :class:`Request`.
+        
+        >>> my_request = pyflight.Request()
+        >>> my_request.set_passenger_counts(adults=2, children=3)
+        >>> my_request.get_passenger_counts()
+        {
+            'kind': "qpxexpress#passengerCounts",
+            'adultCount': 2,
+            'childCount': 3,
+            'infantInLapCount': 0,
+            'infantInSeatCount': 0,
+            'seniorCount': 0
+        }
+        
+        Returns
+        -------
+        dict
+            The adult counts as a dictionary, view the example above.
+        """
         return self.raw_data['request']['passengers']
 
     def set_max_price(self, max_price: str):
