@@ -17,6 +17,8 @@ Basic Configuration
 Making Requests
 ---------------
 
+.. autoclass:: pyflight.Request
+
 .. autofunction:: pyflight.send_async
 
 .. autofunction:: pyflight.send_sync

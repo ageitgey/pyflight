@@ -4,9 +4,13 @@ Handles all Requests that are sent to the API.
 import asyncio
 
 import aiohttp
+import re
 import requests
 
 import pyflight.rate_limiter
+
+
+MAX_PRICE_REGEX = re.compile('[A-Z]{3}\d+(\.\d+)?')
 
 
 class APIException(Exception):
@@ -45,28 +49,22 @@ class Request:
         """Create a new Request."""
         self.raw_data = {
             'request': {
-                'passengers': {
-                    'kind': "qpxexpress#passengerCounts",
-                    'adultCount': 0,
-                    'childCount': 0,
-                    'infantInLapCount': 0,
-                    'infantInSeatCount': 0,
-                    'seniorCount': 0
-                },
+                'passengers': {},
                 'slice': [],
-                'maxPrice': '',
-                'saleCountry': '',
-                'ticketingCountry': '',
-                'refundable': False,
                 'solutions': 1
             }
         }
+
+    def _set_passenger_count_or_omit(self, attr, value):
+        if value != 0:
+            self.raw_data['request']['passengers'][attr] = value
 
     def set_passenger_counts(self, adults: int=0, children: int=0, infants_in_lap: int=0,
                              infants_in_seat: int=0, seniors: int=0):
         """Set the passenger counts to be used for this request.
         
-        All parameters not passed will default to ``0``.
+        All parameters not passed will default to ``0``, but will not be changed if set previously.
+        Use :meth:`get_passenger_counts` to get the passenger counts.
         
         Parameters
         ----------
@@ -82,11 +80,11 @@ class Request:
             The number of passengers that are senior citizens.
 
         """
-        self.raw_data['request']['passengers']['adultCount'] = adults
-        self.raw_data['request']['passengers']['childCount'] = children
-        self.raw_data['request']['passengers']['infantInLapCount'] = infants_in_lap
-        self.raw_data['request']['passengers']['infantsInSeatCount'] = infants_in_seat
-        self.raw_data['request']['passengers']['seniorCount'] = seniors
+        self._set_passenger_count_or_omit('adultCount', adults)
+        self._set_passenger_count_or_omit('childCount', children)
+        self._set_passenger_count_or_omit('infantInLapCount', infants_in_lap)
+        self._set_passenger_count_or_omit('infantInSeatCount', infants_in_seat)
+        self._set_passenger_count_or_omit('seniorCount', seniors)
 
     def get_passenger_counts(self):
         """Get the passenger counts of this :class:`Request`.
@@ -111,6 +109,18 @@ class Request:
         return self.raw_data['request']['passengers']
 
     def set_max_price(self, max_price: str):
+        """Set the max price for this :class:`Request`. Use :meth:`get_max_price` to get the max price.
+        This is used to only return solutions that cost less than the maximum price passed.
+        The input is validated using the Regex ``[A-Z]{3}\d+(\.\d+)?``.
+        This function can be omitted.
+        
+        Parameters
+        ----------
+        max_price : str
+            The maximum price for which solutions should be returned.
+        """
+        if not re.match(MAX_PRICE_REGEX, max_price):
+            raise ValueError('max_price given does not match ISO-4217 format')
         self.raw_data['request']['maxPrice'] = max_price
 
     def get_max_price(self):
