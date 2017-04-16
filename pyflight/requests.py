@@ -116,7 +116,7 @@ class Request:
             The maximum price for which solutions should be returned.
         """
         if not re.match(MAX_PRICE_REGEX, max_price):
-            raise ValueError('max_price given does not match ISO-4217 format')
+            raise ValueError('max_price given (\'{}\') does not match ISO-4217 format'.format(max_price))
         self.raw_data['request']['maxPrice'] = max_price
 
     def get_max_price(self):
