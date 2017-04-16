@@ -70,20 +70,38 @@ class Request:
         self.raw_data['request']['passengers']['infantsInSeatCount'] = infants_in_seat
         self.raw_data['request']['passengers']['seniorCount'] = seniors
 
+    def get_passenger_counts(self):
+        return self.raw_data['request']['passengers']
+
     def set_max_price(self, max_price: str):
         self.raw_data['request']['maxPrice'] = max_price
+
+    def get_max_price(self):
+        return self.raw_data['request']['maxPrice']
 
     def set_sale_country(self, sale_country: str):
         self.raw_data['request']['saleCountry'] = sale_country
 
+    def get_sale_country(self):
+        return self.raw_data['request']['saleCountry']
+
     def set_ticketing_country(self, ticketing_country: str):
         self.raw_data['request']['ticketingCountry'] = ticketing_country
+
+    def get_ticketing_country(self):
+        return self.raw_data['request']['ticketingCountry']
 
     def set_refundable(self, refundable: bool):
         self.raw_data['request']['refundable'] = refundable
 
+    def get_refundable(self):
+        return self.raw_data['request']['refundable']
+
     def set_solution_count(self, solution_amount: int):
         self.raw_data['request']['solutions'] = solution_amount
+
+    def get_solution_count(self):
+        return self.raw_data['request']['solutions']
 
 
 class Requester(object):
