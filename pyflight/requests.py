@@ -120,7 +120,14 @@ class Request:
         self.raw_data['request']['maxPrice'] = max_price
 
     def get_max_price(self):
-        return self.raw_data['request']['maxPrice']
+        """Get the maximum price that was set.
+        
+        Returns
+        -------
+        str
+            The ``max_price`` if set, ``''`` (empty string) otherwise.
+        """
+        return self.raw_data['request'].get('maxPrice', '')
 
     def set_sale_country(self, sale_country: str):
         self.raw_data['request']['saleCountry'] = sale_country
