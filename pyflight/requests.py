@@ -108,7 +108,7 @@ class Request:
         """Set the max price for this :class:`Request`. Use :meth:`get_max_price` to get the max price.
         This is used to only return solutions that cost less than the maximum price passed.
         The input is validated using the Regex ``[A-Z]{3}\d+(\.\d+)?``.
-        This function can be omitted.
+        Calling this function can be omitted to return solutions with any price.
         
         Parameters
         ----------
