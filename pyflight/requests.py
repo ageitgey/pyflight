@@ -64,6 +64,23 @@ class Request:
 
     def set_passenger_counts(self, adults: int=0, children: int=0, infants_in_lap: int=0,
                              infants_in_seat: int=0, seniors: int=0):
+        """Set the passenger counts to be used for this request.
+        
+        All parameters not passed will default to ``0``.
+        
+        Parameters
+        ----------
+        adults : int
+            The number of passengers that are adults.
+        children : int
+            The number of passengers that are children.
+        infants_in_lap : int
+            The number of passengers that are infants travelling in the lap of an adult.
+        infants_in_seat : int
+            The number of passengers that are infants assigned a seat.
+        seniors : int
+            The number of passengers that are senior citizens.
+        """
         self.raw_data['request']['passengers']['adultCount'] = adults
         self.raw_data['request']['passengers']['childCount'] = children
         self.raw_data['request']['passengers']['infantInLapCount'] = infants_in_lap
