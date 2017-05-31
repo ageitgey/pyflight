@@ -21,7 +21,7 @@ def set_api_key(key: str):
     api_key = key
 
 
-async def send_async(request_body: dict, use_containers: bool = True):
+async def send_async(request_body: dict, use_containers: bool=True):
     """Asynchronously execute and send a JSON Request. This is a coroutine - calling this function must be awaited.
     
     Parameters
@@ -44,19 +44,19 @@ async def send_async(request_body: dict, use_containers: bool = True):
     :class:`Result`
         If ``use_containers`` is ``True`` and no Error occurred.
     dict
-        If `use_containers` is `False`, as a raw dictionary without any adjustments.
+        If ``use_containers`` is ``False``, as a raw dictionary without any adjustments.
 
     """
     if isinstance(request_body, dict):
         response = await requester.post_request(BASE_URL + api_key, request_body)
     else:
-        return ValueError('Unsupported Request Type')
+        raise ValueError('Unsupported Request Type')
     if use_containers:
         return Result(response)
     return response
 
 
-def send_sync(request_body: dict, use_containers: bool = True):
+def send_sync(request_body: dict, use_containers: bool=True):
     """Synchronously execute and send a JSON-Request. Note that this function is blocking.
     
     Parameters
@@ -77,15 +77,15 @@ def send_sync(request_body: dict, use_containers: bool = True):
     Returns
     -------
     :class:`Result`
-        If `use_containers` is `True` and no Error occurred.
+        If ``use_containers`` is ``True`` and no Error occurred.
     dict
-        If `use_containers` is `False`, as a raw dictionary without any adjustments.
+        If ``use_containers`` is ``False`, as a raw dictionary without any adjustments.
 
     """
     if isinstance(request_body, dict):
         response = requester.post_request_sync(BASE_URL + api_key, request_body)
     else:
-        return ValueError('Unsupported Request Type')
+        raise ValueError('Unsupported Request Type')
     if use_containers:
         return Result(response)
     return response

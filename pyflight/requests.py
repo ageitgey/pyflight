@@ -58,8 +58,8 @@ class Request:
         The amount of passengers that are senior citizens.
     max_price : Optional[str]
          The maximum price below which results should be returned. The currency is specified in ISO-4217, and setting
-         this attribute is validated using the regex ``[A-Z]{3}\d+(\.\d+)?``. If it does not match, a ``ValueError`` is
-         raised.
+         this attribute is validated using the regex ``[A-Z]{3}\d+(\.\d+)?``. If it does not match, a
+         :class:`ValueError` is raised.
     sale_country : Optional[str]
         The IATA country code representing the point of sale. Determines the currency.
     ticketing_country : Optional[str]
@@ -67,8 +67,8 @@ class Request:
     refundable : Optional[bool]
         Whether to return only results with refundable fares or not.
     solution_count : int
-        The amount of solutions to return. Defaults to 1, maximum is 500. Raises a ``ValueError`` when trying to assign
-        a value outside 1 to 500.
+        The amount of solutions to return. Defaults to 1, maximum is 500. Raises a :class:`ValueError` when trying to
+        assign a value outside 1 to 500.
 
         
     """
