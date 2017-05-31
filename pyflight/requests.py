@@ -63,11 +63,12 @@ class Request:
     sale_country : Optional[str]
         The IATA country code representing the point of sale. Determines the currency.
     ticketing_country : Optional[str]
-        The IATA country code representing the point of ticketing.
+        The IATA country code representing the point of ticketing, for example ``DE``.
     refundable : Optional[bool]
         Whether to return only results with refundable fares or not.
     solution_count : int
-        The amount of solutions to return. Defaults to 1, maximum is 500.
+        The amount of solutions to return. Defaults to 1, maximum is 500. Raises a ``ValueError`` when trying to assign
+        a value outside 1 to 500.
 
         
     """
@@ -161,6 +162,8 @@ class Request:
 
     @solution_count.setter
     def solution_count(self, count: int):
+        if not 1 < count < 500:
+            raise ValueError('solution_count must be 1-500')
         self.raw_data['request']['solutions'] = count
 
 
