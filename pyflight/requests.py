@@ -33,12 +33,14 @@ class APIException(Exception):
             ...
             
     The Exception will be formatted as: `'<status-code>: <error-message> (reason)'`, for example
-    `400: Bad Request (keyInvalid)`
+    ``400: Bad Request (keyInvalid)``
     """
 
 
 class Request:
     """Represents a Request that can be sent to the API instead of using a dictionary manually.
+
+    Optional attributes default to ``None``.
     
     Attributes
     ----------
@@ -54,6 +56,18 @@ class Request:
         The amount of passengers that are infants assigned a seat.
     senior_count : int
         The amount of passengers that are senior citizens.
+    max_price : Optional[str]
+        The maximum price below which results should be returned. The currency is specified in ISO-4217, and setting
+         this attribute is validated using the regex ``[A-Z]{3}\d+(\.\d+)?``. If it does not match, a ``ValueError`` is
+         raised.
+    sale_country : Optional[str]
+        The IATA country code representing the point of sale. Determines the currency.
+    ticketing_country : Optional[str]
+        The IATA country code representing the point of ticketing.
+    refundable : Optional[bool]
+        Whether to return only results with refundable fares or not.
+    solution_count : int
+        The amount of solutions to return. Defaults to 1, maximum is 500.
 
         
     """
