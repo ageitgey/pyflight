@@ -6,6 +6,7 @@ import asyncio
 import aiohttp
 import re
 import requests
+from typing import Optional
 
 import pyflight.rate_limiter
 
@@ -95,55 +96,47 @@ class Request:
     def senior_count(self, count: int):
         self.raw_data['request']['passengers']['seniorCount'] = count
 
+    @property
+    def max_price(self) -> Optional[str]:
+        return self.raw_data['request'].get('maxPrice', None)
 
-    def set_max_price(self, max_price: str):
-        """Set the max price for this :class:`Request`. Use :meth:`get_max_price` to get the max price.
-        This is used to only return solutions that cost less than the maximum price passed.
-        The input is validated using the Regex ``[A-Z]{3}\d+(\.\d+)?``.
-        Calling this function can be omitted to return solutions with any price.
-        
-        Parameters
-        ----------
-        max_price : str
-            The maximum price for which solutions should be returned.
-        """
+    @max_price.setter
+    def max_price(self, max_price: str):
         if not re.match(MAX_PRICE_REGEX, max_price):
             raise ValueError('max_price given (\'{}\') does not match ISO-4217 format'.format(max_price))
         self.raw_data['request']['maxPrice'] = max_price
 
-    def get_max_price(self):
-        """Get the maximum price that was set.
-        
-        Returns
-        -------
-        str
-            The ``max_price`` if set, ``''`` (empty string) otherwise.
-        """
-        return self.raw_data['request'].get('maxPrice', '')
+    @property
+    def sale_country(self) -> Optional[str]:
+        return self.raw_data['request'].get('saleCountry', None)
 
-    def set_sale_country(self, sale_country: str):
+    @sale_country.setter
+    def sale_country(self, sale_country: str):
         self.raw_data['request']['saleCountry'] = sale_country
 
-    def get_sale_country(self):
-        return self.raw_data['request']['saleCountry']
+    @property
+    def ticketing_country(self) -> Optional[str]:
+        return self.raw_data['request'].get('ticketingCountry', None)
 
-    def set_ticketing_country(self, ticketing_country: str):
-        self.raw_data['request']['ticketingCountry'] = ticketing_country
+    @ticketing_country.setter
+    def ticketing_country(self, country: str):
+        self.raw_data['request']['ticketingCountry'] = country
 
-    def get_ticketing_country(self):
-        return self.raw_data['request']['ticketingCountry']
+    @property
+    def refundable(self) -> Optional[bool]:
+        return self.raw_data['request'].get('refundable', None)
 
-    def set_refundable(self, refundable: bool):
+    @refundable.setter
+    def refundable(self, refundable: bool):
         self.raw_data['request']['refundable'] = refundable
 
-    def get_refundable(self):
-        return self.raw_data['request']['refundable']
-
-    def set_solution_count(self, solution_amount: int):
-        self.raw_data['request']['solutions'] = solution_amount
-
-    def get_solution_count(self):
+    @property
+    def solution_count(self):
         return self.raw_data['request']['solutions']
+
+    @solution_count.setter
+    def solution_count(self, count: int):
+        self.raw_data['request']['solutions'] = count
 
 
 class Requester(object):
