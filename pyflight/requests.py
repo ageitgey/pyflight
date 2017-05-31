@@ -44,6 +44,17 @@ class Request:
     ----------
     raw_data : dict
         The raw JSON / dictionary data which will be sent to the API.
+    adult_count : int
+        The amount of passengers that are adults.
+    children_count : int
+        The amount of passengers that are children.
+    infant_in_lap_count : int
+        The amount of passengers that are infants travelling in the lap of an adult.
+    infant_in_seat_count : int
+        The amount of passengers that are infants assigned a seat.
+    senior_count : int
+        The amount of passengers that are senior citizens.
+
         
     """
     def __init__(self):
@@ -171,20 +182,6 @@ class Requester(object):
                     raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
                 return await r.json()
 
-    async def get_request(self, url: str) -> dict:
-        """Send a GET request to the specified URL with the given payload.
-        Arguments
-            url : str
-                The URL to which the GET Request should be sent
-                
-        Returns
-            dict: The Response of the Website
-        """
-        await pyflight.rate_limiter.delay_async(self.loop)
-        async with aiohttp.ClientSession(loop=self.loop) as cs:
-            async with cs.get(url) as r:
-                return await r.json()
-
     @staticmethod
     def post_request_sync(url: str, payload: dict) -> dict:
         """Send a synchronous POST request to the specified URL with the given payload.
@@ -207,33 +204,3 @@ class Requester(object):
         return r.json()
 
 requester = Requester()
-
-
-def get_request(url: str) -> dict:
-    """Sends out a GET request in Background
-    
-    Arguments:
-        url : str
-            The URL to which the Request should be sent
-            
-    Returns:
-        dict: The Response, as a dictionary
-    """
-    return requester.loop.run_until_complete(requester.get_request(url))
-
-
-def post_request(url: str, payload=None) -> dict:
-    """Sends out a POST Request to the specified URL
-    
-    Arguments
-        url : str
-            The URL to which the Request should be sent
-        payload : dict
-            The Payload to be sent to the URL
-            
-    Returns:
-        dict: The Response, as dictionary
-    """
-    if payload is None:
-        payload = {}
-    return requester.loop.run_until_complete(requester.post_request(url, payload))
