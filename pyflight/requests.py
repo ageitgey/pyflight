@@ -57,7 +57,7 @@ class Request:
     senior_count : int
         The amount of passengers that are senior citizens.
     max_price : Optional[str]
-        The maximum price below which results should be returned. The currency is specified in ISO-4217, and setting
+         The maximum price below which results should be returned. The currency is specified in ISO-4217, and setting
          this attribute is validated using the regex ``[A-Z]{3}\d+(\.\d+)?``. If it does not match, a ``ValueError`` is
          raised.
     sale_country : Optional[str]
