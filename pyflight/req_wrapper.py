@@ -22,7 +22,7 @@ def set_api_key(key: str):
 
 
 async def send_async(request_body: dict, use_containers: bool = True):
-    """Asynchronously execute and send the Request. This is a coroutine - calling this function must be awaited.
+    """Asynchronously execute and send a JSON Request. This is a coroutine - calling this function must be awaited.
     
     Parameters
     ----------
@@ -57,7 +57,7 @@ async def send_async(request_body: dict, use_containers: bool = True):
 
 
 def send_sync(request_body: dict, use_containers: bool = True):
-    """Synchronously execute and send the Request. Note that this function is blocking.
+    """Synchronously execute and send a JSON-Request. Note that this function is blocking.
     
     Parameters
     ----------
@@ -77,7 +77,7 @@ def send_sync(request_body: dict, use_containers: bool = True):
     Returns
     -------
     :class:`Result`
-        If `use_containers` is `True` and no Error occured.
+        If `use_containers` is `True` and no Error occurred.
     dict
         If `use_containers` is `False`, as a raw dictionary without any adjustments.
 
