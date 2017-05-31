@@ -55,54 +55,46 @@ class Request:
             }
         }
 
-    def _set_passenger_count_or_omit(self, attr, value):
-        if value != 0:
-            self.raw_data['request']['passengers'][attr] = value
+    @property
+    def adult_count(self) -> int:
+        return self.raw_data['request']['passengers'].get('adultCount', 0)
 
-    def set_passenger_counts(self, adults: int=0, children: int=0, infants_in_lap: int=0,
-                             infants_in_seat: int=0, seniors: int=0):
-        """Set the passenger counts to be used for this request.
-        
-        All parameters not passed will default to ``0``, but will not be changed if set previously.
-        Use :meth:`get_passenger_counts` to get the passenger counts.
-        
-        Parameters
-        ----------
-        adults : int
-            The number of passengers that are adults.
-        children : int
-            The number of passengers that are children.
-        infants_in_lap : int
-            The number of passengers that are infants travelling in the lap of an adult.
-        infants_in_seat : int
-            The number of passengers that are infants assigned a seat.
-        seniors : int
-            The number of passengers that are senior citizens.
+    @adult_count.setter
+    def adult_count(self, count: int):
+        self.raw_data['request']['passengers']['adultCount'] = count
 
-        """
-        self._set_passenger_count_or_omit('adultCount', adults)
-        self._set_passenger_count_or_omit('childCount', children)
-        self._set_passenger_count_or_omit('infantInLapCount', infants_in_lap)
-        self._set_passenger_count_or_omit('infantInSeatCount', infants_in_seat)
-        self._set_passenger_count_or_omit('seniorCount', seniors)
+    @property
+    def children_count(self) -> int:
+        return self.raw_data['request']['passengers'].get('childrenCount', 0)
 
-    def get_passenger_counts(self):
-        """Get the passenger counts of this :class:`Request`.
-        
-        >>> my_request = pyflight.Request()
-        >>> my_request.set_passenger_counts(adults=2, children=3)
-        >>> my_request.get_passenger_counts()
-        {
-            'adultCount': 2,
-            'childCount': 3
-        }
-        
-        Returns
-        -------
-        dict
-            The adult counts as a dictionary, view the example above.
-        """
-        return self.raw_data['request']['passengers']
+    @children_count.setter
+    def children_count(self, count: int):
+        self.raw_data['request']['passengers']['childrenCount'] = count
+
+    @property
+    def infant_in_lap_count(self) -> int:
+        return self.raw_data['request']['passengers'].get('infantInLapCount', 0)
+
+    @infant_in_lap_count.setter
+    def infant_in_lap_count(self, count: int):
+        self.raw_data['request']['passengers']['infantInLapCount'] = count
+
+    @property
+    def infant_in_seat_count(self) -> int:
+        return self.raw_data['request']['passengers'].get('infantInSeatCount', 0)
+
+    @infant_in_seat_count.setter
+    def infant_in_seat_count(self, count: int):
+        self.raw_data['request']['passengers']['infantInSeatCount'] = count
+
+    @property
+    def senior_count(self) -> int:
+        return self.raw_data['request']['passengers'].get('seniorCount', 0)
+
+    @senior_count.setter
+    def senior_count(self, count: int):
+        self.raw_data['request']['passengers']['seniorCount'] = count
+
 
     def set_max_price(self, max_price: str):
         """Set the max price for this :class:`Request`. Use :meth:`get_max_price` to get the max price.
