@@ -897,8 +897,7 @@ class SegmentPricing(object):
         """
         self.segment_id = segment_data['segmentId']
         self.fare_id = segment_data['fareId']
-
-        self.free_baggage = [FreeBaggageOption(fbo) for fbo in segment_data['freeBaggageOption']]
+        self.free_baggage = [FreeBaggageOption(fbo) for fbo in segment_data.get('freeBaggageOption', [])]
 
     def __eq__(self, other):
         """Compares two :class:`SegmentPricing` objects for equality.
@@ -1027,8 +1026,6 @@ class Pricing(object):
         base_fare_total : str
             The total fare in the currency of the country of origin.
             ``None`` when the sales currency and the currency of the country of commencement are not different.
-        sale_fare_total : str
-            The total fare in the sale or equivalent currency.
         sale_fare_total : str
             The total fare in the sale or equivalent currency.
         sale_tax_total : str
@@ -1179,6 +1176,25 @@ class Trip(object):
         """
         return self.id
 
+    def as_dict(self) -> dict:
+        """Get a dictionary representation of this :class:`Trip`.
+
+        Returns
+        -------
+        dict
+            A dictionary containing the attributes of this :class:`Trip` as key / value pairs.
+        """
+        return {
+            'total_price': self.total_price,
+            'id': self.id,
+            'routes': [
+                r.as_dict() for r in self.routes
+            ],
+            'pricing': [
+                p.as_dict() for p in self.pricing
+            ]
+        }
+
 
 class Result(object):
     """Contains Results of an API Call.
@@ -1207,12 +1223,18 @@ class Result(object):
             
         airports : List[:class:`Airport`]
             Contains Data for the Flights found in the Response.
+
+        aircraft : List[:class:`Aircraft`]
+            Contains the Code and the Name of the Aircraft found in the Response.
             
         carriers : List[:class:`Carrier`]
-            Contains the Code and the Name of the Carriers found in the Response
+            Contains the Code and the Name of the Carriers found in the Response.
+
+        cities : List[:class:`City`]
+            Contains the Code and the Name of Cities found in the Response.
             
         taxes : List[:class:`Tax`]
-            Contains the Code and the Name of Taxes found in the Response
+            Contains the Code and the Name of Taxes found in the Response.
             
         trips : List[:class:`Trip`]
             Contains information about trips (itinerary solutions) returned by the API.
@@ -1260,3 +1282,24 @@ class Result(object):
         """Returns a generator for the :class:`Trip`s saved in this :class:`Result`."""
         for t in self.trips:
             yield t
+
+    def as_dict(self) -> dict:
+        """Returns a dictionary representation of this :class:`Result`.
+
+        Useful for serializing data to JSON.
+        Internally, this calls ``as_dict()`` on all of its members.
+
+        Returns
+        -------
+        dict
+            The data stored in this :class:`Result` as key / value pairs.
+        """
+        return {
+            'request_id': self.request_id,
+            'airports': [a.as_dict() for a in self.airports],
+            'aircraft': [a.as_dict() for a in self.aircraft],
+            'carriers': [c.as_dict() for c in self.carriers],
+            'cities': [c.as_dict() for c in self.cities],
+            'taxes': [t.as_dict() for t in self.taxes],
+            'trips': [t.as_dict() for t in self.trips]
+        }

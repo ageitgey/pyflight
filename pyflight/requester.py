@@ -7,7 +7,7 @@ import pyflight
 from pyflight.api import requester
 from pyflight.results import Result
 
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Tuple
 
 BASE_URL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='
 __api_key = ''
@@ -162,6 +162,7 @@ class Slice:
 class Request:
     """Represents a Request that can be sent to the API instead of using a dictionary manually.
 
+    Please note that each Request requires at least 1 adult or senior passenger.
     Optional attributes default to ``None``.
 
     Attributes
@@ -190,7 +191,7 @@ class Request:
         Whether to return only results with refundable fares or not.
     solution_count : int
         The amount of solutions to return. Defaults to 1, maximum is 500. Raises a :class:`ValueError` when trying to
-        assign a value outside 1 to 500.
+        assign a value outside of 1 to 500.
     """
 
     def __init__(self):
@@ -210,7 +211,7 @@ class Request:
     def as_dict(self) -> dict:
         return self.raw_data
 
-    def send_sync(self, use_containers: bool=True):
+    def send_sync(self, use_containers: bool=True) -> Union[Result, dict]:
         """Synchronously execute a request.
 
         Internally, this calls :meth:`pyflight.send_sync()`.
@@ -219,7 +220,7 @@ class Request:
         """
         return pyflight.send_sync(self, use_containers=use_containers)
 
-    async def send_async(self, use_containers: bool=True):
+    async def send_async(self, use_containers: bool=True) -> Union[Result, dict]:
         """Asynchronously execute a request.
 
         Internally, this calls :meth:`pyflight.send_async()`.

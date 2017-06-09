@@ -17,6 +17,7 @@ python3 -m pip install pyflight
 # Up-to-date version from GitHub (currently recommended):
 python3 -m pip install -U git+https://github.com/Volcyy/pyflight
 ```  
+A Google API Key is required. You can obtain one at the [Google API Dev Console](https://console.developers.google.com/apis).
    
 ## Example
 **Find flights from San Francisco (SFO) to Los Angeles (LAX), limited to one solution** 

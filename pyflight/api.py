@@ -12,7 +12,16 @@ import pyflight.rate_limiter
 class APIException(Exception):
     """
     Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not  
-    return a status code of 200. 
+    return a status code of 200.
+
+    Attributes
+    ----------
+    code : int
+        The code of the Error that was returned
+    message : str
+        The error message as returned by the API
+    reason : str
+        The reason as specified by the API
 
     Examples
     --------
@@ -30,6 +39,13 @@ class APIException(Exception):
     The Exception will be formatted as: `'<status-code>: <error-message> (reason)'`, for example
     ``400: Bad Request (keyInvalid)``
     """
+    def __init__(self, code: int, message: str, reason: str):
+        self.code = code
+        self.message = message
+        self.reason = reason
+
+    def __str__(self):
+        return '{}: {} ({})'.format(self.code, self.message, self.reason)
 
 
 class Requester(object):
@@ -60,9 +76,12 @@ class Requester(object):
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.post(url + self.api_key, data=payload) as r:
                 if r.status != 200:
-                    resp = r.json()
-                    reason = resp['error']['errors'][0]['reason']
-                    raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
+                    resp = await r.json()
+                    raise APIException(
+                        code=resp['error']['code'],
+                        message=resp['error']['message'],
+                        reason=resp['error']['errors'][0]['reason']
+                    )
                 return await r.json()
 
     def post_request_sync(self, url: str, payload: dict) -> dict:
@@ -81,8 +100,11 @@ class Requester(object):
         r = requests.post(url + self.api_key, json=payload)
         if r.status_code != 200:
             resp = r.json()
-            reason = resp['error']['errors'][0]['reason']
-            raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
+            raise APIException(
+                code=resp['error']['code'],
+                message=resp['error']['message'],
+                reason=resp['error']['errors'][0]['reason']
+            )
         return r.json()
 
 requester = Requester()
