@@ -42,8 +42,10 @@ flight.add_slice(pyflight.Slice(
     date='2017-09-19'
 ))
 
+result = flight.send_sync(use_containers=False)
+
 with open('res.json', 'w+') as f:
-    json.dump(flight.send_sync(use_containers=False), f)
+    json.dump(result, f)
 ```
 
 ## Dependencies
