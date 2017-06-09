@@ -203,9 +203,9 @@ class Request:
             }
         }
 
-    def add_slice(self, slice: Slice):
+    def add_slice(self, slice_: Slice):
         """Adds a slice to this Request."""
-        self.raw_data['request']['slice'].append(slice.raw_data)
+        self.raw_data['request']['slice'].append(slice_.raw_data)
 
     def as_dict(self) -> dict:
         return self.raw_data
