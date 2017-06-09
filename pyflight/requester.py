@@ -1,13 +1,161 @@
 """
 Provides an easy-to-use interface to use pyflight with.
 """
-from pyflight.api import requester, Request
+import re
+
+from pyflight.api import requester
 from pyflight.results import Result
 
-from typing import Union
+from typing import Union, Optional, List
 
 BASE_URL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='
 __api_key = ''
+MAX_PRICE_REGEX = re.compile('[A-Z]{3}\d+(\.\d+)?')
+
+
+class Slice:
+    """Represents a slice that makes up a single itinerary of this trip.
+
+    For example, for one-way trips, usually one slice is used.
+    A round trip would use two slices. (e.g. SFO - FRA - SFO)
+
+    Optional attributes default to ``None`` or an empty list if applicable, but can be set if wanted.
+
+    Attributes
+    ----------
+    raw_data : dict
+        The raw JSON / dictionary data which will be sent to the API.
+    origin : str
+        The airport or city IATA designator of the origin.
+    destination : str
+        The airport or city IATA designator of the destination.
+    date : str
+        The date on which this flight should take place, in the format YYYY-MM-DD.
+    max_stops : Optional[int]
+        The maximum amount of stops that the passenger(s) are willing to accept on this slice.
+    max_connection_duration : Optional[int]
+        The longest duration (in minutes) between two legs that passengers are willing to accept
+    preferred_cabin : Optional[str]
+        The preferred cabin for this slice.
+        Allowed values are COACH, PREMIUM_COACH, BUSINESS, and FIRST.
+        A :class:`ValueError` is raised if a value is assigned that is not listed above.
+    earliest_departure_time : Optional[str]
+        The earliest time for departure, local to the point of departure. Formatted as HH:MM.
+    latest_departure_time : Optional[str]
+        The latest time for departure, local to the point of departure. Formatted as HH:MM.
+    permitted_carriers : List[str]
+        A list of 2-letter IATA airline designators for which results should be returned.
+    prohibited_carriers : List[str]
+        A list of 2-letter IATA airline designators, for which no results will be returned.
+    """
+    def __init__(self, origin: str, destination: str, date: str):
+        """Create a new slice.
+
+        Parameters
+        ----------
+        origin : str
+            The airport or city IATA designator of the origin.
+        destination : str
+            The airport or city IATA designator of the destination.
+        date : str
+            The date on which this flight should take place, in the format YYYY-MM-DD.
+        """
+        self.raw_data = {
+            'kind': 'qpxexpress#sliceInput',
+            'origin': origin,
+            'destination': destination,
+            'date': date
+        }
+
+    @property
+    def origin(self) -> str:
+        return self.raw_data['origin']
+
+    @origin.setter
+    def origin(self, new_origin: str):
+        self.raw_data['origin'] = new_origin
+
+    @property
+    def destination(self) -> str:
+        return self.raw_data['destination']
+
+    @destination.setter
+    def destination(self, new_destination: str):
+        self.raw_data['destination'] = new_destination
+
+    @property
+    def date(self) -> str:
+        return self.raw_data['date']
+
+    @date.setter
+    def date(self, new_date: str):
+        self.raw_data['date'] = new_date
+        
+    @property
+    def max_stops(self) -> Optional[int]:
+        return self.raw_data.get('maxStops', None)
+
+    @max_stops.setter
+    def max_stops(self, max_stops: int):
+        self.raw_data['max_stops'] = max_stops
+
+    @property
+    def max_connection_duration(self) -> Optional[int]:
+        return self.raw_data.get('maxConnectionDuration', None)
+
+    @max_connection_duration.setter
+    def max_connection_duration(self, new_max_duration: int):
+        self.raw_data['maxConnectionDuration'] = new_max_duration
+
+    @property
+    def preferred_cabin(self) -> Optional[str]:
+        return self.raw_data.get('preferredCabin', None)
+
+    @preferred_cabin.setter
+    def preferred_cabin(self, new_preferred_cabin: str):
+        if new_preferred_cabin not in ('COACH', 'PREMIUM_COACH', 'BUSINESS', 'FIRST'):
+            raise ValueError('Invalid value for preferred_cabin')
+        self.raw_data['preferredCabin'] = new_preferred_cabin
+
+    @property
+    def _permitted_departure_time(self) -> dict:
+        if 'permittedDepartureTime' not in self.raw_data:
+            self.raw_data['permittedDepartureTime'] = {
+                'kind': 'qpxexpress#timeOfDayRange'
+            }
+        return self.raw_data['permittedDepartureTime']
+
+    @property
+    def earliest_departure_time(self) -> Optional[str]:
+        return self._permitted_departure_time.get('earliestTime', None)
+
+    @earliest_departure_time.setter
+    def earliest_departure_time(self, new_earliest_departure_time: str):
+        self._permitted_departure_time['earliestTime'] = new_earliest_departure_time
+
+    @property
+    def latest_departure_time(self) -> Optional[str]:
+        return self._permitted_departure_time.get('latestTime', None)
+
+    @latest_departure_time.setter
+    def latest_departure_time(self, new_latest_departure_time: str):
+        self._permitted_departure_time['latestTime'] = new_latest_departure_time
+
+    @property
+    def permitted_carriers(self) -> List[str]:
+        return self.raw_data.get('permittedCarrier', [])
+
+    @permitted_carriers.setter
+    def permitted_carriers(self, new_permitted_carriers: list):
+        self.raw_data['permittedCarrier'] = new_permitted_carriers
+
+    @property
+    def prohibited_carriers(self) -> List[str]:
+        return self.raw_data.get('prohibitedCarrier', [])
+
+    @prohibited_carriers.setter
+    def prohibited_carriers(self, new_prohibited_carriers: list):
+        self.raw_data['prohibitedCarrier'] = new_prohibited_carriers
 
 
 class Request:
@@ -42,8 +190,6 @@ class Request:
     solution_count : int
         The amount of solutions to return. Defaults to 1, maximum is 500. Raises a :class:`ValueError` when trying to
         assign a value outside 1 to 500.
-
-
     """
 
     def __init__(self):
@@ -139,6 +285,7 @@ class Request:
         if not 1 < count < 500:
             raise ValueError('solution_count must be 1-500')
         self.raw_data['request']['solutions'] = count
+
 
 def set_api_key(key: str):
     """Set the API key to use with the API.  

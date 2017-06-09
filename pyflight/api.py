@@ -4,14 +4,9 @@ Handles all Requests that are sent to the API.
 import asyncio
 
 import aiohttp
-import re
 import requests
-from typing import Optional
 
 import pyflight.rate_limiter
-
-
-MAX_PRICE_REGEX = re.compile('[A-Z]{3}\d+(\.\d+)?')
 
 
 class APIException(Exception):

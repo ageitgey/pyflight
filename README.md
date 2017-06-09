@@ -9,12 +9,12 @@ A Python Wrapper around the Google QPX Flights API that supports both synchronou
 - Rate Limiting to your liking
 
 ## Installation
-```
-pip3 install pyflight
-```  
-*or*  
-```
+```bash
+pip3 install pyflight 
 python3 -m pip install pyflight
+
+# Up-to-date version from GitHub (currently recommended):
+python3 -m pip install -U git+https://github.com/Volcyy/pyflight
 ```  
    
 ## Example
