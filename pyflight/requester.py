@@ -213,7 +213,7 @@ class Request:
     def send_sync(self, use_containers: bool=True):
         """Synchronously execute a request.
 
-        Internally, this calls ``pyflight.send_sync()`.
+        Internally, this calls :meth:`pyflight.send_sync()`.
         You can also call the function directly. For further information, please view
         documentation for :meth:`pyflight.send_sync()`.
         """
@@ -222,7 +222,7 @@ class Request:
     async def send_async(self, use_containers: bool=True):
         """Asynchronously execute a request.
 
-        Internally, this calls ``pyflight.send_async()`.
+        Internally, this calls :meth:`pyflight.send_async()`.
         You can also call the function directly. For further information, please view
         documentation for :meth:`pyflight.send_async()`.
         """
