@@ -8,7 +8,7 @@ except IOError:
 
 setup(
     name="pyflight",
-    version="0.0.3",
+    version="0.1.0",
     description="A Python Wrapper around Google's QPX Express API",
     license="MIT",
     author="Volcyy",
