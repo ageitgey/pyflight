@@ -485,7 +485,7 @@ class Segment(object):
                 return flight
         return None
 
-    def find(self, condition_function: function):
+    def find(self, condition_function: callable):
         """Similar to :meth:`find_one`\, except that it returns a generator of :class:`Flight`\s matching the condition
         in the passed function instead of a single :class:`Flight` or ``None``. This returns all :class:`Flight`\s for
         which ``condition_function`` returns True.
