@@ -1069,13 +1069,9 @@ class Pricing(object):
             pricing_data : dict
                 The Pricing Data Object as returned from the API in an Array
         """
-        self.fares = []
-        for fare in pricing_data['fare']:
-            self.fares.append(Fare(fare))
+        self.fares = [Fare(f) for f in pricing_data['fare']]
 
-        self.segment_pricing = []
-        for segment_pricing in pricing_data['segmentPricing']:
-            self.segment_pricing.append(SegmentPricing(segment_pricing))
+        self.segment_pricing = [SegmentPricing(sp) for sp in pricing_data['segmentPricing']]
 
         self.base_fare_total = pricing_data.get('baseFareTotal')
         self.sale_fare_total = pricing_data['saleFareTotal']
@@ -1160,17 +1156,8 @@ class Trip(object):
         self.total_price = trip_data['saleTotal']
         self.id = trip_data['id']
 
-        # Get Routes / Slices
-        self.routes = []
-
-        for route in trip_data['slice']:
-            self.routes.append(Route(route))
-
-        # Get Pricing Data
-        self.pricing = []
-
-        for pricing_data in trip_data['pricing']:
-            self.pricing.append(Pricing(pricing_data))
+        self.routes = [Route(r) for r in trip_data['slice']]
+        self.pricing = [Pricing(pd) for pd in trip_data['pricing']]
 
     def __eq__(self, other):
         """Compare two :class:`Trip` objects with each other for equality
@@ -1209,9 +1196,9 @@ class Result(object):
     ``str(x)``
         Returns the ``request_id`` for the :class:`Result` this is invoked on.
 
-    ``for trip in Result``
+    ``for trip in x``
         This will call ``__iter__`` of :class:`Result` and return an iterator
-        over the :class:`Trip`s saved in this :class:`Result`.
+        over the :class:`Trip`\s saved in this :class:`Result`.
     
     Attributes
     ----------
