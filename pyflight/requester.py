@@ -3,10 +3,11 @@ Provides an easy-to-use interface to use pyflight with.
 """
 import re
 
+import pyflight
 from pyflight.api import requester
 from pyflight.results import Result
 
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Any
 
 BASE_URL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='
 __api_key = ''
@@ -201,6 +202,31 @@ class Request:
                 'solutions': 1
             }
         }
+
+    def add_slice(self, slice: Slice):
+        """Adds a slice to this Request."""
+        self.raw_data['request']['slice'].append(slice.raw_data)
+
+    def as_dict(self) -> dict:
+        return self.raw_data
+
+    def send_sync(self, use_containers: bool=True):
+        """Synchronously execute a request.
+
+        Internally, this calls ``pyflight.send_sync()`.
+        You can also call the function directly. For further information, please view
+        documentation for :meth:`pyflight.send_sync()`.
+        """
+        return pyflight.send_sync(self, use_containers=use_containers)
+
+    async def send_async(self, use_containers: bool=True):
+        """Asynchronously execute a request.
+
+        Internally, this calls ``pyflight.send_async()`.
+        You can also call the function directly. For further information, please view
+        documentation for :meth:`pyflight.send_async()`.
+        """
+        return pyflight.send_async(self, use_containers=use_containers)
 
     @property
     def adult_count(self) -> int:

@@ -20,6 +20,9 @@ Making Requests
 .. autoclass:: pyflight.Request
    :members:
 
+.. autoclass:: pyflight.Slice
+   :members:
+
 .. autofunction:: pyflight.send_async
 
 .. autofunction:: pyflight.send_sync
