@@ -1,47 +1,20 @@
 """
-Handles all Requests that are sent to the API.
+Provides an easy-to-use interface to use pyflight with.
 """
-import asyncio
+from pyflight.api import requester, Request
+from pyflight.results import Result
 
-import aiohttp
-import re
-import requests
-from typing import Optional
+from typing import Union
 
-import pyflight.rate_limiter
-
-
-MAX_PRICE_REGEX = re.compile('[A-Z]{3}\d+(\.\d+)?')
-
-
-class APIException(Exception):
-    """
-    Custom Exception that is raised from the Requests when an API call goes wrong, meaning the API did not  
-    return a status code of 200. 
-
-    Examples
-    --------
-        
-    .. code-block:: python
-    
-        try:
-            flight_info = send_sync(my_request_body, use_containers=False)
-        except pyflight.APIException as err:
-            print('Error trying to execute a request:') 
-            print(err)
-        else:
-            ...
-            
-    The Exception will be formatted as: `'<status-code>: <error-message> (reason)'`, for example
-    ``400: Bad Request (keyInvalid)``
-    """
+BASE_URL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='
+__api_key = ''
 
 
 class Request:
     """Represents a Request that can be sent to the API instead of using a dictionary manually.
 
     Optional attributes default to ``None``.
-    
+
     Attributes
     ----------
     raw_data : dict
@@ -70,8 +43,9 @@ class Request:
         The amount of solutions to return. Defaults to 1, maximum is 500. Raises a :class:`ValueError` when trying to
         assign a value outside 1 to 500.
 
-        
+
     """
+
     def __init__(self):
         """Create a new Request."""
         self.raw_data = {
@@ -166,58 +140,89 @@ class Request:
             raise ValueError('solution_count must be 1-500')
         self.raw_data['request']['solutions'] = count
 
+def set_api_key(key: str):
+    """Set the API key to use with the API.  
+    
+    Parameters
+    ----------
+        key : str
+            The API key to make requests with.
 
-class Requester(object):
     """
-    Class to execute requests with.
+    global __api_key
+    __api_key = key
+
+
+async def send_async(request_body: Union[dict, Request], use_containers: bool=True):
+    """Asynchronously execute and send a JSON Request or a :class:`Request`.
+     This is a coroutine - calling this function must be awaited.
+    
+    Parameters
+    ----------
+    request_body : Union[dict, Request]
+        The body of the request to be sent to the API. This must follow the structure described here:
+        https://developers.google.com/qpx-express/v1/trips/search
+    use_containers : Optional[bool]
+        Whether the containers given should be used or not.
+        If False is given, any API call will return a dictionary of the "raw" API data without any
+        modification. Otherwise, an API call will return a :class:`Result` object or an Error if appropriate.
+    
+    Raises
+    ------
+    :class:`APIException`
+            If the API call did not return the normal `200` status code and thus, an error occurred.
+                    
+    Returns
+    -------
+    :class:`Result`
+        If ``use_containers`` is ``True`` and no Error occurred.
+    dict
+        If ``use_containers`` is ``False``, as a raw dictionary without any adjustments.
+
     """
+    if isinstance(request_body, dict):
+        response = await requester.post_request(BASE_URL + __api_key, request_body)
+    elif isinstance(request_body, Request):
+        response = await requester.post_request(BASE_URL + __api_key, request_body.raw_data)
+    else:
+        raise ValueError('Unsupported Request Type')
+    if use_containers:
+        return Result(response)
+    return response
 
-    def __init__(self):
-        """Initialization of the Requester. 
-        Gets a dedicated Event Loop from asyncio to be used for making Requests.
-        """
-        self.loop = asyncio.get_event_loop()
 
-    async def post_request(self, url: str, payload: dict) -> dict:
-        """Send a POST request to the specified URL with the given payload.
-        
-        Arguments
-            url : str
-                The URL to which the POST Request should be sent
-            payload: dict
-                The Payload to be sent along with the POST request
-                
-        Returns
-            dict: The Response of the Website
-        """
-        await pyflight.rate_limiter.delay_async(self.loop)
-        async with aiohttp.ClientSession(loop=self.loop) as cs:
-            async with cs.post(url, data=payload) as r:
-                if r.status != 200:
-                    resp = r.json()
-                    reason = resp['error']['errors'][0]['reason']
-                    raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
-                return await r.json()
+def send_sync(request_body: Union[dict, Request], use_containers: bool=True):
+    """Synchronously execute and send a JSON-Request or a :class:`Request. Note that this function is blocking.
+    
+    Parameters
+    ----------
+    request_body : Union[dict, Request]
+        The body of the request to be sent to the API. This must follow the structure described here:
+        https://developers.google.com/qpx-express/v1/trips/search
+    use_containers : Optional[bool]
+        Whether the containers given should be used or not.
+        If False is given, any API call will return a dictionary of the "raw" API data without any
+        modification. Otherwise, an API call will return a :class:`Result` object or an Error if appropriate.
+    
+    Raises
+    ------
+    :class:`APIException`
+            If the API call did not return the normal `200` status code and thus, an error occurred.
+                    
+    Returns
+    -------
+    :class:`Result`
+        If ``use_containers`` is ``True`` and no Error occurred.
+    dict
+        If ``use_containers`` is ``False`, as a raw dictionary without any adjustments.
 
-    @staticmethod
-    def post_request_sync(url: str, payload: dict) -> dict:
-        """Send a synchronous POST request to the specified URL with the given payload.
-        
-        Arguments
-            url : str
-                The URL to which the POST Request should be sent
-            payload: dict
-                The Payload to be sent along with the POST request
-                
-        Returns
-            dict: The Response of the Website
-        """
-        pyflight.rate_limiter.delay_sync()
-        r = requests.post(url, json=payload)
-        if r.status_code != 200:
-            resp = r.json()
-            reason = resp['error']['errors'][0]['reason']
-            raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
-        return r.json()
-
-requester = Requester()
+    """
+    if isinstance(request_body, dict):
+        response = requester.post_request_sync(BASE_URL + __api_key, request_body)
+    elif isinstance(request_body, Request):
+        response = requester.post_request_sync(BASE_URL + __api_key, request_body.raw_data)
+    else:
+        raise ValueError('Unsupported Request Type')
+    if use_containers:
+        return Result(response)
+    return response
