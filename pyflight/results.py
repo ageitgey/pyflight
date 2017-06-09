@@ -1238,39 +1238,12 @@ class Result(object):
         """
         self.request_id = data['trips']['requestId']
 
-        # Save Airports
-        self.airports = []
-        airports = data['trips']['data']['airport']
-        for airport in airports:
-            self.airports.append(Airport(airport))
-
-        # Save Aircraft
-        self.aircraft = []
-        for single_aircraft in data['trips']['data']['aircraft']:
-            self.aircraft.append(Aircraft(single_aircraft['code'], single_aircraft['name']))
-
-        # Save Carriers
-        self.carriers = []
-        carriers = data['trips']['data']['carrier']
-        for carrier in carriers:
-            self.carriers.append(Carrier(carrier['code'], carrier['name']))
-
-        # Save Cities
-        self.cities = []
-        for city in data['trips']['data']['city']:
-            self.cities.append(City(city['code'], city['name']))
-
-        # Save Taxes
-        self.taxes = []
-        taxes = data['trips']['data']['tax']
-        for tax in taxes:
-            self.taxes.append(Tax(tax['id'], tax['name']))
-
-        # Save Trips
-        self.trips = []
-        trips = data['trips']['tripOption']
-        for trip in trips:
-            self.trips.append(Trip(trip))
+        self.airports = [Airport(a) for a in data['trips']['data']['airport']]
+        self.aircraft = [Aircraft(a['code'], a['name']) for a in data['trips']['data']['aircraft']]
+        self.carriers = [Carrier(c['code'], c['name']) for c in data['trips']['data']['carrier']]
+        self.cities = [City(c['code'], c['name']) for c in data['trips']['data']['city']]
+        self.taxes = [Tax(t['id'], t['name']) for t in data['trips']['data']['tax']]
+        self.trips = [Trip(t) for t in data['trips']['tripOption']]
 
     def __eq__(self, other):
         """Compare two :class:`Result` objects for equality.
@@ -1291,3 +1264,7 @@ class Result(object):
             The ``request_id`` of the :class:`Request` this is invoked on.
         """
         return self.request_id
+
+    def __iter__(self):
+        """Returns a generator for the :class:`Trip`s saved in this :class:`Result`."""
+        yield (t for t in self.trips)
