@@ -28,30 +28,23 @@ To execute this call asynchronously, simply replace `send_sync` with `send_async
 `await` it like any coroutine. Note that asynchronous API calls are designed to be used within
 asynchronous applications.
 ```python
-import pyflight
 import json
+import pyflight
 
-pyflight.set_api_key('<my-api-key>')
+pyflight.set_api_key('<key>')
 # pyflight.set_queries_per_day(<my-limit>)
 
-query_data = {
-  "request": {
-    "passengers": {
-      "adultCount": "1"
-    },
-    "slice": [
-      {
-        "origin": "SFO",
-        "destination": "LAX",
-        "date": "2017-09-19"
-      }
-    ],
-    "solutions": "1"
-  }
-}
-resp = pyflight.send_sync(query_data, use_containers=False)
-with open('response.json', 'w+') as f:
-    json.dump(resp, f)
+flight = pyflight.Request()
+flight.adult_count = 1
+
+flight.add_slice(pyflight.Slice(
+    origin='SFO',
+    destination='LAX',
+    date='2017-09-19'
+))
+
+with open('res.json', 'w+') as f:
+    json.dump(flight.send_sync(use_containers=False), f)
 ```
 
 ## Dependencies

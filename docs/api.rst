@@ -4,6 +4,9 @@ API Reference
 =============
 
 This page shows the functions and classes exposed by pyflight.
+A lot of attributes wrap the required parameters for the QPX API and thus result in documentation similiar to the one
+found on `the official QPX Express API reference <https://developers.google.com/qpx-express/v1/trips/search>`_, licensed
+under the `Creative Commons Attribution 3.0 License <https://creativecommons.org/licenses/by/3.0/>`_.
 
 
 Basic Configuration
