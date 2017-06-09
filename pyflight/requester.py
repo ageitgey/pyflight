@@ -7,7 +7,7 @@ import pyflight
 from pyflight.api import requester
 from pyflight.results import Result
 
-from typing import Union, Optional, List, Any
+from typing import Union, Optional, List
 
 BASE_URL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='
 __api_key = ''
@@ -319,11 +319,10 @@ def set_api_key(key: str):
     Parameters
     ----------
         key : str
-            The API key to make requests with.
+            The API key to execute requests with.
 
     """
-    global __api_key
-    __api_key = key
+    requester.api_key = key
 
 
 async def send_async(request_body: Union[dict, Request], use_containers: bool=True):
@@ -354,9 +353,9 @@ async def send_async(request_body: Union[dict, Request], use_containers: bool=Tr
 
     """
     if isinstance(request_body, dict):
-        response = await requester.post_request(BASE_URL + __api_key, request_body)
+        response = await requester.post_request(BASE_URL, request_body)
     elif isinstance(request_body, Request):
-        response = await requester.post_request(BASE_URL + __api_key, request_body.raw_data)
+        response = await requester.post_request(BASE_URL, request_body.raw_data)
     else:
         raise ValueError('Unsupported Request Type')
     if use_containers:
@@ -391,9 +390,9 @@ def send_sync(request_body: Union[dict, Request], use_containers: bool=True):
 
     """
     if isinstance(request_body, dict):
-        response = requester.post_request_sync(BASE_URL + __api_key, request_body)
+        response = requester.post_request_sync(BASE_URL, request_body)
     elif isinstance(request_body, Request):
-        response = requester.post_request_sync(BASE_URL + __api_key, request_body.raw_data)
+        response = requester.post_request_sync(BASE_URL, request_body.raw_data)
     else:
         raise ValueError('Unsupported Request Type')
     if use_containers:

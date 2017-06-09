@@ -42,6 +42,7 @@ class Requester(object):
         Gets a dedicated Event Loop from asyncio to be used for making Requests.
         """
         self.loop = asyncio.get_event_loop()
+        self.api_key = None
 
     async def post_request(self, url: str, payload: dict) -> dict:
         """Send a POST request to the specified URL with the given payload.
@@ -57,15 +58,14 @@ class Requester(object):
         """
         await pyflight.rate_limiter.delay_async(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
-            async with cs.post(url, data=payload) as r:
+            async with cs.post(url + self.api_key, data=payload) as r:
                 if r.status != 200:
                     resp = r.json()
                     reason = resp['error']['errors'][0]['reason']
                     raise APIException('{0["error"]["code"]}: {0["error"]["message"]} ({1})'.format(resp, reason))
                 return await r.json()
 
-    @staticmethod
-    def post_request_sync(url: str, payload: dict) -> dict:
+    def post_request_sync(self, url: str, payload: dict) -> dict:
         """Send a synchronous POST request to the specified URL with the given payload.
         
         Arguments
@@ -78,7 +78,7 @@ class Requester(object):
             dict: The Response of the Website
         """
         pyflight.rate_limiter.delay_sync()
-        r = requests.post(url, json=payload)
+        r = requests.post(url + self.api_key, json=payload)
         if r.status_code != 200:
             resp = r.json()
             reason = resp['error']['errors'][0]['reason']
