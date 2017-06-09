@@ -7,6 +7,7 @@ Some of the Documentation is extracted from the resource reference from the API 
 from which a full documentation can be found here:
 https://developers.google.com/qpx-express/v1/trips/search
 """
+from typing import Generator
 
 
 class FlightData(object):
@@ -430,7 +431,7 @@ class Segment(object):
             The flight number of this Segment
         married_segment_group : str
             The Index of a Segment in a married Segment Group
-        flights : list of :class:`Flight`
+        flights : List[:class:`Flight`]
             The flights from takeoff to landing for this Segment.
     """
     def __init__(self, segment: dict):
@@ -450,10 +451,7 @@ class Segment(object):
         self.flight_number = segment['flight']['number']
         self.married_segment_group = segment['marriedSegmentGroup']
 
-        # Save Flights
-        self.flights = []
-        for flight in segment['leg']:
-            self.flights.append(Flight(flight))
+        self.flights = [Flight(f) for f in segment['leg']]
 
     def __eq__(self, other):
         """Compare one :class:`Segment` object to another."""
@@ -463,12 +461,12 @@ class Segment(object):
         """Get the ID of this :class:`Segment` object."""
         return self.id
 
-    def find_flight(self, condition_function):
+    def find_one(self, condition_function):
         """Find a Flight out of the List of Flights in this :class:`Flight`\s that matches the passed function.
         This will return the first :class:`Flight` for which ``condition_function`` returns ``True``.
         For example, finding the first matching flight by its Carrier: ::
             
-            flight = find_flight(lambda f: f.flight_carrier == 'AB')
+            flight = some_flight.find_one(lambda f: f.flight_carrier == 'AB')
             
         Parameters
         ---------
@@ -487,11 +485,28 @@ class Segment(object):
                 return flight
         return None
 
-    def find_all_flights(self, condition_function):
-        """Similar to :meth:`find_flight`\, except that it returns a list of :class:`Flight`\s matching the condition
+    def find(self, condition_function: function):
+        """Similar to :meth:`find_one`\, except that it returns a generator of :class:`Flight`\s matching the condition
         in the passed function instead of a single :class:`Flight` or ``None``. This returns all :class:`Flight`\s for
         which ``condition_function`` returns True.
-        
+
+        For example, finding all flights with a duration above 60 minutes:
+
+            flights = some_flight.find(lambda f: f.duration > 60)
+
+
+        Examples
+        --------
+        Using the Generator to iterate over the results:
+
+            for flight in some_flight.find(lambda f: f.duration > 60):
+                print(flight.id)
+
+        Saving the results to a list:
+
+            found_flights = [f for f in some_flight.find(lambda f: f.duration > 60)]
+
+
         Parameters
         ---------
         condition_function : function
@@ -499,16 +514,10 @@ class Segment(object):
             
         Returns
         -------
-        list of :class:`Flight`\s
-            If the search was successful
-        empty list
-            If nothing was found
+        Generator[:class:`Flight`]
+            A generator over which you can iterate easily, or construct a list from it. See examples.
         """
-        matching_flights = []
-        for flight in self.flights:
-            if condition_function(flight):
-                matching_flights.append(flight)
-        return matching_flights
+        return (f for f in self.flights if condition_function(f))
 
     def as_dict(self):
         """Get a dictionary representing the contents of this :class:`Segment`.
@@ -566,7 +575,7 @@ class Route(object):
     ----------
         duration : int
             The duation of the :class:`Route`, in Minutes
-        segments : list of :class:`Segment`\s
+        segments : List[:class:`Segment`]
             Segments consisting of one more consecutive legs on the same flight.
     """
     def __init__(self, route_slice: dict):
@@ -578,11 +587,7 @@ class Route(object):
                 The ``trips.tripsOption[].slice[]`` Object from the Response
         """
         self.duration = route_slice['duration']
-
-        # Save Segments
-        self.segments = []
-        for segment in route_slice['segment']:
-            self.segments.append(Segment(segment))
+        self.segments = [Segment(s) for s in route_slice['segment']]
 
     def __lt__(self, other):
         """Compare the duration of two :class:`Route`\s.
@@ -678,7 +683,7 @@ class Fare(object):
             The Basis Code of this fare.
         private : bool
             Specifies whether this is a private fare offered only to select customers or not.
-            Defaults to ``False``.
+            Defaults to ``None``.
     """
     def __init__(self, fare_data: dict):
         """
@@ -694,7 +699,7 @@ class Fare(object):
         self.origin_city_code = fare_data['origin']
         self.destination_city_code = fare_data['destination']
         self.basis_code = fare_data['basisCode']
-        self.private = fare_data.get('private', False)
+        self.private = fare_data.get('private', None)
 
     def __eq__(self, other):
         """Compare two :class:`Fare`\s for equality.
@@ -749,7 +754,7 @@ class BagDescriptor(object):
             The commercial name for this :class:`BagDescriptor` for an optional service, can also be an empty string.
         count : int
             How many of this type of bag will be checked on this flight.
-        description : list
+        description : List[str]
             A list of strings describing the baggage. Can be an empty list.
         subcode : str
             An IATA subcode used to identify the optional service
@@ -820,7 +825,7 @@ class FreeBaggageOption(object):
     ----------
         pieces : int
             How many pieces of free baggage are allowed
-        bag_descriptors : list
+        bag_descriptors : List[:class:`BagDescriptor`]
             A list of :class:`BagDescriptor` Objects used to represent different types of bags.
             Can be an empty list.
     
@@ -838,10 +843,7 @@ class FreeBaggageOption(object):
                 
         """
         self.pieces = baggage_data['pieces']
-
-        self.bag_descriptors = []
-        for bag_descriptor in baggage_data.get('bagDescriptor', []):
-            self.bag_descriptors.append(BagDescriptor(bag_descriptor))
+        self.bag_descriptors = [BagDescriptor(bd) for bd in baggage_data.get('bagDescriptor', [])]
 
     def as_dict(self):
         """Return a dictionary representation of this :class:`FreeBaggageOption`.
@@ -881,7 +883,7 @@ class SegmentPricing(object):
             A unique identifier for this :class:`SegmentPricing` object.
         fare_id : str
             The Fare ID for this :class:`SegmentPricing`. Used to refer to different parts of the same solution.
-        free_baggage : list
+        free_baggage : List[:class:`FreeBaggageOption`]
             A list of :class:`FreeBaggageOption` objects for the free baggage allowance on this segment. 
     
     """
@@ -896,9 +898,7 @@ class SegmentPricing(object):
         self.segment_id = segment_data['segmentId']
         self.fare_id = segment_data['fareId']
 
-        self.free_baggage = []
-        for free_baggage_option in segment_data['freeBaggageOption']:
-            self.free_baggage.append(FreeBaggageOption(free_baggage_option))
+        self.free_baggage = [FreeBaggageOption(fbo) for fbo in segment_data['freeBaggageOption']]
 
     def __eq__(self, other):
         """Compares two :class:`SegmentPricing` objects for equality.
@@ -959,14 +959,14 @@ class TaxPricing(object):
     ----------
         id : str
             The unique identifier for this tax in a response, which is not present
-            for unnamed carrier surcharges. ``''`` (empty string) if not present.
+            for unnamed carrier surcharges. ``None`` if not present.
         charge_type : str
             Specifies the charge type for this :class:`Tax` - whether it is a government charge or a carrier surcharge.
         code : str
             The code to enter in the ticket's tax box.
         country : str
             The country issuing the charge, for government charges only. 
-            ``''`` (Empty string) if not a government charge.
+            ``None`` (Empty string) if not a government charge.
         sale_price : str
             The price of the tax in the sales or equivalent currency.
     """
@@ -977,10 +977,10 @@ class TaxPricing(object):
             pricing_tax_data : dict
                 The ``pricing[].tax[]` data returned from the API.
         """
-        self.id = pricing_tax_data.get('id', '')
+        self.id = pricing_tax_data.get('id', None)
         self.charge_type = pricing_tax_data['chargeType']
         self.code = pricing_tax_data['code']
-        self.country = pricing_tax_data.get('country', '')
+        self.country = pricing_tax_data.get('country', None)
         self.sale_price = pricing_tax_data['salePrice']
 
     def __eq__(self, other):
@@ -1020,13 +1020,13 @@ class Pricing(object):
     
     Attributes
     ----------
-        fares : list of :class:`Fare`
+        fares : List[:class:`Fare`]
             A list of :class:`Fare` objects used to price one or more segments.
-        segment_pricing : list of :class:`SegmentPricing`
+        segment_pricing : List[:class:`SegmentPricing`]
             A list of :class:`SegmentPricing` objects used to price one segment.
         base_fare_total : str
             The total fare in the currency of the country of origin.
-            ``None`` when the sales currency and the currency of the country of commencement are not different
+            ``None`` when the sales currency and the currency of the country of commencement are not different.
         sale_fare_total : str
             The total fare in the sale or equivalent currency.
         sale_fare_total : str
@@ -1057,7 +1057,7 @@ class Pricing(object):
             for senior citizens).
         refundable : bool
             Specifies whether the fares on this pricing are refundable. 
-            If the API does not specify this explicitly in the response, it defaults to ``False``.
+            If the API does not specify this explicitly in the response, it defaults to ``None``.
 
     """
     def __init__(self, pricing_data: dict):
@@ -1089,7 +1089,7 @@ class Pricing(object):
         self.fare_calculation = pricing_data['fareCalculation']
         self.latest_ticketing_time = pricing_data['latestTicketingTime']
         self.for_passenger_type = pricing_data['ptc']
-        self.refundable = pricing_data.get('refundable', False)
+        self.refundable = pricing_data.get('refundable', None)
 
     def as_dict(self):
         """Get a dictionary representing this :class:`Pricing`.
@@ -1144,9 +1144,9 @@ class Trip(object):
             The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. ``'USD59.00'``
         id : str
             The unique ID given to each Trip
-        routes : list of :class:`Route`
+        routes : List[:class:`Route`]
             A list of Routes from this Trip
-        pricing : list of :class:`Pricing`
+        pricing : List[:class:`Pricing`]
             A list of pricing data from this Trip
     """
     def __init__(self, trip_data: dict):
@@ -1208,22 +1208,26 @@ class Result(object):
         
     ``str(x)``
         Returns the ``request_id`` for the :class:`Result` this is invoked on.
+
+    ``for trip in Result``
+        This will call ``__iter__`` of :class:`Result` and return an iterator
+        over the :class:`Trip`s saved in this :class:`Result`.
     
     Attributes
     ----------
         request_id : str
             Specifies the Request ID, unique for each Request.
             
-        airports : list of :class:`Airport`
+        airports : List[:class:`Airport`]
             Contains Data for the Flights found in the Response.
             
-        carriers : list of :class:`Carrier`
+        carriers : List[:class:`Carrier`]
             Contains the Code and the Name of the Carriers found in the Response
             
-        taxes : list of :class:`Tax`
+        taxes : List[:class:`Tax`]
             Contains the Code and the Name of Taxes found in the Response
             
-        trips : list of :class:`Trip`
+        trips : List[:class:`Trip`]
             Contains information about trips (itinerary solutions) returned by the API.
             The Amount of Trips is determined by the amount of Solutions set in the Request.
     """
@@ -1267,4 +1271,5 @@ class Result(object):
 
     def __iter__(self):
         """Returns a generator for the :class:`Trip`s saved in this :class:`Result`."""
-        yield (t for t in self.trips)
+        for t in self.trips:
+            yield t
