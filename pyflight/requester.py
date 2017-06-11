@@ -205,8 +205,20 @@ class Request:
         }
 
     def add_slice(self, slice_: Slice):
-        """Adds a slice to this Request."""
+        """Adds a slice to this Request.
+
+        Parameters
+        ----------
+        slice_ : :class:`Slice`
+            The Slice to be added to the request.
+
+        Returns
+        -------
+        self
+            To ease chaining of this function, ``self`` is returned.
+        """
         self.raw_data['request']['slice'].append(slice_.raw_data)
+        return self
 
     def as_dict(self) -> dict:
         return self.raw_data

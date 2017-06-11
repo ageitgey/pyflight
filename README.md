@@ -4,7 +4,7 @@
 A Python Wrapper around the Google QPX Flights API that supports both synchronous and asynchronous operation.
 
 ## Features
-- Fully asynchronous using aiohttp 2.0, or non-async using `requests`.
+- Fully asynchronous using `aiohttp`, or synchronous using `requests`.
 - Easy control over the formatting of requests and results
 - Powerful functions to work with API results
 - Rate Limiting to your liking
@@ -25,7 +25,7 @@ A Google API Key is required. You can obtain one at the [Google API Dev Console]
 We create a request and set the adult count, then add a slice to send with the request. We execute the API call synchronously 
 and specify that we do not want to use the supplied containers and would like to receive the "raw" JSON response 
 instead, to write the response to a file using Python's built-in `json` module. Note that asynchronous API calls are designed to be used within
-asynchronous applications.
+asynchronous applications, thus we use a synchronous request here.
 ```python
 import json
 import pyflight

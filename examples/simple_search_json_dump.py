@@ -17,6 +17,5 @@ req.add_slice(pyflight.Slice(
 # Send the request synchronously
 result = req.send_sync(use_containers=False)
 
-
 with open('result.json', 'w+') as f:
     json.dump(result, f, sort_keys=True, indent=2)
