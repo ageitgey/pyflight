@@ -9,7 +9,7 @@ except ImportError:
 
 setup(
     name="pyflight",
-    version='0.1.1',
+    version='0.1.2',
     description="An asynchronous Wrapper around Google's QPX Express API",
     license="MIT",
     author="Volcyy",
