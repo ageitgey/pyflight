@@ -55,9 +55,9 @@ with open('res.json', 'w+') as f:
 
 
 ## Tests
-If you're interested in running the tests, download the two example responses given on the bottom of 
-[this page](https://developers.google.com/qpx-express/v1/requests) and save them in the `tests` directory named
-`response_1.json` and `response_2.json`. Afterwards, from the root directory, run `python3 -m pytest tests/`. 
+If you're interested in running the tests,  run `python3 -m pytest`.
+If required files for testing are not found in the directory, they will be downloaded
+automatically and saved for the next testing runs.
 You can also use the `-v` flag to enable a more detailed overview of the tests.
  
  
