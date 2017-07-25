@@ -454,8 +454,10 @@ class Segment(object):
         --------
         Using the Generator to iterate over the results:
 
-            for flight in some_flight.find(lambda f: f.duration > 60):
-                print(flight.id)
+        .. code-block:: python
+
+           for flight in some_flight.find(lambda f: f.duration > 60):
+               print(flight.id)
 
         Saving the results to a list:
 
