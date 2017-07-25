@@ -14,9 +14,9 @@ cache: pip
 
 script: "pytest"
 
+after_script:
+    - bash -c "$(curl -fsSL https://raw.githubusercontent.com/MaT1g3R/travis_discord/master/travis.sh)"
+
 
 notifications:
     email: false
-    webhooks:
-        urls:
-            secure: "SD+nlHrX4A/7g1XnEEmRC6C2RTjo3dXhXjtcT4RShOJdb0gYOrDf5bJVGxJhrsdV66ZugUHBuIl37GhwDtAT3W++zz75rB8au5oVGVtTJt/OcjpxDA4O22lQ9u05+8zhgh7TLrl33Fx0j2x6iN83tcajqjhLIVPr/2Jh/afmtJMK8znS5PCPqVrBgBzD2+NN1L3d6oPEFThNpt69Xa3PmKuNdRfsKuf/Idn7qUz8NFb03PzbleKqmwJ7ppLiqrZQtTF7KtHznYc91yB/ttPz8UhF1u+jFjJOveeELQeXhmpXRO2FFAirsB+lsQzbgeRv1MTsntoJI4jIqLF4MTGTWqGYMN2DoGNWBwEpXyEpgSQ+AhGG7Mude1D8sOxFvS3ZOoapOqusKgSyNJydrmLt8wFTDI4sNTBKqL9PAW12pVBwpYuT0KvQN8oCntSwP2dtMnFyAT6CZWSjv9YweYnptcYYMo1aibUDwwWuwFOfdaN/AS1e4MQwrQaUTguBEFDvC7APNsiomhc6GafSj7FEQsqa4vGbnd9Lo7PIiVCKni/1oB0NjhS/1MU6r730E90xW3w8ncLYwgZ5S8mO9PhoO7gLbqbaeNZWLt9GCNA40ryB99/lybgFKCyQ/2FJzuFohll2VMxPxRNb+j56f/ZX6Rg7DwvY+uAF+BoE/DGQ8P4="
