@@ -2,14 +2,15 @@
 from setuptools import setup, find_packages
 
 try:
+    import pypandoc
+    long_description = pypandoc.convert("README.md", 'rst')
+except ImportError:
     long_description = open("README.md").read()
-except IOError:
-    long_description = ""
 
 setup(
     name="pyflight",
     version='0.1.1',
-    description="A Python Wrapper around Google's QPX Express API",
+    description="An asynchronous Wrapper around Google's QPX Express API",
     license="MIT",
     author="Volcyy",
     packages=find_packages(),
