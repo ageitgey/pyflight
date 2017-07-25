@@ -9,6 +9,9 @@ python:
 
 install:
     - python3 setup.py install
+
+cache: pip
+
 script: "pytest"
 
 

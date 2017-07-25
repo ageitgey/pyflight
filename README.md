@@ -1,5 +1,6 @@
 # pyflight
 [![Documentation Status](https://readthedocs.org/projects/pyflight/badge/?version=latest)](http://pyflight.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/Volcyy/pyflight.svg?branch=master)](https://travis-ci.org/Volcyy/pyflight)
 
 A Python Wrapper around the Google QPX Flights API that supports both synchronous and asynchronous operation.
 
