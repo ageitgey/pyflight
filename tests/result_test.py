@@ -1,8 +1,9 @@
 # Tests the various Containers / Classes found in results.py
 
-import json
 import os
 import sys
+
+import util
 
 # Change Directory to Parent Directory
 current_path = os.path.dirname(os.path.abspath(__file__))
@@ -21,11 +22,6 @@ def test_flight_data():
     assert first_data != second_data
     assert first_data == third_data
     assert third_data == first_data
-
-    # Test the __len__ overload
-    assert len(first_data) == 12
-    assert len(second_data) == 20
-    assert len(third_data) == 12
 
     # Test the __str__ overload
     assert str(first_data) == 'Example Data'
@@ -52,11 +48,6 @@ def test_airport():
     first_airport = Airport({'code': '13', 'city': 'C83', 'name': 'Some Airport'})
     second_airport = Airport({'code': '58', 'city': '337', 'name': 'Another Airport'})
     third_airport = Airport({'code': '31', 'city': '958', 'name': 'Airport Airport'})
-
-    # Test the __len__ overload
-    assert len(first_airport) == 12
-    assert len(second_airport) == 15
-    assert len(third_airport) == 15
 
     # Test the __eq__ overload
     assert first_airport == first_airport
@@ -88,14 +79,15 @@ def test_airport():
         'name': 'Airport Airport'
     }
 
-# Get sample Data from JSON
-with open('tests/response_1.json') as f:
-    first_result = json.load(f)
-with open('tests/response_2.json') as f:
-    second_result = json.load(f)
 
-first_result = Result(first_result)
-second_result = Result(second_result)
+first_result = Result(util.download_file_if_not_exists(
+    url="https://developers.google.com/qpx-express/v1/json.samples/SFOLAX.out.json",
+    filename="response_1.json"
+))
+second_result = Result(util.download_file_if_not_exists(
+    url="https://developers.google.com/qpx-express/v1/json.samples/OGGNCE.out.json",
+    filename="response_2.json"
+))
 
 
 # Test the Entry grabbing from the Result Container
