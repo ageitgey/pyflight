@@ -35,14 +35,7 @@ class FlightData(object):
         >>> my_data = FlightData('3E7', 'Example Data')
         >>> str(my_data)
         'Example Data'
-        
-    ``len(x)``
-        Get the length of the Name of this FlightData.
-        
-        >>> my_data = FlightData('7H6', 'Example Data')
-        >>> len(my_data)
-        12
-        
+
         
     Attributes
     ----------
@@ -77,22 +70,6 @@ class FlightData(object):
             ``True`` or ``False``, depending on the Result of the Comparison
         """
         return self.code == other.code and self.name == other.name
-
-    def __len__(self):
-        """Get the length of the Name of this FlightData.
-        
-        Example
-        -------
-            >>> my_data = FlightData('7H6', 'Example Data')
-            >>> len(my_data)
-            12
-        
-        Returns
-        -------
-        int
-            The length of the name of this FlightData
-        """
-        return len(self.name)
 
     def __str__(self):
         """Get the Name of this FlightData Object.
@@ -188,13 +165,8 @@ class Airport(object):
         
         >>> str(my_airport)
         'ABC International'
-        
-    ``len(x)``
-        Get the length of the Airport's name
-        
-        >>> len(my_airport)
-        17
-    
+
+
     Attributes
     ----------
         code : str
@@ -236,23 +208,6 @@ class Airport(object):
             ``True`` or ``False` depending on the Result of the Comparison
         """
         return self.__dict__ == other.__dict__
-
-    def __len__(self):
-        """Get the length of the Airport Name.
-        
-        Example
-        -------
-            >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
-            >>> example_airport = Airport(airport)
-            >>> len(example_airport)
-            15
-        
-        Returns
-        -------
-        int
-            The length of the Airport Name 
-        """
-        return len(self.name)
 
     def __str__(self):
         """Get this airport's name
