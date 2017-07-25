@@ -78,7 +78,7 @@ class Requester(object):
                 if r.status != 200:
                     resp = await r.json()
                     raise APIException(
-                        code=resp['error']['code'],
+                        code=r.status,
                         message=resp['error']['message'],
                         reason=resp['error']['errors'][0]['reason']
                     )
@@ -101,7 +101,7 @@ class Requester(object):
         if r.status_code != 200:
             resp = r.json()
             raise APIException(
-                code=resp['error']['code'],
+                code=r.status_code,
                 message=resp['error']['message'],
                 reason=resp['error']['errors'][0]['reason']
             )
