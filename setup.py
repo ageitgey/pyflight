@@ -7,9 +7,11 @@ try:
 except ImportError:
     long_description = open("README.md").read()
 
+from pyflight import __version__ as version
+
 setup(
     name="pyflight",
-    version='0.1.2',
+    version=version,
     description="An asynchronous Wrapper around Google's QPX Express API",
     license="MIT",
     author="Volcyy",
