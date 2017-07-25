@@ -5,10 +5,6 @@ import sys
 
 import util
 
-# Change Directory to Parent Directory
-current_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, current_path + '/../')
-
 from pyflight.results import *
 
 
