@@ -8,6 +8,7 @@ __pycache__/
 *.so
 tests/response_1.json
 tests/response_2.json
+.cache/
 
 # Distribution / packaging
 env/
