@@ -17,6 +17,14 @@ script: "pytest"
 after_script:
     - bash -c "$(curl -fsSL https://raw.githubusercontent.com/MaT1g3R/travis_discord/master/travis.sh)"
 
+deploy:
+    provider: pypi
+    user:
+        secure: "CJsX2iSgvhlQ8vmxMUdcpnImzzkIIbKr9JfImENjir9uNcqYSyO19uXSmedTAobkxKPEXR4Jth3ftj5WV3Ttl2mWmyamk6O/qFgYBowJHhCVjNGGyN0Q9UxiPvG+JSU7v/KKrXJNUgofI6f1481u7d7dTEfTwBaBb8plxAbenFYKmfg0hxOSn6Pk4OamEpIYCpPA2IZ1/rh4w5BGYMTOXAlgR51E9r2eI/gvD7XEtec3vWvK40yowJfYlPKMAD/19YIdNkDkd+0h+Qj+CBABwYZvEU4QTe57jIt6xDXWbieR36BRobir4IGCQrzRQr55e1cQ4HPd9gyPEUKRGru4HUMc4jtVdweUOk9qF3ra+XJoH1vpmJxQDP7c5c+KtVt1hjhlJ0SsQ4J1i+1yLskYBa/yd5lPtDAKUjEEf+0v0t+CHMnFepfTdsPufJ0Nw37u+pBBHEiUxn+ydkakuyq8ucFxLBwvX9MsoevwhyQnO1qBAORe0QufynI8dwF5lAzqORstLIJXke/BOlJsi1SFLJv+vioOBAhGcP+VTIXagsf0RP6u2z4xyjPv0TPin5PXG7EJGCqxaO04lDlzgG6tI4gggRRQYbmVnpTlg68ohVQCJ9/D/MbVChaYLm9rFhbxiN5pyM4n0GlXQ0bgSaGneSUxmdqKUxEaDc3VMiDmBIg="
+    password:
+        secure: "BcWVJPpnQfz4+tZRRNYZyixKl9yJE6NGVv3EWdH2cZoozZZQ6aeoedq3+Vv+QVnCQmXYQ20qyuoHe9Vv9QZIfx7QnjagsV3FI7nNGwImiODUErBzVp2kmItVlKgyGZAwU7++wZsgvd5GjcMKCgP+RX7wmDos0AjOviOXHVMH++E+xqEcFwmrVHQjGmaaokK4YzBGAhJhtqEcvGtUjaHw5HgjtQaGP5KbHbz3ThKLazKZSF4fLKQfpM9rbu8+ZCaRC4CskqKKSn4r4l32voDF2qxhxQFt/qsiEiQPjgdxzzrC4462rcX0eWaOVLhinDyNcwtFrw4POpVpZ/e3Ii285On93c3GLaqLfyGnLlEd3WSBki724c/TNjdwowKcN/wvmqKaGWVVtS/xbxDaJaw+zU44zcIRTyIgSdaOC2R9oc31PnqSa1m1Dnd2iMlnUaZYyVouDEe2wfmzs1FvEjf7ZQ5W1pG4SQscHD65pW0umWFNcNxrPeJlcFhbUoXNgATUNFAThMTILi5km+dqLeEZtmoXnF8pEwjPvuT0kcf9V9jg6mg7ytMvFxm7VbI3QHFybb/U/oLPhF26j3bYQTrEQDTtEwpkLXnPIjo+amATwjcrSQ8yZy5lDsiIoDNpePy/aCdD8lbfqbdat82littRqsNESio/tA5ikuKK+tLG4Vc="
+    on:
+        tags: true
 
 notifications:
     email: false
