@@ -8,6 +8,8 @@ from the API itself, for which a full documentation can be found here:
 https://developers.google.com/qpx-express/v1/trips/search
 """
 
+# pylint: disable=too-few-public-methods, invalid-name
+
 
 class FlightData(object):
     """Base Class for simple Flight Data with a Code / ID and name.
