@@ -8,7 +8,6 @@ A Python Wrapper around the Google QPX Flights API that supports both synchronou
 - Fully asynchronous using `aiohttp`, or synchronous using `requests`.
 - Easy control over the formatting of requests and results
 - Powerful functions to work with API results
-- Rate Limiting to your liking
 
 ## Installation
 ```bash
@@ -32,7 +31,6 @@ import json
 import pyflight
 
 pyflight.set_api_key('<key>')
-# pyflight.set_queries_per_day(<my-limit>)
 
 flight = pyflight.Request()
 flight.adult_count = 1
