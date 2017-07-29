@@ -6,8 +6,6 @@ import asyncio
 import aiohttp
 import requests
 
-import pyflight.rate_limiter
-
 
 class APIException(Exception):
     """
@@ -81,7 +79,6 @@ class Requester(object):
         """
         # pylint: disable=invalid-name
 
-        await pyflight.rate_limiter.delay_async(self.loop)
         async with aiohttp.ClientSession(loop=self.loop) as cs:
             async with cs.post(url + self.api_key, data=payload) as r:
                 if r.status != 200:
@@ -108,7 +105,6 @@ class Requester(object):
         """
         # pylint: disable=invalid-name
 
-        pyflight.rate_limiter.delay_sync()
         r = requests.post(url + self.api_key, json=payload)
 
         if r.status_code != 200:
