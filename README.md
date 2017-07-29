@@ -12,10 +12,6 @@ A Python Wrapper around the Google QPX Flights API that supports both synchronou
 ## Installation
 ```bash
 pip3 install pyflight 
-python3 -m pip install pyflight
-
-# Up-to-date version from GitHub (currently recommended):
-python3 -m pip install -U git+https://github.com/Volcyy/pyflight
 ```  
 A Google API Key is required. You can obtain one at the [Google API Dev Console](https://console.developers.google.com/apis).
    
