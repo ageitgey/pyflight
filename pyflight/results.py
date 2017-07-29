@@ -828,7 +828,7 @@ class BagDescriptor(object):
         return self.commercial_name
 
     def __eq__(self, other):
-        """Compare two :class:`BagDescriptor` objects 
+        """Compare two :class:`BagDescriptor` objects
         with each other for equality by their attributes.
 
         Returns
@@ -1216,7 +1216,7 @@ class Trip(object):
         Parameters
         ----------
             trip_data : dict
-                The tripOption dictionary returned by 
+                The tripOption dictionary returned by
                 the API to create the Trip Object from.
         """
         self.total_price = trip_data['saleTotal']
