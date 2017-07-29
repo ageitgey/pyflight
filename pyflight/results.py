@@ -3,48 +3,48 @@ These provide several Classes that contain the Results of a Request
 to simplify accessing them, as well as offering several Methods
 to work with the Data from the Result.
 
-Some of the Documentation is extracted from the resource reference from the API itself,
-from which a full documentation can be found here:
+Some of the Documentation is extracted from the resource reference
+from the API itself, for which a full documentation can be found here:
 https://developers.google.com/qpx-express/v1/trips/search
 """
-from typing import Generator
 
 
 class FlightData(object):
-    """Base Class for simple Flight Data with a Code / ID and name. 
-    
+    """Base Class for simple Flight Data with a Code / ID and name.
+
     This Class supports various *magic methods*:
-    
+
     ``x == y``
         Compare two FlightData objects with each other for equality.
-        
+
         >>> first_data = FlightData('9B1', 'Some Data')
         >>> second_data = FlightData('7B3', 'More Data')
         >>> first_data == second_data
         False
-        
+
     ``x != y``
         Compare two FlightData objects with each other for inequality.
-        
+
         >>> first_data != second_data
         True
-        
+
     ``str(x)``
         Get the Name of this FlightData.
-        
+
         >>> my_data = FlightData('3E7', 'Example Data')
         >>> str(my_data)
         'Example Data'
 
-        
+
     Attributes
     ----------
         code : str
             A Code given to the FlightData Object as given from the API.
         name : str
             A name specifying the Name associated with the Code
-    
+
     """
+
     def __init__(self, code: str, name: str):
         self.code = code
         self.name = name
@@ -56,35 +56,37 @@ class FlightData(object):
         ---------
             other : FlightData
                 The Object to compare this one with
-                
+
         Example
         -------
             >>> first_data = FlightData('9B1', 'Some Data')
             >>> second_data = FlightData('7B3', 'More Data')
             >>> first_data == second_data
             False
-        
+
         Returns
         -------
         bool
             ``True`` or ``False``, depending on the Result of the Comparison
         """
+
         return self.code == other.code and self.name == other.name
 
     def __str__(self):
         """Get the Name of this FlightData Object.
-        
+
         Example
         -------
             >>> my_data = FlightData('3E7', 'Example Data')
             >>> str(my_data)
             'Example Data'
-        
+
         Returns
         -------
-        str 
+        str
             the Name of the FlightData Object
         """
+
         return self.name
 
     def as_dict(self):
@@ -95,74 +97,80 @@ class FlightData(object):
             >>> my_data = Tax('B31', 'Example FlightData')
             >>> my_data.as_dict()
             {'code': 'B31', 'name': 'Example FlightData')
-    
+
         Returns
         -------
         dict
-            Contains the Attributes of this Object 
+            Contains the Attributes of this Object
         """
+
         return self.__dict__
 
 
 class Aircraft(FlightData):
     """
-    An Aircraft with a Code (unique identifier) and Name. This Class inherits from 
-    :class:`FlightData` and thus, supports all operations that FlightData supports. 
-    For Examples, view the "Examples" section of :class:`FlightData`.
+    This Class inherits from :class:`FlightData` and thus,
+    supports all operations that FlightData supports.
+    This represents a Tax with a code (unique identifier) and a Name.
+    This will also be reflected in the Pricing section of a Trip,
+    but with more information such as the charge type, the country,
+    and the price of the Tax. For Examples, view the "Examples" section
+    for :class:`FlightData`.
     """
 
 
 class Carrier(FlightData):
     """
-    This Class inherits from :class:`FlightData` and thus, supports all operations
-    that FlightData supports. It represents a Carrier for the returned solution with 
-    a code and a name.
-    For Examples, view the "Examples" section for :class:`FlightData`.
+    This Class inherits from :class:`FlightData` and thus,
+    supports all operations that FlightData supports.
+    This represents a Tax with a code (unique identifier) and a Name.
+    This will also be reflected in the Pricing section of a Trip,
+    but with more information such as the charge type, the country,
+    and the price of the Tax. For Examples, view the "Examples" section
+    for :class:`FlightData`.
     """
 
 
 class City(FlightData):
     """
-    This Class inherits from :class:`FlightData` and thus, supports all operations
-    that FlightData supports. This represents a City with a code that uniquely identifies
-    it as well as a name.
-    For Examples, view the "Examples" section for :class:`FlightData`.
+    This Class inherits from :class:`FlightData` and thus,
+    supports all operations that FlightData supports.
+    This represents a Tax with a code (unique identifier) and a Name.
+    This will also be reflected in the Pricing section of a Trip,
+    but with more information such as the charge type, the country,
+    and the price of the Tax. For Examples, view the "Examples" section
+    for :class:`FlightData`.
     """
 
 
 class Tax(FlightData):
     """
-    This Class inherits from :class:`FlightData` and thus, supports all operations
-    that FlightData supports. This represents a Tax with a code (unique identifier) and a Name. 
-    This will also be reflected in the Pricing section of a Trip, but with more information 
-    such as the charge type, the country, and the price of the Tax.
-    For Examples, view the "Examples" section for :class:`FlightData`.
+    This Class inherits from :class:`FlightData` and thus,
+    supports all operations that FlightData supports.
+    This represents a Tax with a code (unique identifier) and a Name.
+    This will also be reflected in the Pricing section of a Trip,
+    but with more information such as the charge type, the country,
+    and the price of the Tax. For Examples, view the "Examples" section
+    for :class:`FlightData`.
     """
 
 
 class Airport(object):
     """
     Contains Data of an Airport and its City Code.
-    
-    This Class supports various *magic methods*: 
-    
+
+    This Class supports various *magic methods*:
+
     ``x == y``
-        Compare two Airports with each other for equality by their Airport and City Codes.
-        
-        >>> my_airport = Airport({'code': 'ABC', 'name': 'ABC International', 'city': 'Example Airport'})
-        >>> another_airport = Airport({'code': 'XYZ', 'name': 'XYZ International', 'city': 'Another Airport'})
-        >>> my_airport == another_airport
-        False
-        
+        Compare two Airports with each other
+        for equality by their Airport and City Codes.
+
     ``x != y``
         Compare two Airports with each other for inequality.
-        
-        >>> my_airport != another_airport
-        True
-        
+
     ``str(x)``
         Get the Airport's Name
-        
+
         >>> str(my_airport)
         'ABC International'
 
@@ -171,20 +179,21 @@ class Airport(object):
     ----------
         code : str
             The Code of this Airport
-            
+
         name : str
             The Name of this Airport
-        
+
         city : str
             The Code of the City associated with the Airport
     """
 
     def __init__(self, airport: dict):
-        """Create an Airport Object containing Data about an Airport and its associated City.
-        
-        An Airport Object which contains Data about 
+        """Create an Airport Object containing Data
+        about an Airport and its associated City.
+
+        An Airport Object which contains Data about
         each Flight returned from the API.
-        
+
         Arguments
         ---------
             airport : dict
@@ -196,42 +205,39 @@ class Airport(object):
 
     def __eq__(self, other):
         """Compare two Airports with each other by their Airport and City Codes.
-        
+
         Arguments
         ---------
             other : Airport
                 The other Airport to compare this one to
-        
+
         Returns
         -------
         bool
             ``True`` or ``False` depending on the Result of the Comparison
         """
+
         return self.__dict__ == other.__dict__
 
     def __str__(self):
         """Get this airport's name
-        
-        Example
-        -------
-            >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
-            >>> example_airport = Airport(airport)
-            >>> str(example_airport)
-            Example Airport
-        
+
         Returns
         -------
         str
-            A representation of this Airport as a String.
+            The name of this :class:`Airport`.
         """
+
         return self.name
 
     def as_dict(self):
         """Get a dictionary representation of the Airport.
-        
+
         Example
         -------
-            >>> airport = {'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'}
+            >>> airport = {
+                'code': '3E7', 'city': 'XYZ', 'name': 'Example Airport'
+            }
             >>> example_airport = Airport(airport)
             >>> example_airport.as_dict()
             {
@@ -239,33 +245,35 @@ class Airport(object):
                 'city': 'XYZ',
                 'name': 'Example Airport',
             }
-        
+
         Returns
         -------
         dict
-            A dictionary representing this Airport. 
+            A dictionary representing this Airport.
         """
+
         return self.__dict__
 
 
-class Flight(object):
-    """
-    The smallest unit of travel, identifies a flight from takeoff to landing. 
-    
-    In the API Response, this is found as ``trips.tripOption[].slice[].segment[].leg[]``
-    
+class Flight(object):  # pylint: disable=too-many-instance-attributes
+    r"""
+    The smallest unit of travel, identifies a flight from takeoff to landing.
+
+    In the API Response, this is found as
+    ``trips.tripOption[].slice[].segment[].leg[]``
+
     This class supports various *magic methods*:
-    
+
     ``x == y``
         Compare two :class:`Flight`\s with each other for equality.
-        
+
     ``x != y``
         Compare two :class:`Flight`\s with each other for inequality.
-        
+
     ``str(x)``
         Get the :class:`Flight`'s ``id`` as a String.
 
-    
+
     Attributes
     ----------
         id : str
@@ -273,31 +281,40 @@ class Flight(object):
         aircraft : str
             The aircraft travelling between the two points of this Flight
         departure_time : str
-            The Time of Departure local to the point of departure, with the Time Zone Difference included
+            The Time of Departure local to the point of departure,
+            with the Time Zone Difference included
         arrival_time : str
-            The Time of Arrival local to the point of arrival, with the Time Zone Difference included
+            The Time of Arrival local to the point of arrival
+            with the Time Zone Difference included
         duration : int
-            The scheduled Travelling Time between the the two Points, in minutes
+            The scheduled Travelling Time between
+            the the two Points, in minutes
         origin : str
             The Origin of this Flight as a City / Airport Code
         destination : str
             The Destination of this Flight as a City / Airport Code
         origin_terminal : str
-            The scheduled Terminal from which this Flight should depart on. ``''`` (empty string) if not specified.
+            The scheduled Terminal from which this Flight should depart on.
+            ``''`` (empty string) if not specified.
         destination_terminal : str
-            The scheduled Terminal where this Flight should arrive at. ``''`` (empty string) if not specified.
+            The scheduled Terminal where this Flight should arrive at.
+            ``''`` (empty string) if not specified.
         mileage : int
             The number of miles flown in this Flight
         meal : str
-            A description of the meal(s) served on the flight, ``''`` (empty string) if not specified.
+            A description of the meal(s) served on the flight
+            ``''`` (empty string) if not specified.
         change_plane : bool
-            Whether passengers have to change planes following this leg. Applies to the next leg, defaults to False.
+            Whether passengers have to change planes following this leg.
+            Applies to the next leg, defaults to False.
         performance : int
-            Specifies the published on time performance on this leg. ``None`` if not specified.
+            Specifies the published on time performance on this leg.
+            ``None`` if not specified.
     """
+
     def __init__(self, leg_data: dict):
         """Create a new Flight Object
-        
+
         Parameters
         ----------
             leg_data : dict
@@ -319,55 +336,63 @@ class Flight(object):
 
     def __eq__(self, other):
         """Compare two :class:`Flight`s with each other for equality.
-        
+
         Parameters
         ----------
         other : :class:`Flight`
             The other :class:`Flight` to compare to.
-            
+
         Returns
         -------
         bool
             ``True`` or ``False``, depending on the result of the comparison.
         """
+
         return self.id == other.id
 
     def __str__(self):
-        """Get a string representing the ID of this instance of :class:`Flight`"""
+        """Get a string of the ID of this instance of :class:`Flight`"""
+
         return self.id
 
     def as_dict(self):
         """Get this object in the form of a dictionary.
-        
+
         Returns
         -------
         dict
-            A dictionary representing all attributes of this :class:`Flight` as Key / Value pairs.
+            A dictionary representing all attributes of this
+            :class:`Flight` as Key / Value pairs.
         """
+
         return self.__dict__
 
 
-class Segment(object):
-    """A single Segment consisting of one or more consecutive legs on the same flight.
-    
-    As an example, a Flight could have a stop between the origin and destination,
-    resulting in two Segments instead of one. This contains information about
-    one Single Segment's duration - for example, a flight from DFW to HNL, as well
-    as other information about the Flight that this Segment describes.
-    
-    In the Response, this is represented as ``trips.tripOption[].slice[].segment[]``
-    
+class Segment(object):  # pylint: disable=too-many-instance-attributes
+    r"""A single Segment consisting of one or
+    more consecutive legs on the same flight.
+
+    As an example, a Flight could have a stop between the
+    origin and destination, resulting in two Segments
+    instead of one. This contains information about
+    one Single Segment's duration - for example, a flight
+    from DFW to HNL, as well as other information about
+    the Flight that this Segment describes.
+
+    In the Response, this is represented as
+    ``trips.tripOption[].slice[].segment[]``
+
     This class supports various *magic methods*:
-    
+
     ``x == y``
         Compares two :class:`Segment`\s for equality.
-        
+
     ``x != y``
         Compares two :class:`Segment`\s for inequality.
-    
+
     ``str(x)``
         Get the ID of this :class:`Segment` object.
-    
+
     Attributes
     ----------
         id : str
@@ -379,7 +404,8 @@ class Segment(object):
         booking_code : str
             The booking code or booking class for this Segment
         booking_code_count : int
-            The Number of seats available in this Segment with this Booking Code
+            The Number of seats available in
+            this Segment with this Booking Code
         flight_carrier : str
             A two-letter IATA airline designator for this Segment
         flight_number : str
@@ -389,9 +415,10 @@ class Segment(object):
         flights : List[:class:`Flight`]
             The flights from takeoff to landing for this Segment.
     """
+
     def __init__(self, segment: dict):
         """Create a new Segment Object.
-        
+
         Parameters
         ----------
             segment : dict
@@ -410,24 +437,29 @@ class Segment(object):
 
     def __eq__(self, other):
         """Compare one :class:`Segment` object to another."""
+
         return self.id == other.id
 
     def __str__(self):
         """Get the ID of this :class:`Segment` object."""
+
         return self.id
 
     def find_one(self, condition_function):
-        """Find a Flight out of the List of Flights in this :class:`Flight`\s that matches the passed function.
-        This will return the first :class:`Flight` for which ``condition_function`` returns ``True``.
+        r"""Find a Flight out of the List of Flights in this
+        :class:`Flight`\s that matches the passed function.
+        This will return the first :class:`Flight` for which
+        ``condition_function`` returns ``True``.
         For example, finding the first matching flight by its Carrier: ::
-            
+
             flight = some_flight.find_one(lambda f: f.flight_carrier == 'AB')
-            
+
         Parameters
         ---------
         condition_function : function
-            A function that returns a ``bool`` as a result of, for example, a comparison.
-            
+            A function that returns a ``bool`` as a result of,
+            for example, a comparison.
+
         Returns
         -------
         :class:`Flight`
@@ -435,14 +467,18 @@ class Segment(object):
         None
             If no element has been found
         """
+
         for flight in self.flights:
             if condition_function(flight):
                 return flight
+
         return None
 
     def find(self, condition_function: callable):
-        """Similar to :meth:`find_one`\, except that it returns a generator of :class:`Flight`\s matching the condition
-        in the passed function instead of a single :class:`Flight` or ``None``. This returns all :class:`Flight`\s for
+        r"""Similar to :meth:`find_one`\, except that it returns
+        a generator of :class:`Flight`\s matching the condition
+        in the passed function instead of a single :class:`Flight`
+        or ``None``. This returns all :class:`Flight`\s for
         which ``condition_function`` returns True.
 
         For example, finding all flights with a duration above 60 minutes:
@@ -461,29 +497,37 @@ class Segment(object):
 
         Saving the results to a list:
 
-            found_flights = [f for f in some_flight.find(lambda f: f.duration > 60)]
+        .. code-block:: python
+
+           found_flights = [
+               f for f in some_flight.find(lambda f: f.duration > 60)
+           ]
 
 
         Parameters
         ---------
         condition_function : function
-            A function that returns a ``bool`` as a result of, for example, a comparison.
-            
+            A function that returns a ``bool`` as a result of,
+            for example, a comparison.
+
         Returns
         -------
         Generator[:class:`Flight`]
-            A generator over which you can iterate easily, or construct a list from it. See examples.
+            A generator over which you can iterate easily, or
+            construct a list from it. See examples.
         """
+
         return (f for f in self.flights if condition_function(f))
 
     def as_dict(self):
         """Get a dictionary representing the contents of this :class:`Segment`.
-        
+
         Returns
         -------
         dict
             A dictionary containing the Data of this :class:`Flight` object.
         """
+
         return {
             'id': self.id,
             'duration': self.duration,
@@ -498,46 +542,51 @@ class Segment(object):
 
 
 class Route(object):
-    """Represents the traveller's intent as well as a low-fare search about an itinerary between two points.
-    
+    r"""Represents the traveller's intent as well as a low-fare
+    search about an itinerary between two points.
+
     In the Response, this is represented as ``trips.tripOption[].slice[]``
-    
+
     This Class supports various *magic methods*:
-        
+
     ``x == y``
-        Compares two duration of two :class:`Route`\s with each other for equality.
+        Compares two duration of two :class:`Route`\s
+        with each other for equality.
         Returns ``True`` when ``x.duration == y.duration``.
-        
+
     ``x != y``
-        Compares two duration of two :class:`Route`\s with each other for inequality.
+        Compares two duration of two :class:`Route`\s
+        with each other for inequality.
         Returns ``True`` when ``x.duration != y.duration``.
-    
+
     ``x < y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
         Returns ``True`` when ``x.duration < y.duration``.
-        
+
     ``x <= y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
         Returns ``True`` when ``x.duration <= y.duration``.
-        
+
     ``x > y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
         Returns ``True`` when ``x.duration > y.duration``.
-        
+
     ``x >= y``
         Compare the ``duration`` of two :class:`Route`\s with each other.
         Returns ``True`` when ``x.duration >= y.duration``.
-    
+
     Attributes
     ----------
         duration : int
             The duation of the :class:`Route`, in Minutes
         segments : List[:class:`Segment`]
-            Segments consisting of one more consecutive legs on the same flight.
+            Segments consisting of one more consecutive
+            legs on the same flight.
     """
+
     def __init__(self, route_slice: dict):
         """Create a new Route Object.
-        
+
         Parameters
         ----------
             route_slice : dict
@@ -547,85 +596,94 @@ class Route(object):
         self.segments = [Segment(s) for s in route_slice['segment']]
 
     def __lt__(self, other):
-        """Compare the duration of two :class:`Route`\s.
-        
+        r"""Compare the duration of two :class:`Route`\s.
+
         Returns
         -------
         bool
-            The result of the comparison, depending on the ``duration`` of two :class:`Route`\s."""
+            The result of the comparison, depending on the
+            ``duration`` of two :class:`Route`\s."""
+
         return self.duration < other.duration
 
     def __le__(self, other):
-        """Compare the duration of two :class:`Route`\s.
-        
+        r"""Compare the duration of two :class:`Route`\s.
+
         Returns
         -------
         bool
-            The result of the comparison, depending on the ``duration`` of two :class:`Route`\s."""
+            The result of the comparison, depending on the
+            ``duration`` of two :class:`Route`\s."""
+
         return self.duration <= other.duration
 
     def __gt__(self, other):
-        """Compare the duration of two :class:`Route`\s
-        
+        r"""Compare the duration of two :class:`Route`\s
+
         Returns
         -------
         bool
-            The result of the comparison, depending on the ``duration`` of two :class:`Route`\s.
+            The result of the comparison, depending on the
+            ``duration`` of two :class:`Route`\s.
         """
+
         return self.duration > other.duration
 
     def __ge__(self, other):
-        """Compare the duration of two :class:`Route`\s
-         
+        r"""Compare the duration of two :class:`Route`\s
+
         Returns
         -------
         bool
-            The result of the comparison, depending on the ``duration`` of two :class:`Route`\s.
+            The result of the comparison, depending on
+            the ``duration`` of two :class:`Route`\s.
         """
+
         return self.duration >= other.duration
 
     def __eq__(self, other):
-        """Compare the duration of two :class:`Route`\s with each other.
-        
+        r"""Compare the duration of two :class:`Route`\s with each other.
+
         Returns
         -------
         bool
-            The result of the comparison, depending on the ``duration`` of two :class:`Route`s.
+            The result of the comparison, depending on the
+            ``duration`` of two :class:`Route`s.
         """
+
         return self.duration == other.duration
 
     def as_dict(self):
         """Returns this :class:`Route` as a dictionary.
-        
+
         Returns
         -------
         dict
             This :class:`Route` as a dictionary."""
+
         return {
             'duration': self.duration,
-            'segments': [
-                segment.as_dict() for segment in self.segments
-            ]
+            'segments': [segment.as_dict() for segment in self.segments]
         }
 
 
 class Fare(object):
     """
     The fare used to price one or more segments.
-    
+
     This Class supports various *magic methods*:
-    
+
     ``x == y``
         Compare two :class:`Fare` objects with each other for equality.
         Returns ``True`` when ``x.id == y.id``.
-    
+
     ``x != y``
         Compare two :class:`Fare` objects with each other for inequality.
         Returns ``True`` when ``x.id != y.id``.
-        
+
     ``str(x)``
         Returns the ``id`` of this :class:`Fare` object.
-    
+
     Attributes
     ----------
         id : str
@@ -639,16 +697,18 @@ class Fare(object):
         basis_code : str
             The Basis Code of this fare.
         private : bool
-            Specifies whether this is a private fare offered only to select customers or not.
+            Specifies whether this is a private fare
+            offered only to select customers or not.
             Defaults to ``None``.
     """
+
     def __init__(self, fare_data: dict):
         """
         Create a new Fare Object.
-        
+
         Parameters
         ----------
-            fare_data : dict 
+            fare_data : dict
                 A Fare Object returned in from the API in arrays.
         """
         self.id = fare_data['id']
@@ -659,56 +719,63 @@ class Fare(object):
         self.private = fare_data.get('private', None)
 
     def __eq__(self, other):
-        """Compare two :class:`Fare`\s for equality.
-        
+        r"""Compare two :class:`Fare`\s for equality.
+
         Returns
         -------
         bool
             The result of the comparison
         """
+
         return self.id == other.id
 
     def __str__(self):
         """Get the ID of this :class:`Fare` object.
-        
+
         Returns
         -------
         str
             The ``id`` of this :class:`Fare` object.
         """
+
         return self.id
 
     def as_dict(self):
         """Get a representation of this :class:`Fare` as a dictionary.
-        
+
         Returns
         -------
         dict
-            A dictionary containing the attributes of this :class:`Fare` as key / value pairs.
+            A dictionary containing the attributes of
+            this :class:`Fare` as key / value pairs.
         """
+
         return self.__dict__
 
 
 class BagDescriptor(object):
-    """A representation of a type of bag.
-    
+    r"""A representation of a type of bag.
+
     This class supports various *magic methods*:
-    
+
     ``x == y``
         Compare two :class:`BagDescriptor`\s for equality.
-        Works by comparing their attributes, so it returns ``True`` when ``x.__dict__ == y.__dict__``.
-        
+        Works by comparing their attributes, so it returns ``True``
+        when ``x.__dict__ == y.__dict__``.
+
     ``x != y``
         Compare two :class:`BagDescriptor`\s for inequality.
-        Works by comparing their attributes, so it returns ``True`` when ``x.__dict__ != y.__dict``.
-        
+        Works by comparing their attributes, so it returns
+        ``True`` when ``x.__dict__ != y.__dict``.
+
     ``str(x)``
         Returns the ``commercial_name`` of a :class:`BagDescriptor`.
-    
+
     Attributes
     ----------
         commercial_name : str
-            The commercial name for this :class:`BagDescriptor` for an optional service, can also be an empty string.
+            The commercial name for this :class:`BagDescriptor`
+            for an optional service, can also be an empty string.
         count : int
             How many of this type of bag will be checked on this flight.
         description : List[str]
@@ -716,25 +783,30 @@ class BagDescriptor(object):
         subcode : str
             An IATA subcode used to identify the optional service
         max_kilos : int
-            Specifies the maximum number of kilos that all the free baggage together may weigh.
+            Specifies the maximum number of kilos that all
+            the free baggage together may weigh.
             ``None`` if not specified.
         kilos_per_piece : int
-            Specifies the maximum number of kilos that any piece of baggage may weigh.
+            Specifies the maximum number of kilos that
+            any piece of baggage may weigh.
             ``None`` if not specified.
         pounds : int
-            The number of pounds of free baggage allowed. ``None`` if not specified.
-        
+            The number of pounds of free baggage allowed.
+            ``None`` if not specified.
+
     Notes
     -----
         A single :class:`FreeBaggageOption` contains multiple BagDescriptors.
     """
+
     def __init__(self, bag_descriptor_data: dict):
         """Create a new BagDescriptor object.
-        
+
         Parameters
         ----------
             bag_descriptor_data : dict
-                The Bag Descriptor data as a dictionary, returned from the API in Arrays.
+                The Bag Descriptor data as a dictionary,
+                returned from the API in Arrays.
         """
         self.commercial_name = bag_descriptor_data.get('commercialName', '')
         self.count = bag_descriptor_data['count']
@@ -746,189 +818,211 @@ class BagDescriptor(object):
 
     def __str__(self):
         """Get the ``commercial_name`` of this :class:`BagDescriptor`.
-        
+
         Returns
         -------
         str
             The ``commercial_name`` of this :class:`BagDescriptor`.
         """
+
         return self.commercial_name
 
     def __eq__(self, other):
-        """Compare two :class:`BagDescriptor` objects with each other for equality by their attributes.
-        
+        """Compare two :class:`BagDescriptor` objects 
+        with each other for equality by their attributes.
+
         Returns
         -------
         bool
             True or False, depending on the result of the comparison.
         """
+
         return self.__dict__ == other.__dict__
 
     def as_dict(self):
         """Get a dictionary representing the attributes of this :class:`BagDescriptor`
-        
+
         Returns
         -------
         dict
-            A dictionary with key / value pairs containing the attributes of this :class:`BagDescriptor`.
+            A dictionary with key / value pairs containing
+            the attributes of this :class:`BagDescriptor`.
         """
+
         return self.__dict__
 
 
 class FreeBaggageOption(object):
     """Contains Information about the free baggage allowance for one Segment.
-    
+
     Attributes
     ----------
         pieces : int
             How many pieces of free baggage are allowed
         bag_descriptors : List[:class:`BagDescriptor`]
-            A list of :class:`BagDescriptor` Objects used to represent different types of bags.
+            A list of :class:`BagDescriptor` Objects used
+            to represent different types of bags.
             Can be an empty list.
-    
+
     Notes
     -----
         Information about this is saved in a :class:`SegmentPricing` class.
     """
+
     def __init__(self, baggage_data: dict):
-        """Create a new FreeBaggageOption object. 
-        
+        """Create a new FreeBaggageOption object.
+
         Parameters
         ----------
             baggage_data : dict
                 The Baggage Data as returned from the API in an Array.
-                
+
         """
         self.pieces = baggage_data['pieces']
-        self.bag_descriptors = [BagDescriptor(bd) for bd in baggage_data.get('bagDescriptor', [])]
+        self.bag_descriptors = [
+            BagDescriptor(bd) for bd in baggage_data.get('bagDescriptor', [])
+        ]
 
     def as_dict(self):
         """Return a dictionary representation of this :class:`FreeBaggageOption`.
-        
+
         Returns
         -------
         dict
-            A dictionary with key / value pairs containing the attributes of this :class:`FreeBaggageOption`.
+            A dictionary with key / value pairs containing
+            the attributes of this :class:`FreeBaggageOption`.
         """
+
         return {
             'pieces': self.pieces,
-            'bag_descriptors': [
-                bd.as_dict() for bd in self.bag_descriptors
-            ]
+            'bag_descriptors': [bd.as_dict() for bd in self.bag_descriptors]
         }
 
 
 class SegmentPricing(object):
-    """Price and baggage information for segments.
-    
+    r"""Price and baggage information for segments.
+
     This class supports various *magic methods*:
-    
+
     ``x == y``
         Compares two :class:`SegmentPricing`\s for equality.
-        Returns ``True`` if ``x.segment_id == y.segment_id and x.fare_id == y.fare_id``.
-        
+        Returns ``True`` if
+        ``x.segment_id == y.segment_id and x.fare_id == y.fare_id``.
+
     ``x != y``
         Compares two :class:`SegmentPricing`\s for inequality.
         Returns ``True`` if ``not x == y``
-    
+
     ``str(x)``
         Returns the ``segment_id`` of this :class:`SegmentPricing`.
-    
+
     Attributes
     -----------
         segment_id : str
             A unique identifier for this :class:`SegmentPricing` object.
         fare_id : str
-            The Fare ID for this :class:`SegmentPricing`. Used to refer to different parts of the same solution.
+            The Fare ID for this :class:`SegmentPricing`.
+            Used to refer to different parts of the same solution.
         free_baggage : List[:class:`FreeBaggageOption`]
-            A list of :class:`FreeBaggageOption` objects for the free baggage allowance on this segment. 
-    
+            A list of :class:`FreeBaggageOption` objects
+            for the free baggage allowance on this segment.
+
     """
+
     def __init__(self, segment_data: dict):
         """Create a new SegmentPricing object.
-        
+
         Arguments:
             segment_data : dict
-                The Data for a single SegmentPricing returned in Arrays from the API. 
-                
+                The Data for a single SegmentPricing
+                returned in Arrays from the API.
+
         """
         self.segment_id = segment_data['segmentId']
         self.fare_id = segment_data['fareId']
-        self.free_baggage = [FreeBaggageOption(fbo) for fbo in segment_data.get('freeBaggageOption', [])]
+        self.free_baggage = [
+            FreeBaggageOption(fbo)
+            for fbo in segment_data.get('freeBaggageOption', [])
+        ]
 
     def __eq__(self, other):
         """Compares two :class:`SegmentPricing` objects for equality.
-        
+
         Returns
         -------
         bool
             True or False, depending on the result of the comparison.
         """
-        return self.segment_id == other.segment_id and self.fare_id == other.fare_id
+
+        return self.segment_id == other.segment_id \
+            and self.fare_id == other.fare_id
 
     def __str__(self):
         """Returns the ``segment_id`` of this :class:`SegmentPricing`.
-        
+
         Returns
         -------
         str
             The ``segment_id`` of this :class:`SegmentPricing`.
         """
+
         return self.segment_id
 
     def as_dict(self):
         """Return a dictionary representing this :class:`SegmentPricing`.
-        
+
         Returns
         -------
         dict
-            A dictionary containing the attributes of this :class:`SegmentPricing` as key / value pairs.
+            A dictionary containing the attributes of this
+            :class:`SegmentPricing` as key / value pairs.
         """
+
         return {
             'segment_id': self.segment_id,
             'fare_id': self.fare_id,
-            'free_baggage': [
-                fbo.as_dict() for fbo in self.free_baggage
-            ]
+            'free_baggage': [fbo.as_dict() for fbo in self.free_baggage]
         }
 
 
 class TaxPricing(object):
     """The taxes used to calculate the tax total per ticket.
-    
+
     This extends the information being held in the :class:`Tax` objects.
-    
+
     This class supports various *magic methods*:
-    
+
     ``x == y``
         Check if two :class:`TaxPricing` objects are equal.
         Returns ``True`` if ``x.id == y.id``.
-        
+
     ``x != y``
         Check if two :class:`TaxPricing` objects are equal.
         Returns ``True`` if ``x.id != y.id``.
-        
+
     ``str(x)``
         Returns the ``id`` of this :class:`TaxPricing`
-    
+
     Attributes
     ----------
         id : str
-            The unique identifier for this tax in a response, which is not present
-            for unnamed carrier surcharges. ``None`` if not present.
+            The unique identifier for this tax in a response, which is not
+            present for unnamed carrier surcharges. ``None`` if not present.
         charge_type : str
-            Specifies the charge type for this :class:`Tax` - whether it is a government charge or a carrier surcharge.
+            Specifies the charge type for this :class:`Tax`
+            - whether it is a government charge or a carrier surcharge.
         code : str
             The code to enter in the ticket's tax box.
         country : str
-            The country issuing the charge, for government charges only. 
+            The country issuing the charge, for government charges only.
             ``None`` (Empty string) if not a government charge.
         sale_price : str
             The price of the tax in the sales or equivalent currency.
     """
+
     def __init__(self, pricing_tax_data: dict):
         """Create a new :class:`TaxPricing` object.
-        
+
         Args:
             pricing_tax_data : dict
                 The ``pricing[].tax[]` data returned from the API.
@@ -941,83 +1035,96 @@ class TaxPricing(object):
 
     def __eq__(self, other):
         """Compare two :class:`TaxPricing` objects.
-        
+
         Returns
         -------
         bool
             True or False depending on the result of the comparison
         """
+
         return self.id == other.id
 
     def __str__(self):
         """Get the ``id`` of this :class:`TaxPricing` object.
-        
+
         Returns
         -------
         str
             The ``id`` of this :class:`TaxPricing`
         """
+
         return self.id
 
     def as_dict(self):
         """Get a dictionary representation of this :class:`TaxPricing`
-        
+
         Returns
         -------
         dict
-            A dictionary containing the attributes of this :class:`TaxPricing` as key / value pairs.
+            A dictionary containing the attributes of this
+            :class:`TaxPricing` as key / value pairs.
         """
+
         return self.__dict__
 
 
-class Pricing(object):
+class Pricing(object):  # pylint: disable=too-many-instance-attributes
     """
     Contains Information about the pricing of the given Route, per passenger.
-    
+
     Attributes
     ----------
         fares : List[:class:`Fare`]
             A list of :class:`Fare` objects used to price one or more segments.
         segment_pricing : List[:class:`SegmentPricing`]
-            A list of :class:`SegmentPricing` objects used to price one segment.
+            A list of :class:`SegmentPricing` objects
+            used to price one segment.
         base_fare_total : str
             The total fare in the currency of the country of origin.
-            ``None`` when the sales currency and the currency of the country of commencement are not different.
+            ``None`` when the sales currency and the currency
+            of the country of commencement are not different.
         sale_fare_total : str
             The total fare in the sale or equivalent currency.
         sale_tax_total : str
             The taxes in the sale or equivalent currency.
         sale_total : str
-            The total per-passenger price (fare + tax) in the sale of equivalent currency.
+            The total per-passenger price (fare + tax)
+            in the sale of equivalent currency.
         adults : int
             The amount of passengers that are adults.
         children : int
             The amount of passengers that are children.
         infants_in_lap : int
-            The amount of passengers that are infants travelling in the lap of an adult.
+            The amount of passengers that are infants
+            travelling in the lap of an adult.
         infants_in_seat : int
             The amount of passengers that are infants assigned to a seat.
         seniors : int
             The amount of passengers that are senior citizens.
         fare_calculation : str
-            The horizontal fare calculation. On a ticket, this is a field that displays
-            all of the relevant items that go into the calculation of the fare.
+            The horizontal fare calculation. On a ticket,
+            this is a field that displays all of the relevant
+            items that go into the calculation of the fare.
         latest_ticketing_time : str
-            The latest ticketing time for this pricing assuming there is no change in fares / rules 
+            The latest ticketing time for this pricing assuming
+            there is no change in fares / rules
             and the reservation occurs at ticketing time.
         for_passenger_type : str
-            Specifies the passenger type code for this pricing, used by a carrier to restrict
-            fares to certain categories of passengers (for example, a fare might be valid only
+            Specifies the passenger type code for this pricing,
+            used by a carrier to restrict fares to certain categories
+            of passengers (for example, a fare might be valid only
             for senior citizens).
         refundable : bool
-            Specifies whether the fares on this pricing are refundable. 
-            If the API does not specify this explicitly in the response, it defaults to ``None``.
+            Specifies whether the fares on this pricing are refundable.
+            If the API does not specify this explicitly in the response,
+            it defaults to ``None``.
 
     """
+
     def __init__(self, pricing_data: dict):
         """
         Create a new Pricing object from fare data.
-        
+
         Parameters
         ----------
             pricing_data : dict
@@ -1025,7 +1132,9 @@ class Pricing(object):
         """
         self.fares = [Fare(f) for f in pricing_data['fare']]
 
-        self.segment_pricing = [SegmentPricing(sp) for sp in pricing_data['segmentPricing']]
+        self.segment_pricing = [
+            SegmentPricing(sp) for sp in pricing_data['segmentPricing']
+        ]
 
         self.base_fare_total = pricing_data.get('baseFareTotal')
         self.sale_fare_total = pricing_data['saleFareTotal']
@@ -1033,8 +1142,10 @@ class Pricing(object):
         self.sale_total = pricing_data['saleTotal']
         self.adults = pricing_data['passengers'].get('adultCount', 0)
         self.children = pricing_data['passengers'].get('childCount', 0)
-        self.infants_in_lap = pricing_data['passengers'].get('infantInLapCount', 0)
-        self.infants_in_seat = pricing_data['passengers'].get('infantInSeatCount', 0)
+        self.infants_in_lap = pricing_data['passengers'].get(
+            'infantInLapCount', 0)
+        self.infants_in_seat = pricing_data['passengers'].get(
+            'infantInSeatCount', 0)
         self.seniors = pricing_data['passengers'].get('seniorCount', 0)
         self.fare_calculation = pricing_data['fareCalculation']
         self.latest_ticketing_time = pricing_data['latestTicketingTime']
@@ -1043,19 +1154,17 @@ class Pricing(object):
 
     def as_dict(self):
         """Get a dictionary representing this :class:`Pricing`.
-        
+
         Returns
         -------
         dict
-            A dictionary containing the attributes of this :class:`Pricing` as key / value pairs.
+            A dictionary containing the attributes of this
+            :class:`Pricing` as key / value pairs.
         """
+
         return {
-            'fares': [
-                f.as_dict() for f in self.fares
-            ],
-            'segment_pricing': [
-                sp.as_dict() for sp in self.segment_pricing
-            ],
+            'fares': [f.as_dict() for f in self.fares],
+            'segment_pricing': [sp.as_dict() for sp in self.segment_pricing],
             'base_fare_total': self.base_fare_total,
             'sale_fare_total': self.sale_fare_total,
             'sale_tax_total': self.sale_tax_total,
@@ -1073,25 +1182,26 @@ class Pricing(object):
 
 
 class Trip(object):
-    """Contains Information about one Trip - an itinerary solution - returned by the API.
-      
+    r"""Contains Information about one Trip - an itinerary solution - from the API.
+
     This class supports various *magic methods*:
-    
+
     ``x == y``
         Compares two :class:`Trip`\s with each other for equality.
         Returns ``True`` when ``x.id == y.id``.
-        
+
     ``x != y``
         Compares two :class:`Trip`\s with each other for inequality.
         Returns ``True`` when ``x.id != y.id``.
-        
+
     ``str(x)``
         Returns the ``id`` of the :class:`Trip` this is invoked on.
-    
+
     Attributes
     ----------
         total_price : str
-            The total price as Currency followed by the Amount for all Passengers on the Trip, e.g. ``'USD59.00'``
+            The total price as Currency followed by the
+            Amount for all Passengers on the Trip, e.g. ``'USD59.00'``
         id : str
             The unique ID given to each Trip
         routes : List[:class:`Route`]
@@ -1099,13 +1209,15 @@ class Trip(object):
         pricing : List[:class:`Pricing`]
             A list of pricing data from this Trip
     """
+
     def __init__(self, trip_data: dict):
         """Create a new Trip object.
-        
+
         Parameters
         ----------
             trip_data : dict
-                The tripOption dictionary returned by the API to create the Trip Object from
+                The tripOption dictionary returned by 
+                the API to create the Trip Object from.
         """
         self.total_price = trip_data['saleTotal']
         self.id = trip_data['id']
@@ -1115,22 +1227,24 @@ class Trip(object):
 
     def __eq__(self, other):
         """Compare two :class:`Trip` objects with each other for equality
-        
+
         Returns
         -------
         bool
             True or False depending on the result of the comparison
         """
+
         return self.id == other.id
 
     def __str__(self):
         """Returns the ``id`` of this :class:`Trip`.
-        
+
         Returns
         -------
         str
             The ``id`` of this :class:`Trip`
         """
+
         return self.id
 
     def as_dict(self) -> dict:
@@ -1139,68 +1253,71 @@ class Trip(object):
         Returns
         -------
         dict
-            A dictionary containing the attributes of this :class:`Trip` as key / value pairs.
+            A dictionary containing the attributes
+            of this :class:`Trip` as key / value pairs.
         """
+
         return {
             'total_price': self.total_price,
             'id': self.id,
-            'routes': [
-                r.as_dict() for r in self.routes
-            ],
-            'pricing': [
-                p.as_dict() for p in self.pricing
-            ]
+            'routes': [r.as_dict() for r in self.routes],
+            'pricing': [p.as_dict() for p in self.pricing]
         }
 
 
 class Result(object):
-    """Contains Results of an API Call.
-    
+    r"""Contains Results of an API Call.
+
     This Class supports various *magic methods*:
-    
+
     ``x == y``
         Checks if two :class:`Result`\s are identical.
         This is equivalent to ``x.request_id == y.request_id``.
-        
+
     ``x != y``
         Checks if two :class:`Result`\s are not identical to each other.
         This is equivalent to ``x.request_id != y.request_id``.
-        
+
     ``str(x)``
         Returns the ``request_id`` for the :class:`Result` this is invoked on.
 
     ``for trip in x``
         This will call ``__iter__`` of :class:`Result` and return an iterator
         over the :class:`Trip`\s saved in this :class:`Result`.
-    
+
     Attributes
     ----------
         request_id : str
             Specifies the Request ID, unique for each Request.
-            
+
         airports : List[:class:`Airport`]
             Contains Data for the Flights found in the Response.
 
         aircraft : List[:class:`Aircraft`]
-            Contains the Code and the Name of the Aircraft found in the Response.
-            
+            Contains the Code and the Name of the
+            Aircraft found in the Response.
+
         carriers : List[:class:`Carrier`]
-            Contains the Code and the Name of the Carriers found in the Response.
+            Contains the Code and the Name of the
+            Carriers found in the Response.
 
         cities : List[:class:`City`]
-            Contains the Code and the Name of Cities found in the Response.
-            
+            Contains the Code and the Name of the
+            Cities found in the Response.
+
         taxes : List[:class:`Tax`]
-            Contains the Code and the Name of Taxes found in the Response.
-            
+            Contains the Code and the Name of the
+            Taxes found in the Response.
+
         trips : List[:class:`Trip`]
-            Contains information about trips (itinerary solutions) returned by the API.
-            The Amount of Trips is determined by the amount of Solutions set in the Request.
+            Contains information about trips (itinerary solutions)
+            returned by the API. The Amount of Trips is determined
+            by the amount of Solutions set in the Request.
     """
 
     def __init__(self, data: dict):
         """Create the Result Object from the Response of the API.
-        
+
         Parameters
         ----------
             data: dict
@@ -1209,36 +1326,52 @@ class Result(object):
         self.request_id = data['trips']['requestId']
 
         self.airports = [Airport(a) for a in data['trips']['data']['airport']]
-        self.aircraft = [Aircraft(a['code'], a['name']) for a in data['trips']['data']['aircraft']]
-        self.carriers = [Carrier(c['code'], c['name']) for c in data['trips']['data']['carrier']]
-        self.cities = [City(c['code'], c['name']) for c in data['trips']['data']['city']]
-        self.taxes = [Tax(t['id'], t['name']) for t in data['trips']['data']['tax']]
+        self.aircraft = [
+            Aircraft(a['code'], a['name'])
+            for a in data['trips']['data']['aircraft']
+        ]
+        self.carriers = [
+            Carrier(c['code'], c['name'])
+            for c in data['trips']['data']['carrier']
+        ]
+        self.cities = [
+            City(c['code'], c['name']) for c in data['trips']['data']['city']
+        ]
+        self.taxes = [
+            Tax(t['id'], t['name']) for t in data['trips']['data']['tax']
+        ]
         self.trips = [Trip(t) for t in data['trips']['tripOption']]
 
     def __eq__(self, other):
         """Compare two :class:`Result` objects for equality.
-        
+
         Returns
         -------
         bool
             True or False depending on the result of the comparison
         """
+
         return self.request_id == other.request_id
 
     def __str__(self):
         """Get the ID of this :class:`Request`.
-        
+
         Returns
         -------
         str
             The ``request_id`` of the :class:`Request` this is invoked on.
         """
+
         return self.request_id
 
     def __iter__(self):
-        """Returns a generator for the :class:`Trip`s saved in this :class:`Result`."""
-        for t in self.trips:
-            yield t
+        """
+        Returns a generator for the :class:`Trip`s
+        saved in this :class:`Result`.
+        """
+
+        for trip in self.trips:
+            yield trip
 
     def as_dict(self) -> dict:
         """Returns a dictionary representation of this :class:`Result`.
@@ -1251,6 +1384,7 @@ class Result(object):
         dict
             The data stored in this :class:`Result` as key / value pairs.
         """
+
         return {
             'request_id': self.request_id,
             'airports': [a.as_dict() for a in self.airports],
