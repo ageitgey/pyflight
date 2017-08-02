@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
+
 
 try:
     import pypandoc
-    long_description = pypandoc.convert("README.md", 'rst')
+    LONG_DESC = pypandoc.convert("README.md", 'rst')
 except ImportError:
-    long_description = open("README.md").read()
+    with open("README.md", 'r', encoding='utf-8') as f:
+        LONG_DESC = f.read()
 
 
 setup(
@@ -14,14 +16,16 @@ setup(
     description="An asynchronous Wrapper around Google's QPX Express API",
     license="MIT",
     author="Volcyy",
-    packages=find_packages(),
+    packages=find_packages(exclude=[
+        "build", "dist", "docs", "examples",
+        "pyflight.egg-info", "tests", "venv"
+    ]),
     url="https://github.com/Volcyy/pyflight",
     install_requires=['aiohttp', 'requests'],
-    long_description=long_description,
+    long_description=LONG_DESC,
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.6",
-    ]
-)
+    ])
