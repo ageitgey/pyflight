@@ -4,8 +4,8 @@ Provides an easy-to-use interface to use pyflight with.
 import re
 from typing import List, Optional, Union
 
-from pyflight.api import requester
-from pyflight.results import Result
+from .api import requester
+from .result import Result
 
 BASE_URL = 'https://www.googleapis.com/qpxExpress/v1/trips/search?key='
 __API_KEY = ''

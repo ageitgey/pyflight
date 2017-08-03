@@ -5,7 +5,7 @@ import sys
 
 import util
 
-from pyflight.results import *
+from pyflight.result import *
 from pyflight.models.flight_data import FlightData
 
 
