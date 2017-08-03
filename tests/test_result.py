@@ -6,6 +6,7 @@ import sys
 import util
 
 from pyflight.results import *
+from pyflight.models.flight_data import FlightData
 
 
 # Test the FlightData Container
