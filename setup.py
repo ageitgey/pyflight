@@ -1,15 +1,6 @@
 # -*- coding: utf-8 -*-
 from setuptools import find_packages, setup
 
-
-try:
-    import pypandoc
-    LONG_DESC = pypandoc.convert("README.md", 'rst')
-except ImportError:
-    with open("README.md", 'r', encoding='utf-8') as f:
-        LONG_DESC = f.read()
-
-
 setup(
     name="pyflight",
     version='0.1.3',
@@ -22,7 +13,7 @@ setup(
     ]),
     url="https://github.com/Volcyy/pyflight",
     install_requires=['aiohttp', 'requests'],
-    long_description=LONG_DESC,
+    long_description="",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
